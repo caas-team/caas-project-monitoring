@@ -1,12 +1,14 @@
 apiVersion: v2
 annotations:
   catalog.cattle.io/display-name: CaaS Project Monitoring V3
+  catalog.cattle.io/certified: rancher
 name: caas-project-monitoring
 description: A Helm chart for Rancher Project Monitoring V3
-type: application
 version: 0.0.1
 appVersion: "40.1.2"
 icon: https://raw.githubusercontent.com/caas-team/caas-project-monitoring/main/logo.png
+keywords:
+- monitoring
 dependencies:
 - name: kube-prometheus-stack
   version: "40.1.2"
