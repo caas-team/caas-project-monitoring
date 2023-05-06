@@ -4,7 +4,7 @@ questions:
 - variable: caas.projectNamespaces
   description: "List of additional namespaces to monitor (whitespace separated, without install namespace)"
   type: string
-  label: Caas projectNamespaces:
+  label: Caas projectNamespaces
   group: "CaaS"
 - variable: kube-prometheus-stack.alertmanager.enabled
   default: "true"
