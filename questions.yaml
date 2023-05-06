@@ -1,6 +1,6 @@
 # https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/helm-charts-in-rancher/create-apps#additional-files-for-rancher-charts
 categories:
-- monitoring
+- application
 questions:
 - variable: kube-prometheus-stack.alertmanager.enabled
   default: "true"
