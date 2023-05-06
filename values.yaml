@@ -153,7 +153,7 @@ kube-prometheus-stack:
       selfMonitor: true
     alertmanagerSpec:
       image:
-        repository: quay.io/prometheus/alertmanager
+        repository: mtr.devops.telekom.de/kubeprometheusstack/alertmanager
         tag: v0.24.0
   
       alertmanagerConfigNamespaceSelector: {}
@@ -162,7 +162,6 @@ kube-prometheus-stack:
       #     alertmanagerconfig: enabled
   
       logFormat: logfmt
-      logLevel: info
       replicas: 1
       retention: 120h
   
@@ -195,10 +194,29 @@ kube-prometheus-stack:
       clusterAdvertiseAddress: false
       forceEnableClusterMode: false
       minReadySeconds: 0
-  
   grafana:
     enabled: true
     namespaceOverride: ""
+    image:
+      repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
+      tag: 9.3.8
+    testFramework:
+      enabled: false
+    securityContext:
+      runAsUser: 472
+      runAsGroup: 472
+      fsGroup: 472
+      supplementalGroups:
+      - 472
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsUser: 472
+      runAsGroup: 472
+      privileged: false
+      readOnlyRootFilesystem: true
     forceDeployDatasources: false
     forceDeployDashboards: false
     defaultDashboardsEnabled: true
@@ -207,6 +225,13 @@ kube-prometheus-stack:
     rbac:
       pspEnabled: false
       namespaced: true
+    resources:
+      limits:
+        memory: 600Mi
+        cpu: 600m
+      requests:
+        memory: 200Mi
+        cpu: 200m
     sidecar:
       dashboards:
         enabled: true
@@ -318,13 +343,13 @@ kube-prometheus-stack:
     prometheusSpec:
       disableCompaction: false
       apiserverConfig: {}
-      scrapeInterval: "10s"
-      scrapeTimeout: ""
+      scrapeInterval: "60s"
+      scrapeTimeout: "10s"
       evaluationInterval: ""
       listenLocal: false
       enableAdminAPI: false
       image:
-        repository: quay.io/prometheus/prometheus
+        repository: mtr.devops.telekom.de/kubeprometheusstack/prometheus
         tag: v2.38.0
       externalLabels: {}
       enableRemoteWriteReceiver: false
@@ -390,10 +415,13 @@ kube-prometheus-stack:
       remoteWrite: []
       additionalRemoteWrite: []
       remoteWriteDashboards: false
-  
-      resources: {}
-      # requests:
-      #   memory: 400Mi
+      resources:
+        limits:
+          memory: 1000Mi
+          cpu: 1000m
+        requests:
+          memory: 400Mi
+          cpu: 400m
       storageSpec: {}
       ## Using PersistentVolumeClaim
       ##

@@ -1,12 +1,54 @@
 categories:
 - monitoring
 questions:
+- variable: caas.projectNamespaces
+  description: "List of additional namespaces to monitor (whitespace separated, without install namespace)"
+  type: string
+  label: Caas projectNamespaces:
+  group: "CaaS"
 - variable: kube-prometheus-stack.alertmanager.enabled
   default: "true"
   description: "Enable Alertmanager"
   type: boolean
   label: Alertmanager Enabled
   group: "Alertmanager"
+  show_subquestion_if: false
+  subquestions:
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.repository
+    description: "Repository of Alertmanager Image"
+    type: string
+    label: Alertmanager Image Repo
+    group: "Alertmanager"
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.tag
+    description: "Tag of Alertmanager Image"
+    type: string
+    label: Alertmanager Image Tag
+    group: "Alertmanager"
+  - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.requests.memory
+    description: "Memory Requests Alertmanager"
+    type: string
+    label: Alertmanager Memory Requests
+    group: "Alertmanager"
+  - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.requests.cpu
+    description: "CPU Requests AlertmanagerAlertmanager"
+    type: string
+    label: Alertmanager Memory Requests
+    group: "Alertmanager"
+  - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.limits.memory
+    description: "Memory Limits AlertmanagerAlertmanager"
+    type: string
+    label: Alertmanager Memory Requests
+    group: "Alertmanager"
+  - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.limits.cpu
+    description: "CPU limits AlertmanagerAlertmanager"
+    type: string
+    label: Alertmanager CPU Limits
+    group: "Alertmanager"
+  - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.retention
+    description: "Retention of Alertmanager data"
+    type: string
+    label: Alertmanager Retention
+    group: "Alertmanager"
 - variable: kube-prometheus-stack.prometheus.enabled
   default: "true"
   description: "Enable Prometheus"
@@ -20,32 +62,27 @@ questions:
     description: "Repository of Prometheus Image"
     type: string
     label: Prometheus Image Repo
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.memory
-    default: 400Mi
-    description: "Memory Requests Prometheus"
-    type: string
-    label: Prometheus Memory Requests
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.cpu
-    default: 500m
-    description: "CPU Requests Prometheus"
-    type: string
-    label: Prometheus Memory Requests
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.memory
-    default: 1000Mi
-    description: "Memory Limits Prometheus"
-    type: string
-    label: Prometheus Memory Requests
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.cpu
-    default: 1000m
-    description: "CPU limits Prometheus"
-    type: string
-    label: Prometheus CPU Limits
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.tag
-    default: v2.38.0
     description: "Tag of Prometheus Image"
     type: string
     label: Prometheus Image Tag
     group: "Prometheus"
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.memory
+    description: "Memory Requests Prometheus"
+    type: string
+    label: Prometheus Memory Requests
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.cpu
+    description: "CPU Requests Prometheus"
+    type: string
+    label: Prometheus Memory Requests
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.memory
+    description: "Memory Limits Prometheus"
+    type: string
+    label: Prometheus Memory Requests
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.cpu
+    description: "CPU limits Prometheus"
+    type: string
+    label: Prometheus CPU Limits
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
     description: StorageClass to be used
     type: reference_storage.k8s.io.storageclass
@@ -58,7 +95,6 @@ questions:
     label: Prometheus Storage Size
     group: "Prometheus"
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.retention
-    default: 10d
     description: "Retention of Prometheus data"
     type: string
     label: Prometheus Retention
@@ -67,8 +103,62 @@ questions:
     description: "Retention size of Prometheus data"
     type: string
     label: Prometheus Retention Size
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.scrapeInterval
+    description: "scrapeInterval of Prometheus"
+    type: string
+    label: Prometheus scrape interval
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.logLevel
     default: info
     description: "Loglevel Prometheus"
-    type: string
+    type: enum
     label: Loglevel Prometheus
+    options:
+    - "info"
+    - "error"
+    - "debug"
+- variable: kube-prometheus-stack.grafana.enabled
+  default: "true"
+  description: "Enable Grafana"
+  type: boolean
+  label: Grafana Enabled
+  group: "Grafana"
+  show_subquestion_if: false
+  subquestions:
+  - variable: kube-prometheus-stack.grafana.image.repository
+    description: "Repository of Grafana Image"
+    type: string
+    label: Grafana Image Repo
+    group: "Grafana"
+  - variable: kube-prometheus-stack.grafana.image.tag
+    description: "Tag of Grafana Image"
+    type: string
+    label: Grafana Image Tag
+    group: "Grafana"
+  - variable: kube-grafana-stack.grafana.resources.requests.memory
+    description: "Memory Requests Grafana"
+    type: string
+    label: Grafana Memory Requests
+    group: "Grafana"
+  - variable: kube-grafana-stack.grafana.resources.requests.cpu
+    description: "CPU Requests GrafanaGrafana"
+    type: string
+    label: Grafana Memory Requests
+    group: "Grafana"
+  - variable: kube-grafana-stack.grafana.resources.limits.memory
+    description: "Memory Limits GrafanaGrafana"
+    type: string
+    label: Grafana Memory Requests
+    group: "Grafana"
+  - variable: kube-grafana-stack.grafana.resources.limits.cpu
+    description: "CPU limits GrafanaGrafana"
+    type: string
+    label: Grafana CPU Limits
+    group: "Grafana"
+  - variable: kube-grafana-stack.grafana.defaultDashboardsTimezone
+    description: "Grafana dashboard default timezone"
+    type: string
+    label: Grafana dashboard default timezone
+  - variable: kube-grafana-stack.grafana.adminPassword
+    description: "Grafana default admin password"
+    type: string
+    label: Grafana default admin password
