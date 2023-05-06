@@ -65,7 +65,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: {{ $fullname }}
-  namespace: {{ $s1 }}
 subjects:
 - kind: ServiceAccount
   name: {{ $serviceaccount }}
