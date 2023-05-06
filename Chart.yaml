@@ -1,0 +1,11 @@
+apiVersion: v2
+name: caas-project-monitoring
+description: A Helm chart for Rancher Project Monitoring V3
+type: application
+version: 0.0.1
+appVersion: "40.1.2"
+icon: https://raw.githubusercontent.com/caas-team/caas-project-monitoring/main/logo.png
+dependencies:
+- name: kube-prometheus-stack
+  version: "40.1.2"
+  repository: "https://prometheus-community.github.io/helm-charts"

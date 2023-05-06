@@ -1,0 +1,70 @@
+{{ if .Values.caas.rbac.enabled }}
+{{ $fullname := include "caas-project-monitoring.fullname" . }}
+{{ $serviceaccount :=include "caas-project-monitoring.serviceAccountName" . }}
+{{ $releasenamespace := .Release.Namespace -}}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    {{- include "caas-project-monitoring.labels" . | nindent 4 }}
+  name: {{ include "caas-project-monitoring.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+{{- $ns1 := (splitList " " .Values.caas.projectNamespaces ) }}
+{{- range $s1 := $ns1 }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $fullname }}
+  namespace: {{ $s1 }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - services
+  - endpoints
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - monitoring.cattle.io
+  resources:
+  - prometheuses
+  verbs:
+  - view
+- apiGroups: 
+  - monitoring.coreos.com
+  resources:
+  - servicemonitors
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $fullname }}
+  namespace: {{ $s1 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $fullname }}
+  namespace: {{ $s1 }}
+subjects:
+- kind: ServiceAccount
+  name: {{ $serviceaccount }}
+  namespace: {{ $releasenamespace }}
+{{ end }}
+{{ end }}
