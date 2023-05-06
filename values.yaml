@@ -178,9 +178,13 @@ kube-prometheus-stack:
       externalUrl:
       routePrefix: /
       paused: false
-      resources: {}
-      # requests:
-      #   memory: 400Mi
+      resources:
+        limits:
+          memory: 750Mi
+          cpu: 800m
+        requests:
+          memory: 200Mi
+          cpu: 100m
       podAntiAffinityTopologyKey: kubernetes.io/hostname
       securityContext:
         runAsGroup: 2000

@@ -6,6 +6,11 @@ questions:
   type: string
   label: Caas projectNamespaces
   group: "CaaS"
+- variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
+  description: "Pause Alertmanager"
+  type: boolean
+  label: Alertmanager Pause
+  group: "Alertmanager"
 - variable: kube-prometheus-stack.alertmanager.enabled
   default: "true"
   description: "Enable Alertmanager"
@@ -54,6 +59,11 @@ questions:
   description: "Enable Prometheus"
   type: boolean
   label: Prometheus Enabled
+  group: "Prometheus"
+- variable: kube-prometheus-stack.prometheus.prometheusSpec.paused
+  description: "Pause Prometheus"
+  type: boolean
+  label: Prometheus pause
   group: "Prometheus"
   show_subquestion_if: false
   subquestions:
@@ -134,31 +144,31 @@ questions:
     type: string
     label: Grafana Image Tag
     group: "Grafana"
-  - variable: kube-grafana-stack.grafana.resources.requests.memory
+  - variable: kube-prometheus-stack.grafana.resources.requests.memory
     description: "Memory Requests Grafana"
     type: string
     label: Grafana Memory Requests
     group: "Grafana"
-  - variable: kube-grafana-stack.grafana.resources.requests.cpu
+  - variable: kube-prometheus-stack.grafana.resources.requests.cpu
     description: "CPU Requests GrafanaGrafana"
     type: string
     label: Grafana Memory Requests
     group: "Grafana"
-  - variable: kube-grafana-stack.grafana.resources.limits.memory
+  - variable: kube-prometheus-stack.grafana.resources.limits.memory
     description: "Memory Limits GrafanaGrafana"
     type: string
     label: Grafana Memory Requests
     group: "Grafana"
-  - variable: kube-grafana-stack.grafana.resources.limits.cpu
+  - variable: kube-prometheus-stack.grafana.resources.limits.cpu
     description: "CPU limits GrafanaGrafana"
     type: string
     label: Grafana CPU Limits
     group: "Grafana"
-  - variable: kube-grafana-stack.grafana.defaultDashboardsTimezone
+  - variable: kube-prometheus-stack.grafana.defaultDashboardsTimezone
     description: "Grafana dashboard default timezone"
     type: string
     label: Grafana dashboard default timezone
-  - variable: kube-grafana-stack.grafana.adminPassword
+  - variable: kube-prometheus-stack.grafana.adminPassword
     description: "Grafana default admin password"
     type: string
     label: Grafana default admin password
