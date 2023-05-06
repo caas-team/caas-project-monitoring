@@ -1,7 +1,11 @@
 {{ if .Values.caas.rbac.enabled }}
 {{ $fullname := include "caas-project-monitoring.fullname" . }}
 {{ $serviceaccount :=include "caas-project-monitoring.serviceAccountName" . }}
-{{ $releasenamespace := .Release.Namespace -}}
+{{ $releasenamespace := .Release.Namespace }}
+{{ $monitornamespaces := .Release.Namespace }}
+{{ if .Values.caas.projectNamespaces }}
+{{ $monitornamespaces = printf "%s %s" .Release.Namespace .Values.caas.projectNamespaces }}
+{{ end }}
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -10,7 +14,7 @@ metadata:
     {{- include "caas-project-monitoring.labels" . | nindent 4 }}
   name: {{ include "caas-project-monitoring.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
-{{- $ns1 := (splitList " " .Values.caas.projectNamespaces ) }}
+{{- $ns1 := (splitList " " $monitornamespaces) }}
 {{- range $s1 := $ns1 }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1

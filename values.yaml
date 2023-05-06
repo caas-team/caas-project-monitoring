@@ -13,7 +13,7 @@ caas:
       create: true
       name: project-monitoring
   # list of namespaces where project-monitoring should watch
-  projectNamespaces: ""
+  #projectNamespaces:
   #projectNamespaces: demoapp3 demoapp4
 
 kube-prometheus-stack:
