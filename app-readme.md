@@ -1,10 +1,7 @@
 # Abstract
 
-CaaS Project Monitoring v3 is the evolution of Rancher Project Monitoring V1/V2
-and should improve the usage of a monitoring stack with a simple and secure
-deployment. Based on the community project [kube-prometheus-spec](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) the components Prometheus, Alertmanager, and
-Grafana will be installed in a namespaced manner. Cluster metrics are fetched
-via federate from Cluster Rancher Monitoring.
+CaaS Project Monitoring v3 is the evolution of Rancher Project Monitoring V1/V2 and should improve the usage of a monitoring stack with a simple and secure deployment. Based on the community project [kube-prometheus-spec](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) the components Prometheus, Alertmanager, and
+Grafana will be installed in a namespaced manner. Cluster metrics are fetched via federate from Cluster Rancher Monitoring.
 
 # Preconditions
 
@@ -13,11 +10,9 @@ in the cluster incl. the [rancher-monitoring-crd](https://github.com/rancher/cha
 Ask the administrator for the installed version. CRDs may have new features or values.
 
 Extension of the V2 cluster-monitoring with [prometheus-auth](https://github.com/caas-team/prometheus-auth/tree/fix/boundtoken).
-This includes additional container in prometheus statefulset, service endpoint, cluster role 
-for access additional like subjectaccessreviews and tokenreviews.
+This includes additional container in prometheus statefulset, service endpoint, cluster role for access additional like subjectaccessreviews and tokenreviews.
 
-Networkpolicies to protect anonymous endpoints (used by cluster-monitoring self
-and v2 project-monitoring with [prometheus-federator](https://github.com/rancher/prometheus-federator)
+Networkpolicies to protect anonymous endpoints (used by cluster-monitoring self and v2 project-monitoring with [prometheus-federator](https://github.com/rancher/prometheus-federator)
 
 Additional permissions for Project-Owner, assigned from administrator within RoleTemplate
 
@@ -52,14 +47,9 @@ rules:
 
 # Usage
 
-kube-prometheus-stack will installed in a project namespace with Project-Owner permissions + the
-additional permissions above.
-With default settings at least install namespace are covered with metrics, permitted by the
-ServiceAccountToken in the Prometheus Pod. If the install namespace is in a project, all other
-namespaces are also covered by the token permission.
-For additonal Prometheus targets with ServiceMonitor in other project namespaces or
-AlertmanagerConfigs this namespaces must by listed in `caas.projectNamespaces`
-Prometheus discovery can be limited, e.g.
+kube-prometheus-stack will installed in a project namespace with Project-Owner permissions + the additional permissions above.
+With default settings at least install namespace are covered with metrics, permitted by the ServiceAccountToken in the Prometheus Pod. If the install namespace is in a project, all other namespaces are also covered by the token permission.
+For additonal Prometheus targets with ServiceMonitor in other project namespaces or AlertmanagerConfigs this namespaces must by listed in `caas.projectNamespaces` Prometheus discovery can be limited, e.g.
 
 ```yaml
    ruleNamespaceSelector:
