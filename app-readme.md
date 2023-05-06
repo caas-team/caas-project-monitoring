@@ -5,6 +5,8 @@ Grafana will be installed in a namespaced manner. Cluster metrics are fetched vi
 
 # Preconditions
 
+* This app available in app catalog within Git repo or Helm chart repo
+
 * Installed [Rancher Monitoring](https://github.com/rancher/charts/tree/release-v2.7/charts/rancher-monitoring) in the cluster incl. the [rancher-monitoring-crd](https://github.com/rancher/charts/tree/release-v2.7/charts/rancher-monitoring-crd). Important is the usage of the same CRD version between cluster-monitoring and project-monitoring.
 Ask the administrator for the installed version. CRDs may have new features or values.
 
