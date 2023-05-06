@@ -5,14 +5,16 @@ Grafana will be installed in a namespaced manner. Cluster metrics are fetched vi
 
 # Preconditions
 
-Installed [Rancher Monitoring](https://github.com/rancher/charts/tree/release-v2.7/charts/rancher-monitoring) in the cluster incl. the [rancher-monitoring-crd](https://github.com/rancher/charts/tree/release-v2.7/charts/rancher-monitoring-crd). Important is the usage of the same CRD version between cluster-monitoring and project-monitoring.
+* Installed [Rancher Monitoring](https://github.com/rancher/charts/tree/release-v2.7/charts/rancher-monitoring) in the cluster incl. the [rancher-monitoring-crd](https://github.com/rancher/charts/tree/release-v2.7/charts/rancher-monitoring-crd). Important is the usage of the same CRD version between cluster-monitoring and project-monitoring.
 Ask the administrator for the installed version. CRDs may have new features or values.
 
-Extension of the V2 cluster-monitoring with [prometheus-auth](https://github.com/caas-team/prometheus-auth/tree/fix/boundtoken). This includes additional container in prometheus statefulset, service endpoint, cluster role for access additional like subjectaccessreviews and tokenreviews.
+* Extension of the V2 cluster-monitoring with [prometheus-auth](https://github.com/caas-team/prometheus-auth/tree/fix/boundtoken). This includes additional container in prometheus statefulset, service endpoint, cluster role for access additional like subjectaccessreviews and tokenreviews.
 
-Networkpolicies to protect anonymous endpoints (used by cluster-monitoring self and v2 project-monitoring with [prometheus-federator](https://github.com/rancher/prometheus-federator)
+* Installed [Navlinks Webhook](https://github.com/eumel8/navlinkswebhook) to appear weblinks of the Project Monitoring in Rancher menu.
 
-Additional permissions for Project-Owner, assigned from administrator within RoleTemplate
+* Networkpolicies to protect anonymous endpoints (used by cluster-monitoring self and v2 project-monitoring with [prometheus-federator](https://github.com/rancher/prometheus-federator)
+
+* Additional permissions for Project-Owner, assigned from administrator within RoleTemplate:
 
 ```yaml
 apiVersion: management.cattle.io/v3
