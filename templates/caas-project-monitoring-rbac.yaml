@@ -44,7 +44,7 @@ rules:
 - apiGroups:
   - monitoring.cattle.io
   resources:
-  - prometheuses
+  - prometheus
   verbs:
   - view
 - apiGroups: 
