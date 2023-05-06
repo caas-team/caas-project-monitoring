@@ -203,7 +203,7 @@ kube-prometheus-stack:
     namespaceOverride: ""
     image:
       repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
-      tag: 9.3.8
+      tag: 8.1.7
     testFramework:
       enabled: false
     securityContext:
