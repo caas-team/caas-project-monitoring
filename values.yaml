@@ -451,7 +451,7 @@ kube-prometheus-stack:
           bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
           static_configs:
             - targets:
-              - prometheus-operated.cattle-monitoring-system.svc:9091
+              - rancher-monitoring-prometheus.cattle-monitoring-system.svc:9091
           params:
             'match[]':
               - '{__name__=~".+"}'
