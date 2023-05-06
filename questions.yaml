@@ -1,0 +1,75 @@
+# https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/helm-charts-in-rancher/create-apps#additional-files-for-rancher-charts
+categories:
+- monitoring
+questions:
+- variable: kube-prometheus-stack.alertmanager.enabled
+  default: "true"
+  description: "Enable Alertmanager"
+  type: boolean
+  label: Alertmanager Enabled
+  group: "Alertmanager"
+- variable: kube-prometheus-stack.prometheus.enabled
+  default: "true"
+  description: "Enable Prometheus"
+  type: boolean
+  label: Prometheus Enabled
+  group: "Prometheus"
+  show_subquestion_if: false
+  subquestions:
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
+    default: mtr.devops.telekom.de/mcsps/prometheus
+    description: "Repository of Prometheus Image"
+    type: string
+    label: Prometheus Image Repo
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.memory
+    default: 400Mi
+    description: "Memory Requests Prometheus"
+    type: string
+    label: Prometheus Memory Requests
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.cpu
+    default: 500m
+    description: "CPU Requests Prometheus"
+    type: string
+    label: Prometheus Memory Requests
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.memory
+    default: 1000Mi
+    description: "Memory Limits Prometheus"
+    type: string
+    label: Prometheus Memory Requests
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.cpu
+    default: 1000m
+    description: "CPU limits Prometheus"
+    type: string
+    label: Prometheus CPU Limits
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.tag
+    default: v2.38.0
+    description: "Tag of Prometheus Image"
+    type: string
+    label: Prometheus Image Tag
+    group: "Prometheus"
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
+    description: StorageClass to be used
+    type: reference_storage.k8s.io.storageclass
+    label: Storage Class
+    group: "Prometheus"
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage
+    default:  10Gi
+    description: "Size of Prometheus Storage"
+    type: string
+    label: Prometheus Storage Size
+    group: "Prometheus"
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.retention
+    default: 10d
+    description: "Retention of Prometheus data"
+    type: string
+    label: Prometheus Retention
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.retentionSize
+    default: 9Gi
+    description: "Retention size of Prometheus data"
+    type: string
+    label: Prometheus Retention Size
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.logLevel
+    default: info
+    description: "Loglevel Prometheus"
+    type: string
+    label: Loglevel Prometheus
