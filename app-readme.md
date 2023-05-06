@@ -29,10 +29,12 @@ kind: RoleTemplate
 metadata:
   annotations:
     cleanup.cattle.io/rtUpgradeCluster: 'true'
+  name: caas-project-monitoring-admin
 roleTemplateNames:
   - project-owner
 rules:
   - apiGroups:
+      - monitoring.coreos.com
       - monitoring.coreos.com
     resources:
       - alertmanagers
@@ -44,6 +46,7 @@ rules:
       - list
       - patch
       - update
+      - view
       - watch
 ```
 
