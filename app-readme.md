@@ -5,12 +5,52 @@ Grafana will be installed in a namespaced manner. Cluster metrics are fetched vi
 
 # Preconditions
 
-* This app available in app catalog within Git repo or Helm chart repo
+* This app available in app catalog within Git repo or Helm chart repo. Generate an access token with read\_repo permissions, if the repo requires authorization.
 
 * Installed [Rancher Monitoring](https://github.com/rancher/charts/tree/release-v2.7/charts/rancher-monitoring) in the cluster incl. the [rancher-monitoring-crd](https://github.com/rancher/charts/tree/release-v2.7/charts/rancher-monitoring-crd). Important is the usage of the same CRD version between cluster-monitoring and project-monitoring.
 Ask the administrator for the installed version. CRDs may have new features or values.
 
 * Extension of the V2 cluster-monitoring with [prometheus-auth](https://github.com/caas-team/prometheus-auth/tree/fix/boundtoken). This includes additional container in prometheus statefulset, service endpoint, cluster role for access additional like subjectaccessreviews and tokenreviews.
+
+<details>
+<summary>code snippet</summary>
+```yaml
+  prometheusSpec:
+    containers: |
+    - args:
+      - --proxy-url=http://127.0.0.1:9090
+      - --listen-address=$(POD_IP):9091
+      - --filter-reader-labels=prometheus
+      - --filter-reader-labels=prometheus_replica
+      - --log.debug=true
+      command:
+      - prometheus-auth
+      env:
+      - name: POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP
+      image: mtr.devops.telekom.de/caas/prometheus-auth:0.4.1
+      name: prometheus-agent
+      ports:
+      - containerPort: 9091
+        name: http-auth
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 500m
+          memory: 500Mi
+        requests:
+          cpu: 100m
+          memory: 500Mi
+    service:
+      additionalPorts:
+      - name: http-auth
+        port: 9091
+        protocol: TCP
+        targetPort: http-auth
+```
+</details>
 
 * Installed [Navlinks Webhook](https://github.com/eumel8/navlinkswebhook) to appear weblinks of the Project Monitoring in Rancher menu.
 
