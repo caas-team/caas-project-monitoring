@@ -14,7 +14,61 @@ Ask the administrator for the installed version. CRDs may have new features or v
 
 <details>
 <summary>code snippet</summary>
+
+### prometheus
+
 ```yaml
+  prometheus:
+    additionalRulesForClusterRole:
+    - apiGroups:
+      - ""
+      resources:
+      - namespaces
+      - nodes
+      - nodes/metrics
+      - services
+      - endpoints
+      - pods
+      - secrets
+      verbs:
+      - get
+      - list
+      - watch
+    - apiGroups:
+      - networking.k8s.io
+      resources:
+      - ingresses
+      verbs:
+      - get
+      - list
+      - watch
+    - nonResourceURLs:
+      - /metrics
+      - /metrics/cadvisor
+      verbs:
+      - get
+    - apiGroups:
+      - authentication.k8s.io
+      resources:
+      - tokenreviews
+      verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - watch
+    - apiGroups:
+      - authorization.k8s.io
+      resources:
+      - subjectaccessreviews
+      verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - watch
   prometheusSpec:
     containers: |
     - args:
@@ -58,6 +112,11 @@ Ask the administrator for the installed version. CRDs may have new features or v
 
 * Additional permissions for Project-Owner, assigned from administrator within RoleTemplate:
 
+<details>
+<summary>code snippet</summary>
+
+### rancher
+
 ```yaml
 apiVersion: management.cattle.io/v3
 builtin: false
@@ -90,11 +149,18 @@ rules:
       - watch
 ```
 
+</details>
+
 # Usage
 
 kube-prometheus-stack will installed in a project namespace with Project-Owner permissions + the additional permissions above.
 With default settings at least install namespace are covered with metrics, permitted by the ServiceAccountToken in the Prometheus Pod. If the install namespace is in a project, all other namespaces are also covered by the token permission.
 For additonal Prometheus targets with ServiceMonitor in other project namespaces or AlertmanagerConfigs this namespaces must by listed in `caas.projectNamespaces` Prometheus discovery can be limited, e.g.
+
+<details>
+<summary>code snippet</summary>
+
+### helm values
 
 ```yaml
    ruleNamespaceSelector:
@@ -111,3 +177,4 @@ For additonal Prometheus targets with ServiceMonitor in other project namespaces
         field.cattle.io/projectId: p-q8bp8
 ```
 
+</details>
