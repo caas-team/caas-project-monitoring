@@ -214,6 +214,7 @@ kube-prometheus-stack:
         # Required to embed dashboards in Rancher Cluster Overview Dashboard on Cluster Explorer
         allow_embedding: true
     namespaceOverride: ""
+    fullnameOverride: project-monitoring
     image:
       repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
       tag: 8.1.7
