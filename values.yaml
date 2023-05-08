@@ -365,10 +365,6 @@ kube-prometheus-stack:
       secrets: []
       configMaps: []
       query: {}
-      ruleNamespaceSelector:
-        matchNames:
-        - demoapp3
-        - demoapp4
       ruleSelectorNilUsesHelmValues: true
       ruleSelector: {}
       serviceMonitorSelectorNilUsesHelmValues: true
@@ -391,9 +387,9 @@ kube-prometheus-stack:
               #   - demoapp3
               # - demoapp4
       podMonitorSelectorNilUsesHelmValues: false
-      podMonitorSelector:
-        matchLabels:
-          field.cattle.io/projectId: p-q8bp8
+      #podMonitorSelector:
+      #  matchLabels:
+      #    field.cattle.io/projectId: p-q8bp8
       #podMonitorNamespaceSelector:
       #  matchNames:
       #  - demoapp3
@@ -401,9 +397,9 @@ kube-prometheus-stack:
       #  matchLabels:
       #    field.cattle.io/projectId: p-q8bp8
       probeSelectorNilUsesHelmValues: false
-      probeNamespaceSelector:
-        matchLabels:
-          field.cattle.io/projectId: p-q8bp8
+      #probeNamespaceSelector:
+      #  matchLabels:
+      #    field.cattle.io/projectId: p-q8bp8
       retention: 10d
       retentionSize: ""
       walCompression: true
