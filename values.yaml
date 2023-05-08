@@ -18,8 +18,8 @@ kube-prometheus-stack:
 #  ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
   nameOverride: "caas-project-monitoring"
   fullnameOverride: "caas-project-monitoring"
-  commonLabels:
-    field.cattle.io/projectId: p-q8bp8
+  #commonLabels:
+  #  field.cattle.io/projectId: p-q8bp8
 
 ## Create default rules for monitoring the cluster
 ##
@@ -191,7 +191,8 @@ kube-prometheus-stack:
         # Required to embed dashboards in Rancher Cluster Overview Dashboard on Cluster Explorer
         allow_embedding: true
     namespaceOverride: ""
-    #fullnameOverride: project-monitoring-grafana
+    nameOverride: project-monitoring-grafana
+    fullnameOverride: project-monitoring-grafana
     image:
       repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
       tag: 8.1.7
