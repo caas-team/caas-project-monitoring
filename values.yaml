@@ -200,6 +200,19 @@ kube-prometheus-stack:
       minReadySeconds: 0
   grafana:
     enabled: true
+    grafana.ini:
+      users:
+        auto_assign_org_role: Viewer
+      auth:
+        disable_login_form: false
+      auth.anonymous:
+        enabled: true
+        org_role: Viewer
+      auth.basic:
+        enabled: false
+      security:
+        # Required to embed dashboards in Rancher Cluster Overview Dashboard on Cluster Explorer
+        allow_embedding: true
     namespaceOverride: ""
     image:
       repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
