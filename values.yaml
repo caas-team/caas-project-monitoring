@@ -368,9 +368,10 @@ kube-prometheus-stack:
       ruleSelectorNilUsesHelmValues: true
       ruleSelector: {}
       serviceMonitorSelectorNilUsesHelmValues: true
-      serviceMonitorSelector:
-        matchLabels:
-          field.cattle.io/projectId: p-q8bp8
+      serviceMonitorSelector: {}
+      #serviceMonitorSelector:
+      #  matchLabels:
+      #    field.cattle.io/projectId: p-q8bp8
       #  matchNames:
       #  - demoapp3
       #  - demoapp4
@@ -387,6 +388,7 @@ kube-prometheus-stack:
               #   - demoapp3
               # - demoapp4
       podMonitorSelectorNilUsesHelmValues: false
+      podMonitorSelector: {}
       #podMonitorSelector:
       #  matchLabels:
       #    field.cattle.io/projectId: p-q8bp8
@@ -397,6 +399,7 @@ kube-prometheus-stack:
       #  matchLabels:
       #    field.cattle.io/projectId: p-q8bp8
       probeSelectorNilUsesHelmValues: false
+      probeNamespaceSelector: {}
       #probeNamespaceSelector:
       #  matchLabels:
       #    field.cattle.io/projectId: p-q8bp8
