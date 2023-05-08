@@ -237,6 +237,22 @@ kube-prometheus-stack:
         memory: 200Mi
         cpu: 200m
     sidecar:
+      image:
+        repository: mtr.devops.telekom.de/kubeprometheusstack/k8s-sidecar
+        tag: 1.19.2
+      resources:
+        limits:
+          cpu: 100m
+          memory: 100Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      securityContext:
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+        supplementalGroups:
+        - 472
       dashboards:
         enabled: true
         label: grafana_dashboard
