@@ -55,35 +55,15 @@ kube-prometheus-stack:
       prometheusOperator: false
   
     appNamespacesTarget: ".*"
-  
     runbookUrl: "https://runbooks.prometheus-operator.dev/runbooks"
-  
     ## Disabled PrometheusRule alerts
     disabled: {}
     # KubeAPIDown: true
     # NodeRAIDDegraded: true
   
-  ## Deprecated way to provide custom recording or alerting rules to be deployed into the cluster.
-  ##
-  # additionalPrometheusRules: []
-  #  - name: my-rule-file
-  #    groups:
-  #      - name: my_group
-  #        rules:
-  #        - record: my_record
-  #          expr: 100 * my_record
-  
   ## Provide custom recording or alerting rules to be deployed into the cluster.
   ##
   additionalPrometheusRulesMap: {}
-  #  rule-name:
-  #    groups:
-  #    - name: my_group
-  #      rules:
-  #      - record: my_record
-  #        expr: 100 * my_record
-  
-  ##
   global:
     rbac:
       create: false
@@ -155,7 +135,6 @@ kube-prometheus-stack:
       image:
         repository: mtr.devops.telekom.de/kubeprometheusstack/alertmanager
         tag: v0.24.0
-  
       alertmanagerConfigNamespaceSelector: {}
       # alertmanagerConfigNamespaceSelector:
       #   matchLabels:
@@ -174,7 +153,6 @@ kube-prometheus-stack:
       #       requests:
       #         storage: 50Gi
       #     selector: {}
-  
       externalUrl:
       routePrefix: /
       paused: false
@@ -274,9 +252,6 @@ kube-prometheus-stack:
         enabled: true
         label: grafana_dashboard
         labelValue: "1"
-  
-        ## Annotations for Grafana dashboard configmaps
-        ##
         annotations: {}
         multicluster:
           global:
@@ -288,22 +263,16 @@ kube-prometheus-stack:
       datasources:
         enabled: true
         defaultDatasourceEnabled: true
-  
         uid: prometheus
-  
         createPrometheusReplicasDatasources: false
         label: grafana_datasource
         labelValue: "1"
-  
     serviceMonitor:
       enabled: true
       path: "/metrics"
       interval: "10s"
       scheme: http
       scrapeTimeout: 30s
-  
-  ## Component scraping the kube api server
-  ##
   kubeApiServer:
     enabled: false
   kubelet:
@@ -508,7 +477,6 @@ kube-prometheus-stack:
       enforcedLabelValueLengthLimit: false
       allowOverlappingBlocks: false
       minReadySeconds: 0
-  
     additionalRulesForClusterRole: []
     #  - apiGroups: [ "" ]
     #    resources:
