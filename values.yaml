@@ -248,11 +248,14 @@ kube-prometheus-stack:
           cpu: 50m
           memory: 50Mi
       securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
         runAsUser: 472
         runAsGroup: 472
-        fsGroup: 472
-        supplementalGroups:
-        - 472
+        privileged: false
+        readOnlyRootFilesystem: true
       dashboards:
         enabled: true
         label: grafana_dashboard
