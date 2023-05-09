@@ -267,12 +267,49 @@ kube-prometheus-stack:
         createPrometheusReplicasDatasources: false
         label: grafana_datasource
         labelValue: "1"
+
+    extraContainers: |
+      - name: grafana-proxy
+        args:
+        - nginx
+        - -g
+        - daemon off;
+        - -c
+        - /nginx/nginx.conf
+        image: mtr.devops.telekom.de/kubeprometheusstack/nginx:1.23.2-alpine
+        ports:
+        - containerPort: 8080
+          name: nginx-http
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /nginx
+          name: grafana-nginx
+        - mountPath: /var/cache/nginx
+          name: nginx-home
+        securityContext:
+          runAsUser: 101
+          runAsGroup: 101
+    extraContainerVolumes:
+      - name: nginx-home
+        emptyDir: {}
+      - name: grafana-nginx
+        configMap:
+          name: project-monitoring-grafana-nginx-proxy-config
+          items:
+          - key: nginx.conf
+            mode: 438
+            path: nginx.conf
     serviceMonitor:
       enabled: true
       path: "/metrics"
       interval: "10s"
       scheme: http
       scrapeTimeout: 30s
+
+    service:
+      portName: nginx-http
+      port: 80
+      targetPort: 8080
   kubeApiServer:
     enabled: false
   kubelet:
