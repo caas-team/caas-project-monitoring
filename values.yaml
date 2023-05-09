@@ -3,6 +3,10 @@
 # Declare variables to be passed into your templates.
 #
 #
+
+global:
+  cattle:
+    systemDefaultRegistry: ""
 caas:
   rbac:
     enabled: true
@@ -294,7 +298,7 @@ kube-prometheus-stack:
         emptyDir: {}
       - name: grafana-nginx
         configMap:
-          name: project-monitoring-grafana-nginx-proxy-config
+          name: nginx-proxy-config-project-monitoring-grafana
           items:
           - key: nginx.conf
             mode: 438

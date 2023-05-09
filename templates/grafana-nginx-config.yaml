@@ -1,4 +1,3 @@
-{{ if .Values.kube-prometheus-stack.grafana.enabled }}
 {{ $releasenamespace := .Release.Namespace }}
 {{ $fullname := include "caas-project-monitoring.fullname" . }}
 apiVersion: v1
@@ -78,9 +77,9 @@ data:
 
           sub_filter_once off;
 {{- if not (empty .Values.global.cattle.clusterId) }}
-          sub_filter '"appSubUrl":""' '"appSubUrl":"/k8s/clusters/{{ .Values.global.cattle.clusterId }}/api/v1/namespaces/{{ $releasenamespace }}/services/http:{{ template "caas-project-monitoring.fullname" . }}:{{ .Values.kube-prometheus-stack.grafana.service.port }}/proxy"';
+          sub_filter '"appSubUrl":""' '"appSubUrl":"/k8s/clusters/{{ .Values.global.cattle.clusterId }}/api/v1/namespaces/{{ $releasenamespace }}/services/http:{{ $fullname }}:80/proxy"';
 {{- else }}
-          sub_filter '"appSubUrl":""' '"appSubUrl":"/api/v1/namespaces/{{ $releasenamespace }}/services/http:{{ template "grafana.fullname" . }}:{{ .Values.kube-prometheus-stack.grafana.service.port }}/proxy"';
+          sub_filter '"appSubUrl":""' '"appSubUrl":"/api/v1/namespaces/{{ $releasenamespace }}/services/http:{{ $fullname }}:80/proxy"';
 {{- end }}
           sub_filter '"url":"/' '"url":"./';
           sub_filter ':"/avatar/' ':"avatar/';
@@ -94,4 +93,3 @@ data:
         }
       }
     }
-{{ end }}
