@@ -296,15 +296,6 @@ kube-prometheus-stack:
           fsGroup: 101
           supplementalGroups:
           - 101
-        containerSecurityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop: 
-            - ALL
-          runAsUser: 101
-          runAsGroup: 101
-          privileged: false
-          readOnlyRootFilesystem: true
     extraContainerVolumes:
       - name: nginx-home
         emptyDir: {}
