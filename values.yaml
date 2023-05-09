@@ -181,6 +181,7 @@ kube-prometheus-stack:
       minReadySeconds: 0
   grafana:
     enabled: true
+    createConfigmap: true
     grafana.ini:
       users:
         auto_assign_org_role: Viewer
