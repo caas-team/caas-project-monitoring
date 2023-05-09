@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ $fullname }}-nginx-config
+  name: nginx-proxy-config-project-monitoring-grafana
   labels:
     {{- include "caas-project-monitoring.labels" . | nindent 4 }}
 data:
