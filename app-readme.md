@@ -1,6 +1,6 @@
 # Abstract
 
-CaaS Project Monitoring v3 is the evolution of Rancher Project Monitoring V1/V2 and should improve the usage of a monitoring stack with a simple and secure deployment. Based on the community project [kube-prometheus-spec](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) the components Prometheus, Alertmanager, and
+CaaS Project Monitoring v3 is the evolution of Rancher Project Monitoring V1/V2 and should improve the usage of a monitoring stack with a simple and secure deployment. Based on the community project [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) the components Prometheus, Alertmanager, and
 Grafana will be installed in a namespaced manner. Cluster metrics are fetched via federate from Cluster Rancher Monitoring.
 
 # Preconditions
