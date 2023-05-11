@@ -73,12 +73,8 @@ kube-prometheus-stack:
       createAggregateClusterRoles: false
       pspEnabled: false
   alertmanager:
-    enabled: true
     apiVersion: v2
-    serviceAccount:
-      create: true
-      name: ""
-      annotations: {}
+    enabled: true
     config:
       global:
         resolve_timeout: 5m
@@ -117,6 +113,8 @@ kube-prometheus-stack:
       - name: 'null'
       templates:
       - '/etc/alertmanager/config/*.tmpl'
+    serviceAccount:
+      create: true
     service:
       annotations: {}
       labels: {}
@@ -131,22 +129,25 @@ kube-prometheus-stack:
     servicePerReplica:
       enabled: false
     serviceMonitor:
-      interval: ""
+      interval: "30s"
       selfMonitor: true
     alertmanagerSpec:
-      image:
-        repository: mtr.devops.telekom.de/kubeprometheusstack/alertmanager
-        tag: v0.24.0
       alertmanagerConfigNamespaceSelector: {}
       # alertmanagerConfigNamespaceSelector:
       #   matchLabels:
       #     alertmanagerconfig: enabled
-  
+      clusterAdvertiseAddress: false
+      externalUrl:
+      forceEnableClusterMode: false
+      image:
+        repository: mtr.devops.telekom.de/kubeprometheusstack/alertmanager
+        tag: v0.24.0
+      listenLocal: false
       logFormat: logfmt
       logLevel: debug
+      minReadySeconds: 5
       replicas: 1
       retention: 120h
-  
       storage: {}
       # volumeClaimTemplate:
       #   spec:
@@ -156,9 +157,7 @@ kube-prometheus-stack:
       #       requests:
       #         storage: 50Gi
       #     selector: {}
-      externalUrl:
       routePrefix: /
-      paused: false
       resources:
         limits:
           memory: 750Mi
@@ -166,21 +165,25 @@ kube-prometheus-stack:
         requests:
           memory: 200Mi
           cpu: 100m
-      podAntiAffinityTopologyKey: kubernetes.io/hostname
+      paused: false
       securityContext:
         runAsGroup: 2000
         runAsNonRoot: true
         runAsUser: 1000
         fsGroup: 2000
-      listenLocal: false
-  
       volumes: []
       volumeMounts: []
-      clusterAdvertiseAddress: false
-      forceEnableClusterMode: false
-      minReadySeconds: 0
   grafana:
-    enabled: true
+    adminPassword: prom-operator
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsUser: 472
+      runAsGroup: 472
+      privileged: false
+      readOnlyRootFilesystem: true
     createConfigmap: true
     datasources:
       datasources.yaml:
@@ -191,7 +194,52 @@ kube-prometheus-stack:
           url: http://prometheus-operated:9090
           access: proxy
           isDefault: true
+    defaultDashboardsEnabled: true
+    defaultDashboardsTimezone: utc
+    enabled: true
+    extraContainers: |
+      - name: grafana-proxy
+        args:
+        - nginx
+        - -g
+        - daemon off;
+        - -c
+        - /nginx/nginx.conf
+        image: mtr.devops.telekom.de/kubeprometheusstack/nginx:1.23.2-alpine
+        ports:
+        - containerPort: 8080
+          name: nginx-http
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /nginx
+          name: grafana-nginx
+        - mountPath: /var/cache/nginx
+          name: nginx-home
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsUser: 101
+          runAsGroup: 101
+          privileged: false
+          readOnlyRootFilesystem: true
+    extraContainerVolumes:
+      - name: nginx-home
+        emptyDir: {}
+      - name: grafana-nginx
+        configMap:
+          name: nginx-proxy-config-project-monitoring-grafana
+          items:
+          - key: nginx.conf
+            mode: 438
+            path: nginx.conf
+    forceDeployDatasources: true
+    forceDeployDashboards: true
+    fullnameOverride: project-monitoring-grafana
     grafana.ini:
+      analytics:
+        check_for_updates = false
       users:
         auto_assign_org_role: Viewer
       auth:
@@ -206,34 +254,17 @@ kube-prometheus-stack:
         allow_embedding: true
       log:
         level: debug
-    namespaceOverride: ""
-    nameOverride: project-monitoring-grafana
-    fullnameOverride: project-monitoring-grafana
     image:
       repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
       tag: 9.1.5
-    testFramework:
-      enabled: false
+    namespaceOverride: ""
+    nameOverride: project-monitoring-grafana
     securityContext:
       runAsUser: 472
       runAsGroup: 472
       fsGroup: 472
       supplementalGroups:
       - 472
-    containerSecurityContext:
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-      runAsUser: 472
-      runAsGroup: 472
-      privileged: false
-      readOnlyRootFilesystem: true
-    forceDeployDatasources: true
-    forceDeployDashboards: true
-    defaultDashboardsEnabled: true
-    defaultDashboardsTimezone: utc
-    adminPassword: prom-operator
     rbac:
       pspEnabled: false
       namespaced: true
@@ -279,59 +310,21 @@ kube-prometheus-stack:
       datasources:
         enabled: true
         defaultDatasourceEnabled: true
-        #uid: prometheus
         createPrometheusReplicasDatasources: false
         label: grafana_datasource
         labelValue: "1"
-
-    extraContainers: |
-      - name: grafana-proxy
-        args:
-        - nginx
-        - -g
-        - daemon off;
-        - -c
-        - /nginx/nginx.conf
-        image: mtr.devops.telekom.de/kubeprometheusstack/nginx:1.23.2-alpine
-        ports:
-        - containerPort: 8080
-          name: nginx-http
-          protocol: TCP
-        volumeMounts:
-        - mountPath: /nginx
-          name: grafana-nginx
-        - mountPath: /var/cache/nginx
-          name: nginx-home
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          runAsUser: 101
-          runAsGroup: 101
-          privileged: false
-          readOnlyRootFilesystem: true
-    extraContainerVolumes:
-      - name: nginx-home
-        emptyDir: {}
-      - name: grafana-nginx
-        configMap:
-          name: nginx-proxy-config-project-monitoring-grafana
-          items:
-          - key: nginx.conf
-            mode: 438
-            path: nginx.conf
     serviceMonitor:
       enabled: true
       path: "/metrics"
-      interval: "10s"
+      interval: "30s"
       scheme: http
       scrapeTimeout: 30s
-
     service:
       portName: nginx-http
       port: 80
       targetPort: 8080
+    testFramework:
+      enabled: false
   kubeApiServer:
     enabled: false
   kubelet:
