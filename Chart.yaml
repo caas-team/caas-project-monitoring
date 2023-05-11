@@ -4,7 +4,7 @@ annotations:
   catalog.cattle.io/certified: rancher
 name: caas-project-monitoring
 description: A Helm chart for Rancher Project Monitoring V3
-version: 0.0.17
+version: 0.0.18
 appVersion: "40.1.2"
 icon: https://raw.githubusercontent.com/caas-team/caas-project-monitoring/main/logo.png
 keywords:
