@@ -168,7 +168,9 @@ questions:
     description: "Grafana dashboard default timezone"
     type: string
     label: Grafana dashboard default timezone
+    group: "Grafana"
   - variable: kube-prometheus-stack.grafana.adminPassword
     description: "Grafana default admin password"
     type: string
     label: Grafana default admin password
+    group: "Grafana"
