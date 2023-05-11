@@ -134,6 +134,11 @@ questions:
   group: "Grafana"
   show_subquestion_if: false
   subquestions:
+  - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
+    description: "A comma separated list of namespaces to view"
+    type: string
+    label: Grafana view namespaces (by comma)
+    group: "Grafana"
   - variable: kube-prometheus-stack.grafana.image.repository
     description: "Repository of Grafana Image"
     type: string

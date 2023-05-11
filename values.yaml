@@ -266,8 +266,12 @@ kube-prometheus-stack:
       supplementalGroups:
       - 472
     rbac:
+      create: false
       pspEnabled: false
       namespaced: true
+    serviceAccount:
+      create: false
+      name: project-monitoring
     resources:
       limits:
         memory: 600Mi
@@ -308,11 +312,12 @@ kube-prometheus-stack:
         provider:
           allowUiUpdates: false
       datasources:
-        enabled: true
-        defaultDatasourceEnabled: true
         createPrometheusReplicasDatasources: false
+        defaultDatasourceEnabled: true
+        enabled: true
         label: grafana_datasource
         labelValue: "1"
+        searchNamespace: ""
     serviceMonitor:
       enabled: true
       path: "/metrics"
