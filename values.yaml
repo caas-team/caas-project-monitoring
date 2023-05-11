@@ -199,7 +199,7 @@ kube-prometheus-stack:
     fullnameOverride: project-monitoring-grafana
     image:
       repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
-      tag: 9.5.2
+      tag: 9.1.5
     testFramework:
       enabled: false
     securityContext:
