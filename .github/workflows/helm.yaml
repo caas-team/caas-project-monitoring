@@ -17,7 +17,7 @@ jobs:
           HELM_EXPERIMENTAL_OCI=1 helm registry login ${MTR} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
           helm lint .
           helm package .
-          HELM_EXPERIMENTAL_OCI=1 helm push $(ls *.tgz| head -1) oci://ghcr.io/${{ github.actor }}/charts
+          HELM_EXPERIMENTAL_OCI=1 helm push $(ls *.tgz| head -1) oci://ghcr.io/caas-team/charts
           HELM_EXPERIMENTAL_OCI=1 helm push $(ls *.tgz| head -1) oci://${MTR}/${REPO}/charts
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
