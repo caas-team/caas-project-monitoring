@@ -10,3 +10,19 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --skip-crds .
 ```
 
 Note: the bundle in this repo doesn't contain the crds directory, because helm-operation from Rancher can't set `--skip-crds` flag
+
+Debug kube-prometheus-spec
+
+```yaml
+kube-prometheus-spec:
+  alertmanager:
+    alertmanagerSpec:
+      logLevel: debug
+  grafana:
+    grafana.ini:
+      log:
+        level: debug
+  prometheus:
+    prometheusSpec:
+      logLevel: debug
+```

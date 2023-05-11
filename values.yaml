@@ -143,6 +143,7 @@ kube-prometheus-stack:
       #     alertmanagerconfig: enabled
   
       logFormat: logfmt
+      logLevel: debug
       replicas: 1
       retention: 120h
   
@@ -203,6 +204,8 @@ kube-prometheus-stack:
       security:
         # Required to embed dashboards in Rancher Cluster Overview Dashboard on Cluster Explorer
         allow_embedding: true
+      log:
+        level: debug
     namespaceOverride: ""
     nameOverride: project-monitoring-grafana
     fullnameOverride: project-monitoring-grafana
@@ -409,6 +412,7 @@ kube-prometheus-stack:
       scrapeTimeout: "10s"
       evaluationInterval: ""
       listenLocal: false
+      logLevel: debug
       enableAdminAPI: false
       image:
         repository: mtr.devops.telekom.de/kubeprometheusstack/prometheus
