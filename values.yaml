@@ -181,6 +181,15 @@ kube-prometheus-stack:
   grafana:
     enabled: true
     createConfigmap: true
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://prometheus-operated:9090
+          access: proxy
+          isDefault: true
     grafana.ini:
       users:
         auto_assign_org_role: Viewer
