@@ -35,17 +35,17 @@ questions:
     label: Alertmanager Memory Requests
     group: "Alertmanager"
   - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.requests.cpu
-    description: "CPU Requests AlertmanagerAlertmanager"
+    description: "CPU Requests Alertmanager"
     type: string
-    label: Alertmanager Memory Requests
+    label: Alertmanager CPU Requests
     group: "Alertmanager"
   - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.limits.memory
-    description: "Memory Limits AlertmanagerAlertmanager"
+    description: "Memory Limits Alertmanager"
     type: string
-    label: Alertmanager Memory Requests
+    label: Alertmanager Memory Limits
     group: "Alertmanager"
   - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.limits.cpu
-    description: "CPU limits AlertmanagerAlertmanager"
+    description: "CPU limits Alertmanager"
     type: string
     label: Alertmanager CPU Limits
     group: "Alertmanager"
