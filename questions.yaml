@@ -29,27 +29,27 @@ questions:
     type: string
     label: Alertmanager Image Tag
     group: "Alertmanager"
-  - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.requests.memory
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.memory
     description: "Memory Requests Alertmanager"
     type: string
     label: Alertmanager Memory Requests
     group: "Alertmanager"
-  - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.requests.cpu
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.cpu
     description: "CPU Requests Alertmanager"
     type: string
     label: Alertmanager CPU Requests
     group: "Alertmanager"
-  - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.limits.memory
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.memory
     description: "Memory Limits Alertmanager"
     type: string
     label: Alertmanager Memory Limits
     group: "Alertmanager"
-  - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.resources.limits.cpu
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.cpu
     description: "CPU limits Alertmanager"
     type: string
     label: Alertmanager CPU Limits
     group: "Alertmanager"
-  - variable: kube-alertmanager-stack.alertmanager.alertmanagerSpec.retention
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.retention
     description: "Retention of Alertmanager data"
     type: string
     label: Alertmanager Retention
@@ -95,7 +95,7 @@ questions:
     label: Prometheus CPU Limits
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
     description: StorageClass to be used
-    type: reference_storage.k8s.io.storageclass
+    type: reference_storage.k8s.io.storageclasses
     label: Storage Class
     group: "Prometheus"
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage
