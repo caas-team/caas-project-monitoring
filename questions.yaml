@@ -104,7 +104,7 @@ questions:
     type: string
     label: Prometheus CPU Limits
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
-    description: StorageClass to be used
+    description: Strongly recommend to use a persistant storage for Promeutheus. The size should be bigger than Retention Size and the StorageClass should be Longhorn, if available.
     type: storageclass
     label: Storage Class
     group: "Prometheus"
