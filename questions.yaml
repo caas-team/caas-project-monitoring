@@ -105,7 +105,7 @@ questions:
     label: Prometheus CPU Limits
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
     description: StorageClass to be used
-    type: storageclasses
+    type: storageclass
     label: Storage Class
     group: "Prometheus"
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.accessModes
@@ -128,15 +128,18 @@ questions:
     description: "Retention of Prometheus data"
     type: string
     label: Prometheus Retention
+    group: "Prometheus"
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.retentionSize
     default: 9Gi
     description: "Retention size of Prometheus data"
     type: string
     label: Prometheus Retention Size
+    group: "Prometheus"
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.scrapeInterval
     description: "scrapeInterval of Prometheus"
     type: string
     label: Prometheus scrape interval
+    group: "Prometheus"
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.logLevel
     default: info
     description: "Loglevel Prometheus"
@@ -146,6 +149,7 @@ questions:
     - "info"
     - "error"
     - "debug"
+    group: "Prometheus"
 - variable: kube-prometheus-stack.grafana.enabled
   default: "true"
   description: "Enable Grafana"
