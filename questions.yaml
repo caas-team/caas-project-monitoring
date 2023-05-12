@@ -2,7 +2,7 @@ categories:
 - monitoring
 questions:
 - variable: caas.projectNamespaces
-  description: "List of additional namespaces to monitor (comma separated, without install namespace)"
+  description: "List of additional namespaces to monitor (whitespace separated, without install namespace!!!)"
   type: string
   label: Caas projectNamespaces
   group: "CaaS"
