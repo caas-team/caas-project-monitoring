@@ -2,7 +2,7 @@ categories:
 - monitoring
 questions:
 - variable: caas.projectNamespaces
-  description: "List of additional namespaces to monitor (whitespace separated, without install namespace)"
+  description: "List of additional namespaces to monitor (comma separated, without install namespace)"
   type: string
   label: Caas projectNamespaces
   group: "CaaS"
@@ -154,8 +154,13 @@ questions:
   group: "Grafana"
   show_subquestion_if: false
   subquestions:
+  - variable: kube-prometheus-stack.grafana.sidecar.dashboards.searchNamespace
+    description: "A comma separated list of namespaces to get dashboards. This list MUST set with the correct namespaces, otherwise no metric will be shown."
+    type: string
+    label: Grafana view namespaces (by comma)
+    group: "Grafana"
   - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
-    description: "A comma separated list of namespaces to view"
+    description: "A comma separated list of namespaces to get datasources. This list MUST set with the correct namespaces, otherwise no metric will be shown."
     type: string
     label: Grafana view namespaces (by comma)
     group: "Grafana"

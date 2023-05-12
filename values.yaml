@@ -12,7 +12,7 @@ caas:
       name: project-monitoring
   # list of namespaces where project-monitoring should watch
   #projectNamespaces:
-  #projectNamespaces: demoapp3 demoapp4
+  #projectNamespaces: demoapp3,demoapp4
 
 global:
   cattle:
@@ -283,6 +283,8 @@ kube-prometheus-stack:
       image:
         repository: mtr.devops.telekom.de/kubeprometheusstack/k8s-sidecar
         tag: 1.19.2
+      plugins:
+        searchNamespace: ""
       resources:
         limits:
           cpu: 100m
@@ -311,6 +313,7 @@ kube-prometheus-stack:
             enabled: false
         provider:
           allowUiUpdates: false
+        searchNamespace: ""
       datasources:
         createPrometheusReplicasDatasources: false
         defaultDatasourceEnabled: true
