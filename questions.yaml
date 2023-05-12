@@ -49,6 +49,16 @@ questions:
     type: string
     label: Alertmanager CPU Limits
     group: "Alertmanager"
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.logLevel
+    default: info
+    description: "Loglevel Alertmanager"
+    type: enum
+    options:
+    - "info"
+    - "error"
+    - "debug"
+    label: Loglevel Alertmanager
+    group: "Alertmanager"
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.retention
     description: "Retention of Alertmanager data"
     type: string
@@ -95,9 +105,19 @@ questions:
     label: Prometheus CPU Limits
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
     description: StorageClass to be used
-    type: reference_storage.k8s.io.storageclasses
+    type: storageclasses
     label: Storage Class
     group: "Prometheus"
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.accessModes
+    description: StorageClass accessMode
+    type: enum
+    default: 
+      - ReadWriteOnce
+    options:
+      - [ReadWriteOnce]
+      - [ReadWriteMany]
+      - [ReadOnlyMany]
+    label: Access Mode
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage
     default:  10Gi
     description: "Size of Prometheus Storage"
@@ -173,6 +193,15 @@ questions:
     description: "Grafana dashboard default timezone"
     type: string
     label: Grafana dashboard default timezone
+    group: "Grafana"
+  - variable: kube-prometheus-stack.grafana.grafana.ini.log.level
+    description: "Loglevel Grafana"
+    type: enum
+    label: Loglevel Grafana
+    options:
+    - "info"
+    - "error"
+    - "debug"
     group: "Grafana"
   - variable: kube-prometheus-stack.grafana.adminPassword
     description: "Grafana default admin password"

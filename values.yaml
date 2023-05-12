@@ -4,9 +4,6 @@
 #
 #
 
-global:
-  cattle:
-    systemDefaultRegistry: ""
 caas:
   rbac:
     enabled: true
@@ -16,6 +13,10 @@ caas:
   # list of namespaces where project-monitoring should watch
   #projectNamespaces:
   #projectNamespaces: demoapp3 demoapp4
+
+global:
+  cattle:
+    systemDefaultRegistry: ""
 
 kube-prometheus-stack:
 #  full set of values and pre-defined for caas
@@ -66,12 +67,6 @@ kube-prometheus-stack:
   
   ## Provide custom recording or alerting rules to be deployed into the cluster.
   ##
-  additionalPrometheusRulesMap: {}
-  global:
-    rbac:
-      create: false
-      createAggregateClusterRoles: false
-      pspEnabled: false
   alertmanager:
     apiVersion: v2
     enabled: true
@@ -173,6 +168,11 @@ kube-prometheus-stack:
         fsGroup: 2000
       volumes: []
       volumeMounts: []
+  global:
+    rbac:
+      create: false
+      createAggregateClusterRoles: false
+      pspEnabled: false
   grafana:
     adminPassword: prom-operator
     containerSecurityContext:
@@ -220,9 +220,9 @@ kube-prometheus-stack:
           capabilities:
             drop:
             - ALL
+          privileged: false
           runAsUser: 101
           runAsGroup: 101
-          privileged: false
           readOnlyRootFilesystem: true
     extraContainerVolumes:
       - name: nginx-home
@@ -260,15 +260,15 @@ kube-prometheus-stack:
     namespaceOverride: ""
     nameOverride: project-monitoring-grafana
     securityContext:
+      fsGroup: 472
       runAsUser: 472
       runAsGroup: 472
-      fsGroup: 472
       supplementalGroups:
       - 472
     rbac:
       create: false
-      pspEnabled: false
       namespaced: true
+      pspEnabled: false
     serviceAccount:
       create: false
       name: project-monitoring
@@ -295,10 +295,10 @@ kube-prometheus-stack:
         capabilities:
           drop:
           - ALL
+        readOnlyRootFilesystem: true
         runAsUser: 472
         runAsGroup: 472
         privileged: false
-        readOnlyRootFilesystem: true
       dashboards:
         enabled: true
         label: grafana_dashboard
@@ -361,31 +361,16 @@ kube-prometheus-stack:
   nodeExporter:
     enabled: false
   prometheus-node-exporter:
-    releaseLabel: false
     prometheus:
       monitor:
         enabled: false
+    releaseLabel: false
     rbac:
       pspEnabled: false
   prometheusOperator:
     enabled: false
   prometheus:
     enabled: true
-    serviceAccount:
-      create: false
-      name:  project-monitoring
-    service:
-      annotations: {}
-      labels: {}
-      clusterIP: ""
-      port: 9090
-      targetPort: 9090
-      externalIPs: []
-      externalTrafficPolicy: Cluster
-      type: ClusterIP
-      publishNotReadyAddresses: false
-    servicePerReplica:
-      enabled: false
     ingress:
       enabled: false
       annotations: {}
@@ -395,38 +380,84 @@ kube-prometheus-stack:
       tls: []
     ingressPerReplica:
       enabled: false
-    serviceMonitor:
-      interval: "30s"
-      selfMonitor: true
-      scheme: ""
-      tlsConfig: {}
-      bearerTokenFile:
-      metricRelabelings: []
-      relabelings: []
     prometheusSpec:
-      disableCompaction: false
+      additionalRemoteRead: []
+      additionalRemoteWrite: []
+      additionalScrapeConfigs:
+        - job_name: 'federate'
+          scrape_interval: 10s
+          honor_labels: true
+          metrics_path: '/federate'
+          bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+          static_configs:
+            - targets:
+              - rancher-monitoring-prometheus.cattle-monitoring-system.svc:9091
+          params:
+            'match[]':
+              - '{__name__=~".+"}'
       apiserverConfig: {}
-      scrapeInterval: "60s"
-      scrapeTimeout: "10s"
-      evaluationInterval: ""
-      listenLocal: false
-      logLevel: debug
+      disableCompaction: false
       enableAdminAPI: false
+      evaluationInterval: ""
+      externalLabels: {}
+      externalUrl: ""
+      excludedFromEnforcement: []
+      enforcedNamespaceLabel: ""
+      enforcedLabelLimit: false
+      enforcedLabelNameLengthLimit: false
+      enforcedLabelValueLengthLimit: false
+      enforcedSampleLimit: false
+      enforcedTargetLimit: false
+      enableRemoteWriteReceiver: false
       image:
         repository: mtr.devops.telekom.de/kubeprometheusstack/prometheus
         tag: v2.38.0
-      externalLabels: {}
-      enableRemoteWriteReceiver: false
-      replicaExternalLabelName: ""
-      replicaExternalLabelNameClear: false
+      ignoreNamespaceSelectors: false
+      listenLocal: false
+      logFormat: logfmt
+      logLevel: debug
+      overrideHonorLabels: false
+      overrideHonorTimestamps: false
+      portName: "http-web"
+      prometheusRulesExcludedFromEnforce: []
       prometheusExternalLabelName: ""
       prometheusExternalLabelNameClear: false
-      externalUrl: ""
-      secrets: []
-      configMaps: []
+      podAntiAffinityTopologyKey: kubernetes.io/hostname
+      podMonitorSelectorNilUsesHelmValues: false
+      #podMonitorSelector: {}
+      podMonitorNamespaceSelector:
+        matchLabels:
+          field.cattle.io/projectId: p-v7sr7
+      probeSelectorNilUsesHelmValues: false
+      probeNamespaceSelector: {}
+      paused: false
+      queryLogFile: false
       query: {}
+      replicas: 1
+      remoteRead: []
+      remoteWrite: []
+      remoteWriteDashboards: false
+      resources:
+        limits:
+          memory: 1000Mi
+          cpu: 1000m
+        requests:
+          memory: 400Mi
+          cpu: 400m
+      retention: 10d
+      retentionSize: ""
+      routePrefix: /
+      replicaExternalLabelName: ""
+      replicaExternalLabelNameClear: false
       ruleSelectorNilUsesHelmValues: true
       ruleSelector: {}
+      scrapeInterval: "60s"
+      scrapeTimeout: "10s"
+      securityContext:
+        runAsGroup: 2000
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
       serviceMonitorSelectorNilUsesHelmValues: true
       # serviceMonitorSelector: {}
       serviceMonitorNamespaceSelector:
@@ -450,35 +481,7 @@ kube-prometheus-stack:
               #  matchNames:
               #   - demoapp3
               # - demoapp4
-      podMonitorSelectorNilUsesHelmValues: false
-      #podMonitorSelector: {}
-      podMonitorNamespaceSelector:
-        matchLabels:
-          field.cattle.io/projectId: p-v7sr7
-      probeSelectorNilUsesHelmValues: false
-      probeNamespaceSelector: {}
-      retention: 10d
-      retentionSize: ""
-      walCompression: true
-      paused: false
-      replicas: 1
       shards: 1
-      logLevel: info
-      logFormat: logfmt
-      routePrefix: /
-      podAntiAffinityTopologyKey: kubernetes.io/hostname
-      remoteRead: []
-      additionalRemoteRead: []
-      remoteWrite: []
-      additionalRemoteWrite: []
-      remoteWriteDashboards: false
-      resources:
-        limits:
-          memory: 1000Mi
-          cpu: 1000m
-        requests:
-          memory: 400Mi
-          cpu: 400m
       storageSpec: {}
       ## Using PersistentVolumeClaim
       ##
@@ -496,44 +499,29 @@ kube-prometheus-stack:
       #    medium: Memory
       volumes: []
       volumeMounts: []
-      additionalScrapeConfigs:
-        - job_name: 'federate'
-          scrape_interval: 10s
-          honor_labels: true
-          metrics_path: '/federate'
-          bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-          static_configs:
-            - targets:
-              - rancher-monitoring-prometheus.cattle-monitoring-system.svc:9091
-          params:
-            'match[]':
-              - '{__name__=~".+"}'
-      securityContext:
-        runAsGroup: 2000
-        runAsNonRoot: true
-        runAsUser: 1000
-        fsGroup: 2000
-      portName: "http-web"
-      arbitraryFSAccessThroughSMs: false
-      overrideHonorLabels: false
-      overrideHonorTimestamps: false
-      ignoreNamespaceSelectors: false
-      enforcedNamespaceLabel: ""
-      prometheusRulesExcludedFromEnforce: []
-      excludedFromEnforcement: []
-      queryLogFile: false
-      enforcedSampleLimit: false
-      enforcedTargetLimit: false
-      enforcedLabelLimit: false
-      enforcedLabelNameLengthLimit: false
-      enforcedLabelValueLengthLimit: false
-      allowOverlappingBlocks: false
-      minReadySeconds: 0
-    additionalRulesForClusterRole: []
-    #  - apiGroups: [ "" ]
-    #    resources:
-    #      - nodes/proxy
-    #    verbs: [ "get", "list", "watch" ]
+      walCompression: true
+    serviceAccount:
+      create: false
+      name:  project-monitoring
+    service:
+      annotations: {}
+      clusterIP: ""
+      externalIPs: []
+      externalTrafficPolicy: Cluster
+      labels: {}
+      port: 9090
+      publishNotReadyAddresses: false
+      targetPort: 9090
+      type: ClusterIP
+    servicePerReplica:
+      enabled: false
+    serviceMonitor:
+      interval: "30s"
+      selfMonitor: true
+      scheme: ""
+      tlsConfig: {}
+      bearerTokenFile:
+      metricRelabelings: []
+      relabelings: []
   thanosRuler:
     enabled: false
-  cleanPrometheusOperatorObjectNames: false
