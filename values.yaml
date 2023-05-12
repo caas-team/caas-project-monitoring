@@ -140,7 +140,6 @@ kube-prometheus-stack:
       listenLocal: false
       logFormat: logfmt
       logLevel: debug
-      minReadySeconds: 5
       replicas: 1
       retention: 120h
       storage: {}
