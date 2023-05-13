@@ -81,12 +81,12 @@ questions:
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels
     description: "A podMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
     required: true
-    type: labels
+    type: multiline
     label: Label
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels
     description: "A serviceMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
     required: true
-    type: labels
+    type: multiline
     label: Label
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
     default: mtr.devops.telekom.de/mcsps/prometheus
