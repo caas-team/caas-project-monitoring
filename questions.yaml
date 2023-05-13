@@ -7,26 +7,12 @@ questions:
     label: Caas projectNamespaces
     required: true
     type: string
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
-    description: "projectId for alertmanagerConfigNamespaceSelector label"
+  - variable: global.cattle.projectId
+    description: "projectId of target installation"
     required: true
     type: string
     label: ProjectId
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.ruleNamespaceSelector.matchLabels."field.cattle.io/projectId"
-    description: "projectId for ruleNamespaceSelector label"
-    required: true
-    type: string
-    label: ProjectId
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
-    description: "projectId for podMonitorNamespaceSelector label"
-    required: true
-    type: string
-    label: ProjectId
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
-    description: "projectId for serviceMonitorNamespaceSelector label"
-    required: true
-    type: string
-    label: ProjectId
+    group: "CaaS"
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
     description: "Pause Alertmanager"
     group: "Alertmanager"

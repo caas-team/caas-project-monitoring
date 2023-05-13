@@ -16,7 +16,7 @@ caas:
 
 global:
   cattle:
-    projectId: &projectId p-q8bp8
+    projectId: &projectId
     systemDefaultRegistry: ""
 
 kube-prometheus-stack:
@@ -58,14 +58,12 @@ kube-prometheus-stack:
       nodeExporterRecording: false
       prometheus: true
       prometheusOperator: false
-  
     appNamespacesTarget: ".*"
     runbookUrl: "https://runbooks.prometheus-operator.dev/runbooks"
     ## Disabled PrometheusRule alerts
     disabled: {}
     # KubeAPIDown: true
     # NodeRAIDDegraded: true
-  
   ## Provide custom recording or alerting rules to be deployed into the cluster.
   ##
   alertmanager:
