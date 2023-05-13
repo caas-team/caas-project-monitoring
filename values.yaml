@@ -139,7 +139,7 @@ kube-prometheus-stack:
         tag: v0.24.0
       listenLocal: false
       logFormat: logfmt
-      logLevel: debug
+      logLevel: info
       replicas: 1
       retention: 120h
       storage: {}
@@ -252,7 +252,7 @@ kube-prometheus-stack:
         # Required to embed dashboards in Rancher Cluster Overview Dashboard on Cluster Explorer
         allow_embedding: true
       log:
-        level: debug
+        level: info
     image:
       repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
       tag: 9.1.5
@@ -417,7 +417,7 @@ kube-prometheus-stack:
       ignoreNamespaceSelectors: false
       listenLocal: false
       logFormat: logfmt
-      logLevel: debug
+      logLevel: info
       overrideHonorLabels: false
       overrideHonorTimestamps: false
       portName: "http-web"
@@ -427,9 +427,7 @@ kube-prometheus-stack:
       podAntiAffinityTopologyKey: kubernetes.io/hostname
       podMonitorSelectorNilUsesHelmValues: false
       #podMonitorSelector: {}
-      podMonitorNamespaceSelector:
-        matchLabels:
-          field.cattle.io/projectId: p-v7sr7
+      podMonitorNamespaceSelector:  {}
       probeSelectorNilUsesHelmValues: false
       probeNamespaceSelector: {}
       paused: false
@@ -462,27 +460,7 @@ kube-prometheus-stack:
         fsGroup: 2000
       serviceMonitorSelectorNilUsesHelmValues: true
       # serviceMonitorSelector: {}
-      serviceMonitorNamespaceSelector:
-        matchLabels:
-          field.cattle.io/projectId: p-v7sr7
-      #serviceMonitorSelector:
-      #  matchLabels:
-      #    field.cattle.io/projectId: p-q8bp8
-      #  matchNames:
-      #  - demoapp3
-      #  - demoapp4
-          #matchLabels:
-          #app: demoapp
-      #serviceMonitorNamespaceSelector:
-      #  matchNames:
-      #  - demoapp3
-      #  - demoapp4
-      #  matchLabels:
-      #    field.cattle.io/projectId: p-q8bp8
-        #  app: demoapp
-              #  matchNames:
-              #   - demoapp3
-              # - demoapp4
+      serviceMonitorNamespaceSelector: {}
       shards: 1
       storageSpec: {}
       ## Using PersistentVolumeClaim

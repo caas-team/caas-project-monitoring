@@ -3,14 +3,15 @@ categories:
 questions:
 - variable: caas.projectNamespaces
   description: "List of additional namespaces to monitor (whitespace separated, without install namespace!!!)"
-  type: string
-  label: Caas projectNamespaces
   group: "CaaS"
+  label: Caas projectNamespaces
+  required: true
+  type: string
 - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
   description: "Pause Alertmanager"
-  type: boolean
-  label: Alertmanager Pause
   group: "Alertmanager"
+  label: Alertmanager Pause
+  type: boolean
 - variable: kube-prometheus-stack.alertmanager.enabled
   default: "true"
   description: "Enable Alertmanager"
@@ -77,6 +78,16 @@ questions:
   group: "Prometheus"
   show_subquestion_if: false
   subquestions:
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels:
+    description: "A podMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
+    required: true
+    type: labels
+    label: Label
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels:
+    description: "A serviceMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
+    required: true
+    type: labels
+    label: Label
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
     default: mtr.devops.telekom.de/mcsps/prometheus
     description: "Repository of Prometheus Image"
@@ -162,11 +173,13 @@ questions:
     description: "A comma separated list of namespaces to get dashboards. This list MUST set with the correct namespaces, otherwise no metric will be shown."
     type: string
     label: Grafana view namespaces (by comma)
+    required: true
     group: "Grafana"
   - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
     description: "A comma separated list of namespaces to get datasources. This list MUST set with the correct namespaces, otherwise no metric will be shown."
     type: string
     label: Grafana view namespaces (by comma)
+    required: true
     group: "Grafana"
   - variable: kube-prometheus-stack.grafana.image.repository
     description: "Repository of Grafana Image"
