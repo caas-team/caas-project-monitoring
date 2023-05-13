@@ -80,7 +80,6 @@ questions:
     subquestions:
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
         description: "projectId for podMonitorNamespaceSelector label"
-        default: "p-xxxxx"
         required: true
         type: string
         label: ProjectId
