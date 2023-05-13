@@ -55,9 +55,9 @@ questions:
     description: "Loglevel Alertmanager"
     type: enum
     options:
-    - "info"
-    - "error"
-    - "debug"
+      - "info"
+      - "error"
+      - "debug"
     label: Loglevel Alertmanager
     group: "Alertmanager"
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.retention
@@ -78,12 +78,12 @@ questions:
   group: "Prometheus"
   show_subquestion_if: false
   subquestions:
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels:
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels
     description: "A podMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
     required: true
     type: labels
     label: Label
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels:
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels
     description: "A serviceMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
     required: true
     type: labels
@@ -157,9 +157,9 @@ questions:
     type: enum
     label: Loglevel Prometheus
     options:
-    - "info"
-    - "error"
-    - "debug"
+      - "info"
+      - "error"
+      - "debug"
     group: "Prometheus"
 - variable: kube-prometheus-stack.grafana.enabled
   default: "true"
@@ -221,9 +221,9 @@ questions:
     type: enum
     label: Loglevel Grafana
     options:
-    - "info"
-    - "error"
-    - "debug"
+      - "info"
+      - "error"
+      - "debug"
     group: "Grafana"
   - variable: kube-prometheus-stack.grafana.adminPassword
     description: "Grafana default admin password"
