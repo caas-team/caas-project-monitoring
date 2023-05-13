@@ -78,10 +78,10 @@ questions:
     group: "Prometheus"
     show_subquestion_if: false
     subquestions:
-      - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels.-
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
         description: "A podMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
         required: true
-        type: multiline
+        type: string
         label: Label
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels.-
         description: "A serviceMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
