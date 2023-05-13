@@ -66,6 +66,6 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{- define "kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId" -}}
+{{- define "kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels.\"field.cattle.io/projectId\"" -}}
 {{ .Values.global.cattle.projectId }}
 {{- end }}
