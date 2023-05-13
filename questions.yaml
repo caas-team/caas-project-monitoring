@@ -79,15 +79,17 @@ questions:
     show_subquestion_if: false
     subquestions:
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
-        description: "A podMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
+        description: "projectId for podMonitorNamespaceSelector label"
+        default: "p-xxxxx"
         required: true
         type: string
-        label: Label
+        label: ProjectId
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
-        description: "A serviceMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
+        description: "projectId for serviceMonitorNamespaceSelector label"
+        default: "p-xxxxx"
         required: true
-        type: multiline
-        label: Label
+        type: string
+        label: ProjectId
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
         default: mtr.devops.telekom.de/mcsps/prometheus
         description: "Repository of Prometheus Image"
