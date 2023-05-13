@@ -5,7 +5,6 @@
 #
 
 caas:
-  projectId: &projectId
   rbac:
     enabled: true
     serviceAccount:
@@ -17,6 +16,7 @@ caas:
 
 global:
   cattle:
+    projectId: &projectId
     systemDefaultRegistry: ""
 
 kube-prometheus-stack:

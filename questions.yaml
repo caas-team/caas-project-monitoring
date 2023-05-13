@@ -8,9 +8,33 @@ questions:
     required: true
     type: string
   - variable: caas.projectId
-    description: "projectId of target installation"
+    description: "projectId of target installation, e.g. p-xxxxx"
     required: true
     default: &projectId
+    type: string
+    label: ProjectId
+    group: "CaaS"
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
+    description: "projectId for alertmanagerConfigNamespaceSelector label"
+    required: true
+    type: string
+    label: ProjectId
+    group: "CaaS"
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.ruleNamespaceSelector.matchLabels."field.cattle.io/projectId"
+    description: "projectId for ruleNamespaceSelector label"
+    required: true
+    type: string
+    label: ProjectId
+    group: "CaaS"
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
+    description: "projectId for podMonitorNamespaceSelector label"
+    required: true
+    type: string
+    label: ProjectId
+    group: "CaaS"
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
+    description: "projectId for serviceMonitorNamespaceSelector label"
+    required: true
     type: string
     label: ProjectId
     group: "CaaS"
