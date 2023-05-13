@@ -10,7 +10,7 @@ questions:
   - variable: caas.projectId
     description: "projectId of target installation"
     required: true
-    type: string
+    type: int
     label: ProjectId
     group: "CaaS"
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
