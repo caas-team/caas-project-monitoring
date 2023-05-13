@@ -16,6 +16,7 @@ caas:
 
 global:
   cattle:
+    projectId: p-q8bp8
     systemDefaultRegistry: ""
 
 kube-prometheus-stack:
