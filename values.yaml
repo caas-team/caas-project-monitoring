@@ -238,7 +238,7 @@ kube-prometheus-stack:
     fullnameOverride: project-monitoring-grafana
     grafana.ini:
       analytics:
-        check_for_updates = false
+        check_for_updates: false
       users:
         auto_assign_org_role: Viewer
       auth:
