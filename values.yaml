@@ -426,8 +426,8 @@ kube-prometheus-stack:
       prometheusExternalLabelNameClear: false
       podAntiAffinityTopologyKey: kubernetes.io/hostname
       podMonitorSelectorNilUsesHelmValues: false
-      #podMonitorSelector: {}
-      podMonitorNamespaceSelector:  {}
+      podMonitorSelector: {}
+      podMonitorNamespaceSelector: {}
       probeSelectorNilUsesHelmValues: false
       probeNamespaceSelector: {}
       paused: false
@@ -459,7 +459,7 @@ kube-prometheus-stack:
         runAsUser: 1000
         fsGroup: 2000
       serviceMonitorSelectorNilUsesHelmValues: true
-      # serviceMonitorSelector: {}
+      serviceMonitorSelector: {}
       serviceMonitorNamespaceSelector: {}
       shards: 1
       storageSpec: {}
