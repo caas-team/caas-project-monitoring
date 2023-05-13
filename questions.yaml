@@ -30,26 +30,27 @@ questions:
     type: string
     label: Alertmanager Image Tag
     group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.memory
-    description: "Memory Requests Alertmanager"
-    type: string
-    label: Alertmanager Memory Requests
-    group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.cpu
-    description: "CPU Requests Alertmanager"
-    type: string
-    label: Alertmanager CPU Requests
-    group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.memory
-    description: "Memory Limits Alertmanager"
-    type: string
-    label: Alertmanager Memory Limits
-    group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.cpu
-    description: "CPU limits Alertmanager"
-    type: string
-    label: Alertmanager CPU Limits
-    group: "Alertmanager"
+    subquestions:
+    - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.memory
+      description: "Memory Requests Alertmanager"
+      type: string
+      label: Alertmanager Memory Requests
+      group: "Alertmanager"
+    - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.cpu
+      description: "CPU Requests Alertmanager"
+      type: string
+      label: Alertmanager CPU Requests
+      group: "Alertmanager"
+    - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.memory
+      description: "Memory Limits Alertmanager"
+      type: string
+      label: Alertmanager Memory Limits
+      group: "Alertmanager"
+    - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.cpu
+      description: "CPU limits Alertmanager"
+      type: string
+      label: Alertmanager CPU Limits
+      group: "Alertmanager"
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.logLevel
     default: info
     description: "Loglevel Alertmanager"
