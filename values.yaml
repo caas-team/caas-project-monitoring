@@ -16,7 +16,7 @@ caas:
 
 global:
   cattle:
-    projectId: p-q8bp8
+    projectId: &projectId p-q8bp8
     systemDefaultRegistry: ""
 
 kube-prometheus-stack:
@@ -128,10 +128,8 @@ kube-prometheus-stack:
       interval: "30s"
       selfMonitor: true
     alertmanagerSpec:
-      alertmanagerConfigNamespaceSelector: {}
-      # alertmanagerConfigNamespaceSelector:
-      #   matchLabels:
-      #     alertmanagerconfig: enabled
+      alertmanagerConfigNamespaceSelector:
+        field.cattle.io/projectId: *projectId
       clusterAdvertiseAddress: false
       externalUrl:
       forceEnableClusterMode: false
@@ -428,7 +426,8 @@ kube-prometheus-stack:
       podAntiAffinityTopologyKey: kubernetes.io/hostname
       podMonitorSelectorNilUsesHelmValues: false
       podMonitorSelector: {}
-      podMonitorNamespaceSelector: {}
+      podMonitorNamespaceSelector:
+        field.cattle.io/projectId: *projectId
       probeSelectorNilUsesHelmValues: false
       probeNamespaceSelector: {}
       paused: false
@@ -451,7 +450,8 @@ kube-prometheus-stack:
       replicaExternalLabelName: ""
       replicaExternalLabelNameClear: false
       ruleSelectorNilUsesHelmValues: true
-      ruleSelector: {}
+      ruleNamespaceSelector:
+        field.cattle.io/projectId: *projectId
       scrapeInterval: "60s"
       scrapeTimeout: "10s"
       securityContext:
@@ -461,7 +461,8 @@ kube-prometheus-stack:
         fsGroup: 2000
       serviceMonitorSelectorNilUsesHelmValues: true
       serviceMonitorSelector: {}
-      serviceMonitorNamespaceSelector: {}
+      serviceMonitorNamespaceSelector:
+        field.cattle.io/projectId: *projectId
       shards: 1
       storageSpec: {}
       ## Using PersistentVolumeClaim

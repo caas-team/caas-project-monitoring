@@ -7,6 +7,26 @@ questions:
     label: Caas projectNamespaces
     required: true
     type: string
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
+    description: "projectId for alertmanagerConfigNamespaceSelector label"
+    required: true
+    type: string
+    label: ProjectId
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.ruleNamespaceSelector.matchLabels."field.cattle.io/projectId"
+    description: "projectId for ruleNamespaceSelector label"
+    required: true
+    type: string
+    label: ProjectId
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
+    description: "projectId for podMonitorNamespaceSelector label"
+    required: true
+    type: string
+    label: ProjectId
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
+    description: "projectId for serviceMonitorNamespaceSelector label"
+    required: true
+    type: string
+    label: ProjectId
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
     description: "Pause Alertmanager"
     group: "Alertmanager"
@@ -78,17 +98,6 @@ questions:
     group: "Prometheus"
     show_subquestion_if: false
     subquestions:
-      - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
-        description: "projectId for podMonitorNamespaceSelector label"
-        required: true
-        type: string
-        label: ProjectId
-      - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
-        description: "projectId for serviceMonitorNamespaceSelector label"
-        default: "p-xxxxx"
-        required: true
-        type: string
-        label: ProjectId
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
         default: mtr.devops.telekom.de/mcsps/prometheus
         description: "Repository of Prometheus Image"

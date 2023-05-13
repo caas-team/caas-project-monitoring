@@ -65,7 +65,3 @@ Create the name of the service account to use
 {{- default "default" .Values.caas.rbac.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-{{- define "kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels.\"field.cattle.io/projectId\""  }}
-hiller
-{{- end }}
