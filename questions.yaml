@@ -1,232 +1,232 @@
 categories:
-- monitoring
+  - monitoring
 questions:
-- variable: caas.projectNamespaces
-  description: "List of additional namespaces to monitor (whitespace separated, without install namespace!!!)"
-  group: "CaaS"
-  label: Caas projectNamespaces
-  required: true
-  type: string
-- variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
-  description: "Pause Alertmanager"
-  group: "Alertmanager"
-  label: Alertmanager Pause
-  type: boolean
-- variable: kube-prometheus-stack.alertmanager.enabled
-  default: "true"
-  description: "Enable Alertmanager"
-  type: boolean
-  label: Alertmanager Enabled
-  group: "Alertmanager"
-  show_subquestion_if: false
-  subquestions:
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.repository
-    description: "Repository of Alertmanager Image"
-    type: string
-    label: Alertmanager Image Repo
-    group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.tag
-    description: "Tag of Alertmanager Image"
-    type: string
-    label: Alertmanager Image Tag
-    group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.memory
-    description: "Memory Requests Alertmanager"
-    type: string
-    label: Alertmanager Memory Requests
-    group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.cpu
-    description: "CPU Requests Alertmanager"
-    type: string
-    label: Alertmanager CPU Requests
-    group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.memory
-    description: "Memory Limits Alertmanager"
-    type: string
-    label: Alertmanager Memory Limits
-    group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.cpu
-    description: "CPU limits Alertmanager"
-    type: string
-    label: Alertmanager CPU Limits
-    group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.logLevel
-    default: info
-    description: "Loglevel Alertmanager"
-    type: enum
-    options:
-      - "info"
-      - "error"
-      - "debug"
-    label: Loglevel Alertmanager
-    group: "Alertmanager"
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.retention
-    description: "Retention of Alertmanager data"
-    type: string
-    label: Alertmanager Retention
-    group: "Alertmanager"
-- variable: kube-prometheus-stack.prometheus.enabled
-  default: "true"
-  description: "Enable Prometheus"
-  type: boolean
-  label: Prometheus Enabled
-  group: "Prometheus"
-- variable: kube-prometheus-stack.prometheus.prometheusSpec.paused
-  description: "Pause Prometheus"
-  type: boolean
-  label: Prometheus pause
-  group: "Prometheus"
-  show_subquestion_if: false
-  subquestions:
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels
-    description: "A podMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
+  - variable: caas.projectNamespaces
+    description: "List of additional namespaces to monitor (whitespace separated, without install namespace!!!)"
+    group: "CaaS"
+    label: Caas projectNamespaces
     required: true
-    type: multiline
-    label: Label
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels
-    description: "A serviceMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
-    required: true
-    type: multiline
-    label: Label
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
-    default: mtr.devops.telekom.de/mcsps/prometheus
-    description: "Repository of Prometheus Image"
     type: string
-    label: Prometheus Image Repo
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.tag
-    description: "Tag of Prometheus Image"
-    type: string
-    label: Prometheus Image Tag
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
+    description: "Pause Alertmanager"
+    group: "Alertmanager"
+    label: Alertmanager Pause
+    type: boolean
+  - variable: kube-prometheus-stack.alertmanager.enabled
+    default: "true"
+    description: "Enable Alertmanager"
+    type: boolean
+    label: Alertmanager Enabled
+    group: "Alertmanager"
+    show_subquestion_if: false
+    subquestions:
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.repository
+        description: "Repository of Alertmanager Image"
+        type: string
+        label: Alertmanager Image Repo
+        group: "Alertmanager"
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.tag
+        description: "Tag of Alertmanager Image"
+        type: string
+        label: Alertmanager Image Tag
+        group: "Alertmanager"
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.memory
+        description: "Memory Requests Alertmanager"
+        type: string
+        label: Alertmanager Memory Requests
+        group: "Alertmanager"
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.cpu
+        description: "CPU Requests Alertmanager"
+        type: string
+        label: Alertmanager CPU Requests
+        group: "Alertmanager"
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.memory
+        description: "Memory Limits Alertmanager"
+        type: string
+        label: Alertmanager Memory Limits
+        group: "Alertmanager"
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.cpu
+        description: "CPU limits Alertmanager"
+        type: string
+        label: Alertmanager CPU Limits
+        group: "Alertmanager"
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.logLevel
+        default: info
+        description: "Loglevel Alertmanager"
+        type: enum
+        options:
+          - "info"
+          - "error"
+          - "debug"
+        label: Loglevel Alertmanager
+        group: "Alertmanager"
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.retention
+        description: "Retention of Alertmanager data"
+        type: string
+        label: Alertmanager Retention
+        group: "Alertmanager"
+  - variable: kube-prometheus-stack.prometheus.enabled
+    default: "true"
+    description: "Enable Prometheus"
+    type: boolean
+    label: Prometheus Enabled
     group: "Prometheus"
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.memory
-    description: "Memory Requests Prometheus"
-    type: string
-    label: Prometheus Memory Requests
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.cpu
-    description: "CPU Requests Prometheus"
-    type: string
-    label: Prometheus Memory Requests
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.memory
-    description: "Memory Limits Prometheus"
-    type: string
-    label: Prometheus Memory Requests
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.cpu
-    description: "CPU limits Prometheus"
-    type: string
-    label: Prometheus CPU Limits
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
-    description: Strongly recommend to use a persistant storage for Promeutheus. The size should be bigger than Retention Size and the StorageClass should be Longhorn, if available.
-    type: storageclass
-    label: Storage Class
+  - variable: kube-prometheus-stack.prometheus.prometheusSpec.paused
+    description: "Pause Prometheus"
+    type: boolean
+    label: Prometheus pause
     group: "Prometheus"
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.accessModes
-    description: StorageClass accessMode
-    type: enum
-    default: 
-      - ReadWriteOnce
-    options:
-      - [ReadWriteOnce]
-      - [ReadWriteMany]
-      - [ReadOnlyMany]
-    label: Access Mode
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage
-    default:  10Gi
-    description: "Size of Prometheus Storage"
-    type: string
-    label: Prometheus Storage Size
-    group: "Prometheus"
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.retention
-    description: "Retention of Prometheus data"
-    type: string
-    label: Prometheus Retention
-    group: "Prometheus"
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.retentionSize
-    default: 9Gi
-    description: "Retention size of Prometheus data"
-    type: string
-    label: Prometheus Retention Size
-    group: "Prometheus"
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.scrapeInterval
-    description: "scrapeInterval of Prometheus"
-    type: string
-    label: Prometheus scrape interval
-    group: "Prometheus"
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.logLevel
-    default: info
-    description: "Loglevel Prometheus"
-    type: enum
-    label: Loglevel Prometheus
-    options:
-      - "info"
-      - "error"
-      - "debug"
-    group: "Prometheus"
-- variable: kube-prometheus-stack.grafana.enabled
-  default: "true"
-  description: "Enable Grafana"
-  type: boolean
-  label: Grafana Enabled
-  group: "Grafana"
-  show_subquestion_if: false
-  subquestions:
-  - variable: kube-prometheus-stack.grafana.sidecar.dashboards.searchNamespace
-    description: "A comma separated list of namespaces to get dashboards. This list MUST set with the correct namespaces, otherwise no metric will be shown."
-    type: string
-    label: Grafana view namespaces (by comma)
-    required: true
+    show_subquestion_if: false
+    subquestions:
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels.-
+        description: "A podMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
+        required: true
+        type: multiline
+        label: Label
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels.-
+        description: "A serviceMonitorNamespaceSelector label, e.g. field.cattle.io/projectId: p-v7sr7"
+        required: true
+        type: multiline
+        label: Label
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
+        default: mtr.devops.telekom.de/mcsps/prometheus
+        description: "Repository of Prometheus Image"
+        type: string
+        label: Prometheus Image Repo
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.tag
+        description: "Tag of Prometheus Image"
+        type: string
+        label: Prometheus Image Tag
+        group: "Prometheus"
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.memory
+        description: "Memory Requests Prometheus"
+        type: string
+        label: Prometheus Memory Requests
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.cpu
+        description: "CPU Requests Prometheus"
+        type: string
+        label: Prometheus Memory Requests
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.memory
+        description: "Memory Limits Prometheus"
+        type: string
+        label: Prometheus Memory Requests
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.cpu
+        description: "CPU limits Prometheus"
+        type: string
+        label: Prometheus CPU Limits
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
+        description: Strongly recommend to use a persistant storage for Promeutheus. The size should be bigger than Retention Size and the StorageClass should be Longhorn, if available.
+        type: storageclass
+        label: Storage Class
+        group: "Prometheus"
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.accessModes
+        description: StorageClass accessMode
+        type: enum
+        default:
+          - ReadWriteOnce
+        options:
+          - [ReadWriteOnce]
+          - [ReadWriteMany]
+          - [ReadOnlyMany]
+        label: Access Mode
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage
+        default: 10Gi
+        description: "Size of Prometheus Storage"
+        type: string
+        label: Prometheus Storage Size
+        group: "Prometheus"
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.retention
+        description: "Retention of Prometheus data"
+        type: string
+        label: Prometheus Retention
+        group: "Prometheus"
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.retentionSize
+        default: 9Gi
+        description: "Retention size of Prometheus data"
+        type: string
+        label: Prometheus Retention Size
+        group: "Prometheus"
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.scrapeInterval
+        description: "scrapeInterval of Prometheus"
+        type: string
+        label: Prometheus scrape interval
+        group: "Prometheus"
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.logLevel
+        default: info
+        description: "Loglevel Prometheus"
+        type: enum
+        label: Loglevel Prometheus
+        options:
+          - "info"
+          - "error"
+          - "debug"
+        group: "Prometheus"
+  - variable: kube-prometheus-stack.grafana.enabled
+    default: "true"
+    description: "Enable Grafana"
+    type: boolean
+    label: Grafana Enabled
     group: "Grafana"
-  - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
-    description: "A comma separated list of namespaces to get datasources. This list MUST set with the correct namespaces, otherwise no metric will be shown."
-    type: string
-    label: Grafana view namespaces (by comma)
-    required: true
-    group: "Grafana"
-  - variable: kube-prometheus-stack.grafana.image.repository
-    description: "Repository of Grafana Image"
-    type: string
-    label: Grafana Image Repo
-    group: "Grafana"
-  - variable: kube-prometheus-stack.grafana.image.tag
-    description: "Tag of Grafana Image"
-    type: string
-    label: Grafana Image Tag
-    group: "Grafana"
-  - variable: kube-prometheus-stack.grafana.resources.requests.memory
-    description: "Memory Requests Grafana"
-    type: string
-    label: Grafana Memory Requests
-    group: "Grafana"
-  - variable: kube-prometheus-stack.grafana.resources.requests.cpu
-    description: "CPU Requests GrafanaGrafana"
-    type: string
-    label: Grafana Memory Requests
-    group: "Grafana"
-  - variable: kube-prometheus-stack.grafana.resources.limits.memory
-    description: "Memory Limits GrafanaGrafana"
-    type: string
-    label: Grafana Memory Requests
-    group: "Grafana"
-  - variable: kube-prometheus-stack.grafana.resources.limits.cpu
-    description: "CPU limits GrafanaGrafana"
-    type: string
-    label: Grafana CPU Limits
-    group: "Grafana"
-  - variable: kube-prometheus-stack.grafana.defaultDashboardsTimezone
-    description: "Grafana dashboard default timezone"
-    type: string
-    label: Grafana dashboard default timezone
-    group: "Grafana"
-  - variable: kube-prometheus-stack.grafana.grafana.ini.log.level
-    description: "Loglevel Grafana"
-    type: enum
-    label: Loglevel Grafana
-    options:
-      - "info"
-      - "error"
-      - "debug"
-    group: "Grafana"
-  - variable: kube-prometheus-stack.grafana.adminPassword
-    description: "Grafana default admin password"
-    type: string
-    label: Grafana default admin password
-    group: "Grafana"
+    show_subquestion_if: false
+    subquestions:
+      - variable: kube-prometheus-stack.grafana.sidecar.dashboards.searchNamespace
+        description: "A comma separated list of namespaces to get dashboards. This list MUST set with the correct namespaces, otherwise no metric will be shown."
+        type: string
+        label: Grafana view namespaces (by comma)
+        required: true
+        group: "Grafana"
+      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
+        description: "A comma separated list of namespaces to get datasources. This list MUST set with the correct namespaces, otherwise no metric will be shown."
+        type: string
+        label: Grafana view namespaces (by comma)
+        required: true
+        group: "Grafana"
+      - variable: kube-prometheus-stack.grafana.image.repository
+        description: "Repository of Grafana Image"
+        type: string
+        label: Grafana Image Repo
+        group: "Grafana"
+      - variable: kube-prometheus-stack.grafana.image.tag
+        description: "Tag of Grafana Image"
+        type: string
+        label: Grafana Image Tag
+        group: "Grafana"
+      - variable: kube-prometheus-stack.grafana.resources.requests.memory
+        description: "Memory Requests Grafana"
+        type: string
+        label: Grafana Memory Requests
+        group: "Grafana"
+      - variable: kube-prometheus-stack.grafana.resources.requests.cpu
+        description: "CPU Requests GrafanaGrafana"
+        type: string
+        label: Grafana Memory Requests
+        group: "Grafana"
+      - variable: kube-prometheus-stack.grafana.resources.limits.memory
+        description: "Memory Limits GrafanaGrafana"
+        type: string
+        label: Grafana Memory Requests
+        group: "Grafana"
+      - variable: kube-prometheus-stack.grafana.resources.limits.cpu
+        description: "CPU limits GrafanaGrafana"
+        type: string
+        label: Grafana CPU Limits
+        group: "Grafana"
+      - variable: kube-prometheus-stack.grafana.defaultDashboardsTimezone
+        description: "Grafana dashboard default timezone"
+        type: string
+        label: Grafana dashboard default timezone
+        group: "Grafana"
+      - variable: kube-prometheus-stack.grafana.grafana.ini.log.level
+        description: "Loglevel Grafana"
+        type: enum
+        label: Loglevel Grafana
+        options:
+          - "info"
+          - "error"
+          - "debug"
+        group: "Grafana"
+      - variable: kube-prometheus-stack.grafana.adminPassword
+        description: "Grafana default admin password"
+        type: string
+        label: Grafana default admin password
+        group: "Grafana"
