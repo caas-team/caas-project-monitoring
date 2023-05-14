@@ -25,7 +25,7 @@ kube-prometheus-stack:
   nameOverride: "project-monitoring"
   fullnameOverride: "project-monitoring"
   #commonLabels:
-  #  field.cattle.io/projectId: p-q8bp8
+  #  field.cattle.io/projectId: *projectId
 
 ## Create default rules for monitoring the cluster
 ##
@@ -133,7 +133,7 @@ kube-prometheus-stack:
           values:
           - rancher-monitoring
       alertmanagerConfigNamespaceSelector:
-        "field.cattle.io/projectId": *projectId
+      #  "field.cattle.io/projectId": *projectId
       clusterAdvertiseAddress: false
       externalUrl:
       forceEnableClusterMode: false
@@ -428,12 +428,24 @@ kube-prometheus-stack:
       prometheusExternalLabelName: ""
       prometheusExternalLabelNameClear: false
       podAntiAffinityTopologyKey: kubernetes.io/hostname
-      podMonitorSelectorNilUsesHelmValues: false
-      podMonitorSelector: {}
+      podMonitorSelector:
+        matchExpressions:
+          - key: release
+            operator: NotIn
+            values:
+              - rancher-monitoring
       podMonitorNamespaceSelector:
-        "field.cattle.io/projectId": *projectId
-      probeSelectorNilUsesHelmValues: false
-      probeNamespaceSelector: {}
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
+      # probeNamespaceSelector:
+      #   matchExpressions:
+      #   - key: release
+      #     operator: NotIn
+      #     values:
+      #     - rancher-monitoring
+      # probeNamespaceSelector:
+      #   matchLabels:
+      #     "field.cattle.io/projectId": *projectId
       paused: false
       queryLogFile: false
       query: {}
@@ -454,13 +466,14 @@ kube-prometheus-stack:
       replicaExternalLabelName: ""
       replicaExternalLabelNameClear: false
       ruleNamespaceSelector:
-        "field.cattle.io/projectId": *projectId
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
       rulesSelector:
         matchExpressions:
-        - key: release
-          operator: NotIn
-          values:
-          - rancher-monitoring
+          - key: release
+            operator: NotIn
+            values:
+              - rancher-monitoring
       scrapeInterval: "60s"
       scrapeTimeout: "10s"
       securityContext:
@@ -470,12 +483,13 @@ kube-prometheus-stack:
         fsGroup: 2000
       serviceMonitorSelector:
         matchExpressions:
-        - key: release
-          operator: NotIn
-          values:
-          - rancher-monitoring
+          - key: release
+            operator: NotIn
+            values:
+              - rancher-monitoring
       serviceMonitorNamespaceSelector:
-        "field.cattle.io/projectId": *projectId
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
       shards: 1
       storageSpec: {}
       ## Using PersistentVolumeClaim
