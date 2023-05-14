@@ -126,8 +126,14 @@ kube-prometheus-stack:
       interval: "30s"
       selfMonitor: true
     alertmanagerSpec:
+      alertmanagerConfigSelector:
+        matchExpressions:
+        - key: release
+          operator: NotIn
+          values:
+          - rancher-monitoring
       alertmanagerConfigNamespaceSelector:
-        field.cattle.io/projectId: *projectId
+        "field.cattle.io/projectId": *projectId
       clusterAdvertiseAddress: false
       externalUrl:
       forceEnableClusterMode: false
@@ -425,7 +431,7 @@ kube-prometheus-stack:
       podMonitorSelectorNilUsesHelmValues: false
       podMonitorSelector: {}
       podMonitorNamespaceSelector:
-        field.cattle.io/projectId: *projectId
+        "field.cattle.io/projectId": *projectId
       probeSelectorNilUsesHelmValues: false
       probeNamespaceSelector: {}
       paused: false
@@ -447,9 +453,14 @@ kube-prometheus-stack:
       routePrefix: /
       replicaExternalLabelName: ""
       replicaExternalLabelNameClear: false
-      ruleSelectorNilUsesHelmValues: true
       ruleNamespaceSelector:
-        field.cattle.io/projectId: *projectId
+        "field.cattle.io/projectId": *projectId
+      rulesSelector:
+        matchExpressions:
+        - key: release
+          operator: NotIn
+          values:
+          - rancher-monitoring
       scrapeInterval: "60s"
       scrapeTimeout: "10s"
       securityContext:
@@ -457,10 +468,14 @@ kube-prometheus-stack:
         runAsNonRoot: true
         runAsUser: 1000
         fsGroup: 2000
-      serviceMonitorSelectorNilUsesHelmValues: true
-      serviceMonitorSelector: {}
+      serviceMonitorSelector:
+        matchExpressions:
+        - key: release
+          operator: NotIn
+          values:
+          - rancher-monitoring
       serviceMonitorNamespaceSelector:
-        field.cattle.io/projectId: *projectId
+        "field.cattle.io/projectId": *projectId
       shards: 1
       storageSpec: {}
       ## Using PersistentVolumeClaim
