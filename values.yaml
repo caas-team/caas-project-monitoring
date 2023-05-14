@@ -468,7 +468,7 @@ kube-prometheus-stack:
       ruleNamespaceSelector:
         matchLabels:
           "field.cattle.io/projectId": *projectId
-      rulesSelector:
+      ruleSelector:
         matchExpressions:
           - key: release
             operator: NotIn
