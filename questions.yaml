@@ -218,24 +218,24 @@ questions:
         label: Grafana Memory Requests
         group: "Grafana"
       - variable: kube-prometheus-stack.grafana.resources.requests.cpu
-        description: "CPU Requests GrafanaGrafana"
+        description: "CPU Requests Grafana"
         type: string
         label: Grafana Memory Requests
         group: "Grafana"
       - variable: kube-prometheus-stack.grafana.resources.limits.memory
-        description: "Memory Limits GrafanaGrafana"
+        description: "Memory Limits Grafana"
         type: string
         label: Grafana Memory Requests
         group: "Grafana"
       - variable: kube-prometheus-stack.grafana.resources.limits.cpu
-        description: "CPU limits GrafanaGrafana"
+        description: "CPU limits Grafana"
         type: string
         label: Grafana CPU Limits
         group: "Grafana"
       - variable: kube-prometheus-stack.grafana.defaultDashboardsTimezone
-        description: "Grafana dashboard default timezone"
+        description: "Grafana dashboard timezone"
         type: string
-        label: Grafana dashboard default timezone
+        label: Grafana dashboard timezone
         group: "Grafana"
       - variable: kube-prometheus-stack.grafana.grafana.ini.log.level
         description: "Loglevel Grafana"
@@ -247,7 +247,7 @@ questions:
           - "debug"
         group: "Grafana"
       - variable: kube-prometheus-stack.grafana.adminPassword
-        description: "Grafana default admin password"
+        description: "Grafana admin password"
         type: string
-        label: Grafana default admin password
+        label: Grafana admin password
         group: "Grafana"
