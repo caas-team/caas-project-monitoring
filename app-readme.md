@@ -110,6 +110,27 @@ Ask the administrator for the installed version. CRDs may have new features or v
 
 * Networkpolicies to protect anonymous endpoints (used by cluster-monitoring self and v2 project-monitoring with [prometheus-federator](https://github.com/rancher/prometheus-federator)
 
+<details>
+<summary>code snippet</summary>
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-prometheus-auth
+  namespace: cattle-monitoring-system
+spec:
+  ingress:
+  - ports:
+    - port: 9091
+      protocol: TCP
+  podSelector: {}
+  policyTypes:
+  - Ingress
+```
+</details>
+
+
 * Additional permissions for Project-Owner, assigned from administrator within RoleTemplate:
 
 <details>
