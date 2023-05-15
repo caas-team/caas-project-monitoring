@@ -203,7 +203,8 @@ kube-prometheus-stack:
           values:
           - rancher-monitoring
       alertmanagerConfigNamespaceSelector:
-      #  "field.cattle.io/projectId": *projectId
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
       clusterAdvertiseAddress: false
       externalUrl:
       forceEnableClusterMode: false
