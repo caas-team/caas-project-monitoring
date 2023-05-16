@@ -155,7 +155,7 @@ roleTemplateNames:
 rules:
   - apiGroups:
       - monitoring.coreos.com
-      - monitoring.coreos.com
+      - monitoring.cattle.io
     resources:
       - alertmanagers
       - prometheuses
