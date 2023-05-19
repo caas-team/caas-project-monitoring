@@ -7,11 +7,6 @@ questions:
     label: Caas projectNamespaces
     required: true
     type: string
-  - variable: global.cattle.projectId
-    description: "projectId of target installation, e.g. p-xxxxx"
-    type: string
-    label: ProjectId
-    group: "CaaS"
 #  - variable: caas.projectId
 #    description: "projectId of target installation, e.g. p-xxxxx"
 #    required: true
