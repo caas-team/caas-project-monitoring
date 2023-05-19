@@ -506,10 +506,10 @@ kube-prometheus-stack:
             operator: NotIn
             values:
               - rancher-monitoring
-      podMonitorNamespaceSelector: {}
-      #podMonitorNamespaceSelector:
-      #  matchLabels:
-      #    "field.cattle.io/projectId": *projectId
+      #podMonitorNamespaceSelector: {}
+      podMonitorNamespaceSelector:
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
       # probeNamespaceSelector:
       #   matchExpressions:
       #   - key: release
@@ -561,10 +561,10 @@ kube-prometheus-stack:
             operator: NotIn
             values:
               - rancher-monitoring
-      serviceMonitorNamespaceSelector: {}
-      #serviceMonitorNamespaceSelector:
-      #  matchLabels:
-      #    "field.cattle.io/projectId": *projectId
+      #serviceMonitorNamespaceSelector: {}
+      serviceMonitorNamespaceSelector:
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
       shards: 1
       storageSpec: {}
       ## Using PersistentVolumeClaim
