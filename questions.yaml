@@ -7,6 +7,11 @@ questions:
     label: Caas projectNamespaces
     required: true
     type: string
+  - variable: global.cattle.projectId
+    description: "projectId of target installation, e.g. p-xxxxx"
+    type: string
+    label: ProjectId
+    group: "CaaS"
 #  - variable: caas.projectId
 #    description: "projectId of target installation, e.g. p-xxxxx"
 #    required: true
@@ -196,12 +201,12 @@ questions:
         label: Grafana view namespaces (by comma)
         required: true
         group: "Grafana"
-      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
-        description: "A comma separated list of namespaces to get datasources. This list MUST set with the correct namespaces, otherwise no metric will be shown."
-        type: string
-        label: Grafana view namespaces (by comma)
-        required: true
-        group: "Grafana"
+#      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
+#        description: "A comma separated list of namespaces to get datasources. This list MUST set with the correct namespaces, otherwise no metric will be shown."
+#        type: string
+#        label: Grafana view namespaces (by comma)
+#        required: true
+#        group: "Grafana"
       - variable: kube-prometheus-stack.grafana.image.repository
         description: "Repository of Grafana Image"
         type: string
