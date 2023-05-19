@@ -538,9 +538,10 @@ kube-prometheus-stack:
       routePrefix: /
       replicaExternalLabelName: ""
       replicaExternalLabelNameClear: false
-      ruleNamespaceSelector:
-        matchLabels:
-          "field.cattle.io/projectId": *projectId
+      ruleNamespaceSelector: {}
+      #ruleNamespaceSelector:
+      #  matchLabels:
+      #    "field.cattle.io/projectId": *projectId
       ruleSelector:
         matchExpressions:
           - key: release
