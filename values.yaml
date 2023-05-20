@@ -268,7 +268,7 @@ kube-prometheus-stack:
           url: http://prometheus-operated:9090
           access: proxy
           isDefault: true
-    defaultDashboardsEnabled: true
+    defaultDashboardsEnabled: false
     defaultDashboardsTimezone: utc
     enabled: true
     extraContainers: |
@@ -284,11 +284,13 @@ kube-prometheus-stack:
         - containerPort: 8080
           name: nginx-http
           protocol: TCP
-        volumeMounts:
-        - mountPath: /nginx
-          name: grafana-nginx
-        - mountPath: /var/cache/nginx
-          name: nginx-home
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 50m
+            memory: 50Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -298,6 +300,11 @@ kube-prometheus-stack:
           runAsUser: 101
           runAsGroup: 101
           readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /nginx
+          name: grafana-nginx
+        - mountPath: /var/cache/nginx
+          name: nginx-home
     extraContainerVolumes:
       - name: nginx-home
         emptyDir: {}
