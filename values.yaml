@@ -513,19 +513,19 @@ kube-prometheus-stack:
             operator: NotIn
             values:
               - rancher-monitoring
-      #podMonitorNamespaceSelector: {}
-      podMonitorNamespaceSelector:
-        matchLabels:
-          "field.cattle.io/projectId": *projectId
+      podMonitorNamespaceSelector: {}
+      #podMonitorNamespaceSelector:
+      #  matchLabels:
+      #    "field.cattle.io/projectId": *projectId
       # probeNamespaceSelector:
       #   matchExpressions:
       #   - key: release
       #     operator: NotIn
       #     values:
       #     - rancher-monitoring
-      probeNamespaceSelector:
-        matchLabels:
-          "field.cattle.io/projectId": *projectId
+      #probeNamespaceSelector:
+      #  matchLabels:
+      #    "field.cattle.io/projectId": *projectId
       paused: false
       queryLogFile: false
       query: {}
@@ -545,10 +545,10 @@ kube-prometheus-stack:
       routePrefix: /
       replicaExternalLabelName: ""
       replicaExternalLabelNameClear: false
-      #ruleNamespaceSelector: {}
-      ruleNamespaceSelector:
-        matchLabels:
-          "field.cattle.io/projectId": *projectId
+      ruleNamespaceSelector: {}
+      #ruleNamespaceSelector:
+      #  matchLabels:
+      #    "field.cattle.io/projectId": *projectId
       ruleSelector:
         matchExpressions:
           - key: release
@@ -568,10 +568,10 @@ kube-prometheus-stack:
             operator: NotIn
             values:
               - rancher-monitoring
-      #serviceMonitorNamespaceSelector: {}
-      serviceMonitorNamespaceSelector:
-        matchLabels:
-          "field.cattle.io/projectId": *projectId
+      serviceMonitorNamespaceSelector: {}
+      #serviceMonitorNamespaceSelector:
+      #  matchLabels:
+      #    "field.cattle.io/projectId": *projectId
       shards: 1
       storageSpec: {}
       ## Using PersistentVolumeClaim
