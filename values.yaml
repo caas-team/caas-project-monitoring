@@ -202,10 +202,10 @@ kube-prometheus-stack:
           operator: NotIn
           values:
           - rancher-monitoring
-      alertmanagerConfigNamespaceSelector: {}
-      #alertmanagerConfigNamespaceSelector:
-      #  matchLabels:
-      #    "field.cattle.io/projectId": *projectId
+      #alertmanagerConfigNamespaceSelector: {}
+      alertmanagerConfigNamespaceSelector:
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
       clusterAdvertiseAddress: false
       externalUrl:
       forceEnableClusterMode: false

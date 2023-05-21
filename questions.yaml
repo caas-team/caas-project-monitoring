@@ -7,13 +7,13 @@ questions:
     label: Caas projectNamespaces
     required: true
     type: string
-  - variable: caas.projectId
-    description: "projectId of target installation, e.g. p-xxxxx"
-    required: true
-    default: global.cattle.projectID
-    type: string
-    label: ProjectId
-    group: "CaaS"
+#  - variable: caas.projectId
+#    description: "projectId of target installation, e.g. p-xxxxx"
+#    required: true
+#    default: global.cattle.projectID
+#    type: string
+#    label: ProjectId
+#    group: "CaaS"
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
     description: "projectId for alertmanagerConfigNamespaceSelector label"
     required: true
