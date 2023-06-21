@@ -1,4 +1,6 @@
+{{ if .Values.caas.grafana.configmaps }}
 {{ $releasenamespace := .Release.Namespace }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -92,3 +94,4 @@ data:
         }
       }
     }
+{{ end }}
