@@ -1,3 +1,5 @@
+{{ if .Values.caas.grafana.configmaps }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,3 +9,4 @@ metadata:
     {{- include "caas-project-monitoring.labels" . | nindent 4 }}
 data:
 {{ (.Files.Glob "files/*").AsConfig | indent 2 }}
+{{ end }}
