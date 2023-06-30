@@ -1,5 +1,10 @@
-# caas-project-monitoring
+# CaaS Project Monitoring
+
 Evolution of Rancher Monitoring V1/V2. We call it: V3
+
+Please read the [Application Readme](https://gitlab.devops.telekom.de/caas/helm-charts/caas-project-monitoring/-/blob/main/app-readme.md) for more details.
+
+## Installation via Helm
 
 This Helm Chart installs `kube-prometheus-spec` with some default values, configured for a hardenend and safe deployment.
 You can use this chart as part from rancher-monitoring from command line to install in project namespace:
