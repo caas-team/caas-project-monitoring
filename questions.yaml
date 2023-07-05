@@ -7,13 +7,13 @@ questions:
     label: Caas projectNamespaces
     required: true
     type: string
-#  - variable: caas.projectId
-#    description: projectId of target installation, e.g. p-xxxxx
-#    required: true
-#    default: global.cattle.projectID
-#    type: string
-#    label: ProjectId
-#    group: CaaS
+  #  - variable: caas.projectId
+  #    description: projectId of target installation, e.g. p-xxxxx
+  #    required: true
+  #    default: global.cattle.projectID
+  #    type: string
+  #    label: ProjectId
+  #    group: CaaS
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
     description: projectId for alertmanagerConfigNamespaceSelector label
     required: true
@@ -162,8 +162,8 @@ questions:
         label: Prometheus Retention
         group: Prometheus
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.retentionSize
-        default: 9Gi
-        description: Retention size of Prometheus data
+        default: 9GiB
+        description: Retention size of Prometheus data in bytes (allowed units eg. GiB or MB)
         type: string
         label: Prometheus Retention Size
         group: Prometheus
@@ -196,12 +196,12 @@ questions:
         label: Grafana view namespaces (by comma)
         required: true
         group: Grafana
-#      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
-#        description: "A comma separated list of namespaces to get datasources. This list MUST set with the correct namespaces, otherwise no metric will be shown."
-#        type: string
-#        label: Grafana view namespaces (by comma)
-#        required: true
-#        group: Grafana
+      #      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
+      #        description: "A comma separated list of namespaces to get datasources. This list MUST set with the correct namespaces, otherwise no metric will be shown."
+      #        type: string
+      #        label: Grafana view namespaces (by comma)
+      #        required: true
+      #        group: Grafana
       - variable: kube-prometheus-stack.grafana.image.repository
         description: Repository of Grafana Image
         type: string
