@@ -162,8 +162,8 @@ questions:
         label: Prometheus Retention
         group: Prometheus
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.retentionSize
-        default: 9Gi
-        description: Retention size of Prometheus data
+        default: 9GiB
+        description: Retention size of Prometheus data in bytes (allowed units eg. GiB or MB)
         type: string
         label: Prometheus Retention Size
         group: Prometheus
