@@ -91,12 +91,6 @@ kube-prometheus-stack:
           equal:
             - 'namespace'
             - 'alertname'
-        - source_matchers:
-            - 'alertname = InfoInhibitor'
-          target_matchers:
-            - 'severity = info'
-          equal:
-            - 'namespace'
       route:
         group_by: ['namespace']
         group_wait: 30s
