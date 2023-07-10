@@ -2,20 +2,11 @@ categories:
   - monitoring
 questions:
   - variable: caas.projectNamespaces
-    description: List of additional namespaces to monitor (whitespace separated, without install namespace!!!)
+    description: List of additional namespaces to monitor (whitespace separated, without installation namespace!!!)
     group: CaaS
     label: Caas projectNamespaces
     required: true
     type: string
-<<<<<<< Updated upstream
-#  - variable: caas.projectId
-#    description: projectId of target installation, e.g. p-xxxxx
-#    required: true
-#    default: global.cattle.projectID
-#    type: string
-#    label: ProjectId
-#    group: CaaS
-=======
   #  - variable: caas.projectId
   #    description: "projectId of target installation, e.g. p-xxxxx"
   #    required: true
@@ -23,7 +14,6 @@ questions:
   #    type: string
   #    label: ProjectId
   #    group: "CaaS"
->>>>>>> Stashed changes
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
     description: projectId for alertmanagerConfigNamespaceSelector label
     required: true
@@ -146,7 +136,7 @@ questions:
         type: string
         label: Prometheus CPU Limits
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
-        description: Strongly recommend to use a persistant storage for Promeutheus. The size should be bigger than Retention Size and the StorageClass should be Longhorn, if available.
+        description: Strongly recommend to use a persistent storage for Prometheus. The size should be bigger than Retention Size and the StorageClass should be Longhorn, if available.
         type: storageclass
         label: Storage Class
         group: Prometheus
