@@ -184,7 +184,10 @@ For additonal Prometheus targets with ServiceMonitor in other project namespaces
 ### helm values
 
 ```yaml
-   ruleNamespaceSelector:
+    alertmanagerConfigNamespaceSelector:
+      matchLabels:
+        field.cattle.io/projectId: p-q8bp8
+    ruleNamespaceSelector:
       matchLabels:
         field.cattle.io/projectId: p-q8bp8
     serviceMonitorNamespaceSelector:
