@@ -7,6 +7,7 @@ questions:
     label: Caas projectNamespaces
     required: true
     type: string
+<<<<<<< Updated upstream
 #  - variable: caas.projectId
 #    description: projectId of target installation, e.g. p-xxxxx
 #    required: true
@@ -14,6 +15,15 @@ questions:
 #    type: string
 #    label: ProjectId
 #    group: CaaS
+=======
+  #  - variable: caas.projectId
+  #    description: "projectId of target installation, e.g. p-xxxxx"
+  #    required: true
+  #    default: global.cattle.projectID
+  #    type: string
+  #    label: ProjectId
+  #    group: "CaaS"
+>>>>>>> Stashed changes
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
     description: projectId for alertmanagerConfigNamespaceSelector label
     required: true
@@ -191,17 +201,17 @@ questions:
     show_subquestion_if: false
     subquestions:
       - variable: kube-prometheus-stack.grafana.sidecar.dashboards.searchNamespace
-        description: A comma separated list of namespaces to get dashboards. This list MUST set with the correct namespaces, otherwise no metric will be shown.
+        description: "Namespaces list. If specified, the sidecar will search for dashboards config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used. It's also possible to specify ALL to search in all namespaces."
         type: string
         label: Grafana view namespaces (by comma)
         required: true
-        group: Grafana
-#      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
-#        description: "A comma separated list of namespaces to get datasources. This list MUST set with the correct namespaces, otherwise no metric will be shown."
-#        type: string
-#        label: Grafana view namespaces (by comma)
-#        required: true
-#        group: Grafana
+        group: "Grafana"
+      #      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
+      #        description: "Namespaces list. If specified, the sidecar will search for datasources config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used. It's also possible to specify ALL to search in all namespaces."
+      #        type: string
+      #        label: Grafana view namespaces (by comma)
+      #        required: true
+      #        group: "Grafana"
       - variable: kube-prometheus-stack.grafana.image.repository
         description: Repository of Grafana Image
         type: string
