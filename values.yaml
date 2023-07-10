@@ -53,10 +53,10 @@ kube-prometheus-stack:
       kubernetesApps: true
       kubernetesResources: true
       kubernetesStorage: true
-      kubernetesSystem: true
+      kubernetesSystem: false
       kubeScheduler: false
-      kubeStateMetrics: true
-      network: true
+      kubeStateMetrics: false
+      network: false
       node: false
       nodeExporterAlerting: false
       nodeExporterRecording: false
