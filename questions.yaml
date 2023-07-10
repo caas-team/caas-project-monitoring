@@ -2,18 +2,18 @@ categories:
   - monitoring
 questions:
   - variable: caas.projectNamespaces
-    description: List of additional namespaces to monitor (whitespace separated, without install namespace!!!)
+    description: List of additional namespaces to monitor (whitespace separated, without installation namespace!!!)
     group: CaaS
     label: Caas projectNamespaces
     required: true
     type: string
-#  - variable: caas.projectId
-#    description: projectId of target installation, e.g. p-xxxxx
-#    required: true
-#    default: global.cattle.projectID
-#    type: string
-#    label: ProjectId
-#    group: CaaS
+  #  - variable: caas.projectId
+  #    description: "projectId of target installation, e.g. p-xxxxx"
+  #    required: true
+  #    default: global.cattle.projectID
+  #    type: string
+  #    label: ProjectId
+  #    group: "CaaS"
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
     description: projectId for alertmanagerConfigNamespaceSelector label
     required: true
@@ -136,7 +136,7 @@ questions:
         type: string
         label: Prometheus CPU Limits
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
-        description: Strongly recommend to use a persistant storage for Promeutheus. The size should be bigger than Retention Size and the StorageClass should be Longhorn, if available.
+        description: Strongly recommend to use a persistent storage for Prometheus. The size should be bigger than Retention Size and the StorageClass should be Longhorn, if available.
         type: storageclass
         label: Storage Class
         group: Prometheus
@@ -191,17 +191,17 @@ questions:
     show_subquestion_if: false
     subquestions:
       - variable: kube-prometheus-stack.grafana.sidecar.dashboards.searchNamespace
-        description: A comma separated list of namespaces to get dashboards. This list MUST set with the correct namespaces, otherwise no metric will be shown.
+        description: "Namespaces list. If specified, the sidecar will search for dashboards config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used. It's also possible to specify ALL to search in all namespaces."
         type: string
         label: Grafana view namespaces (by comma)
         required: true
-        group: Grafana
-#      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
-#        description: "A comma separated list of namespaces to get datasources. This list MUST set with the correct namespaces, otherwise no metric will be shown."
-#        type: string
-#        label: Grafana view namespaces (by comma)
-#        required: true
-#        group: Grafana
+        group: "Grafana"
+      #      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
+      #        description: "Namespaces list. If specified, the sidecar will search for datasources config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used. It's also possible to specify ALL to search in all namespaces."
+      #        type: string
+      #        label: Grafana view namespaces (by comma)
+      #        required: true
+      #        group: "Grafana"
       - variable: kube-prometheus-stack.grafana.image.repository
         description: Repository of Grafana Image
         type: string
