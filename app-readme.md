@@ -187,16 +187,16 @@ For additonal Prometheus targets with ServiceMonitor in other project namespaces
     alertmanagerConfigNamespaceSelector:
       matchLabels:
         field.cattle.io/projectId: p-q8bp8
-    ruleNamespaceSelector:
-      matchLabels:
-        field.cattle.io/projectId: p-q8bp8
-    serviceMonitorNamespaceSelector:
-      matchLabels:
-        field.cattle.io/projectId: p-q8bp8
     podMonitorNamespaceSelector:
       matchLabels:
         field.cattle.io/projectId: p-q8bp8
     probeNamespaceSelector:
+      matchLabels:
+        field.cattle.io/projectId: p-q8bp8
+    ruleNamespaceSelector:
+      matchLabels:
+        field.cattle.io/projectId: p-q8bp8
+    serviceMonitorNamespaceSelector:
       matchLabels:
         field.cattle.io/projectId: p-q8bp8
 ```
