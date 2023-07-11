@@ -1,0 +1,17 @@
+name: Helm Lint
+
+on:
+  push:
+    
+jobs:
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Helm lint
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          helm version
+          helm lint .
+
