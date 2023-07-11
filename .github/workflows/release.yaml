@@ -3,6 +3,8 @@ name: Post Message to Webex Room JS Action
 
 on: 
   push:
+    tags:
+      - '*'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
