@@ -471,10 +471,12 @@ kube-prometheus-stack:
     prometheusSpec:
       additionalRemoteRead: []
       additionalRemoteWrite: []
+      # https://prometheus.io/docs/prometheus/latest/federation/
       additionalScrapeConfigs:
         - job_name: 'federate'
           scrape_interval: 10s
           honor_labels: true
+          honor_timestamps: false
           metrics_path: '/federate'
           bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
           static_configs:
@@ -483,6 +485,7 @@ kube-prometheus-stack:
           params:
             'match[]':
               - '{__name__=~".+"}'
+              - '{__name__=~"job:.*"}'
       apiserverConfig: {}
       disableCompaction: false
       enableAdminAPI: false
