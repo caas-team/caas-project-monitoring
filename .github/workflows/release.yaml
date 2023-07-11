@@ -17,4 +17,4 @@ jobs:
         env:
           WEBEX_TOKEN: ${{ secrets.WEBEX_TOKEN }}
           WEBEX_ROOM_ID: ${{ secrets.WEBEX_ROOM_ID }}
-          MARKDOWN_MESSAGE: "**CPM Release Bot Announcement! Just released ${{GITHUB_REF_NAME}}, check out ${{ github.repository }}/releases.**"
+          MARKDOWN_MESSAGE: "**CPM Release Bot Announcement! Just released ${{ github.refname}}, check out ${{ github.repository }}/releases.**"
