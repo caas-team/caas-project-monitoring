@@ -1,8 +1,6 @@
 # Default values for caas kube-prometheus-stack.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-#
-#
 
 caas:
   rbac:
@@ -10,13 +8,17 @@ caas:
     serviceAccount:
       create: true
       name: project-monitoring
-  # list of namespaces where project-monitoring should watch
-  #projectNamespaces:
+  # list of additional namespaces where project-monitoring should watch
+  #projectNamespaces: 
   #projectNamespaces: demoapp3,demoapp4
   #
   # deploy additional nginx.conf and dashboard for Grafana
   grafana:
     configmaps: true
+  fullnameOverride: ""
+  nameOverride: ""
+  # overrides the default namespace for caas related resources
+  namespaceOverride: ""
 
 global:
   cattle:
@@ -24,15 +26,15 @@ global:
     systemDefaultRegistry: ""
 
 kube-prometheus-stack:
-#  full set of values and pre-defined for caas
-#  ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+  #  full set of values and pre-defined for caas
+  #  ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
   nameOverride: "project-monitoring"
   fullnameOverride: "project-monitoring"
   #commonLabels:
   #  field.cattle.io/projectId: *projectId
 
-## Create default rules for monitoring the cluster
-##
+  ## Create default rules for monitoring the cluster
+  ##
   defaultRules:
     create: true
     rules:
@@ -53,10 +55,10 @@ kube-prometheus-stack:
       kubernetesApps: true
       kubernetesResources: true
       kubernetesStorage: true
-      kubernetesSystem: false
+      kubernetesSystem: true
       kubeScheduler: false
-      kubeStateMetrics: false
-      network: false
+      kubeStateMetrics: true
+      network: true
       node: false
       nodeExporterAlerting: false
       nodeExporterRecording: false
@@ -78,33 +80,39 @@ kube-prometheus-stack:
         resolve_timeout: 5m
       inhibit_rules:
         - source_matchers:
-            - 'severity = critical'
+            - "severity = critical"
           target_matchers:
-            - 'severity =~ warning|info'
+            - "severity =~ warning|info"
           equal:
-            - 'namespace'
-            - 'alertname'
+            - "namespace"
+            - "alertname"
         - source_matchers:
-            - 'severity = warning'
+            - "severity = warning"
           target_matchers:
-            - 'severity = info'
+            - "severity = info"
           equal:
-            - 'namespace'
-            - 'alertname'
+            - "namespace"
+            - "alertname"
+        - source_matchers:
+            - "alertname = InfoInhibitor"
+          target_matchers:
+            - "severity = info"
+          equal:
+            - "namespace"
       route:
-        group_by: ['namespace']
+        group_by: ["namespace"]
         group_wait: 30s
         group_interval: 5m
         repeat_interval: 12h
-        receiver: 'null'
+        receiver: "null"
         routes:
-        - receiver: 'null'
-          matchers:
-            - alertname =~ "InfoInhibitor|Watchdog"
+          - receiver: "null"
+            matchers:
+              - alertname =~ "InfoInhibitor|Watchdog"
       receivers:
-      - name: 'null'
+        - name: "null"
       templates:
-      - '/etc/alertmanager/config/*.tmpl'
+        - "/etc/alertmanager/config/*.tmpl"
     serviceAccount:
       create: true
     service:
@@ -124,82 +132,82 @@ kube-prometheus-stack:
       interval: "30s"
       selfMonitor: true
     templateFiles:
-        rancher_defaults.tmpl: |-
-            {{- define "slack.rancher.text" -}}
-            {{ template "rancher.text_multiple" . }}
-            {{- end -}}
-    
-            {{- define "rancher.text_multiple" -}}
-            *[GROUP - Details]*
-            One or more alarms in this group have triggered a notification.
-    
-            {{- if gt (len .GroupLabels.Values) 0 }}
-            *Group Labels:*
-              {{- range .GroupLabels.SortedPairs }}
-              • *{{ .Name }}:* `{{ .Value }}`
-              {{- end }}
-            {{- end }}
-            {{- if .ExternalURL }}
-            *Link to AlertManager:* {{ .ExternalURL }}
-            {{- end }}
-    
-            {{- range .Alerts }}
-            {{ template "rancher.text_single" . }}
-            {{- end }}
-            {{- end -}}
-    
-            {{- define "rancher.text_single" -}}
-            {{- if .Labels.alertname }}
-            *[ALERT - {{ .Labels.alertname }}]*
-            {{- else }}
-            *[ALERT]*
-            {{- end }}
-            {{- if .Labels.severity }}
-            *Severity:* `{{ .Labels.severity }}`
-            {{- end }}
-            {{- if .Labels.cluster }}
-            *Cluster:*  {{ .Labels.cluster }}
-            {{- end }}
-            {{- if .Annotations.summary }}
-            *Summary:* {{ .Annotations.summary }}
-            {{- end }}
-            {{- if .Annotations.message }}
-            *Message:* {{ .Annotations.message }}
-            {{- end }}
-            {{- if .Annotations.description }}
-            *Description:* {{ .Annotations.description }}
-            {{- end }}
-            {{- if .Annotations.runbook_url }}
-            *Runbook URL:* <{{ .Annotations.runbook_url }}|:spiral_note_pad:>
-            {{- end }}
-            {{- with .Labels }}
-            {{- with .Remove (stringSlice "alertname" "severity" "cluster") }}
-            {{- if gt (len .) 0 }}
-            *Additional Labels:*
-              {{- range .SortedPairs }}
-              • *{{ .Name }}:* `{{ .Value }}`
-              {{- end }}
-            {{- end }}
-            {{- end }}
-            {{- end }}
-            {{- with .Annotations }}
-            {{- with .Remove (stringSlice "summary" "message" "description" "runbook_url") }}
-            {{- if gt (len .) 0 }}
-            *Additional Annotations:*
-              {{- range .SortedPairs }}
-              • *{{ .Name }}:* `{{ .Value }}`
-              {{- end }}
-            {{- end }}
-            {{- end }}
-            {{- end }}
-            {{- end -}}
+      rancher_defaults.tmpl: |-
+        {{- define "slack.rancher.text" -}}
+        {{ template "rancher.text_multiple" . }}
+        {{- end -}}
+
+        {{- define "rancher.text_multiple" -}}
+        *[GROUP - Details]*
+        One or more alarms in this group have triggered a notification.
+
+        {{- if gt (len .GroupLabels.Values) 0 }}
+        *Group Labels:*
+          {{- range .GroupLabels.SortedPairs }}
+          • *{{ .Name }}:* `{{ .Value }}`
+          {{- end }}
+        {{- end }}
+        {{- if .ExternalURL }}
+        *Link to AlertManager:* {{ .ExternalURL }}
+        {{- end }}
+
+        {{- range .Alerts }}
+        {{ template "rancher.text_single" . }}
+        {{- end }}
+        {{- end -}}
+
+        {{- define "rancher.text_single" -}}
+        {{- if .Labels.alertname }}
+        *[ALERT - {{ .Labels.alertname }}]*
+        {{- else }}
+        *[ALERT]*
+        {{- end }}
+        {{- if .Labels.severity }}
+        *Severity:* `{{ .Labels.severity }}`
+        {{- end }}
+        {{- if .Labels.cluster }}
+        *Cluster:*  {{ .Labels.cluster }}
+        {{- end }}
+        {{- if .Annotations.summary }}
+        *Summary:* {{ .Annotations.summary }}
+        {{- end }}
+        {{- if .Annotations.message }}
+        *Message:* {{ .Annotations.message }}
+        {{- end }}
+        {{- if .Annotations.description }}
+        *Description:* {{ .Annotations.description }}
+        {{- end }}
+        {{- if .Annotations.runbook_url }}
+        *Runbook URL:* <{{ .Annotations.runbook_url }}|:spiral_note_pad:>
+        {{- end }}
+        {{- with .Labels }}
+        {{- with .Remove (stringSlice "alertname" "severity" "cluster") }}
+        {{- if gt (len .) 0 }}
+        *Additional Labels:*
+          {{- range .SortedPairs }}
+          • *{{ .Name }}:* `{{ .Value }}`
+          {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- with .Annotations }}
+        {{- with .Remove (stringSlice "summary" "message" "description" "runbook_url") }}
+        {{- if gt (len .) 0 }}
+        *Additional Annotations:*
+          {{- range .SortedPairs }}
+          • *{{ .Name }}:* `{{ .Value }}`
+          {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- end }}
+        {{- end -}}
     alertmanagerSpec:
       alertmanagerConfigSelector:
         matchExpressions:
-        - key: release
-          operator: NotIn
-          values:
-          - rancher-monitoring
+          - key: release
+            operator: NotIn
+            values:
+              - rancher-monitoring
       alertmanagerConfigNamespaceSelector: {}
       #alertmanagerConfigNamespaceSelector:
       #  matchLabels:
@@ -251,7 +259,7 @@ kube-prometheus-stack:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+          - ALL
       runAsUser: 472
       runAsGroup: 472
       privileged: false
@@ -261,11 +269,11 @@ kube-prometheus-stack:
       datasources.yaml:
         apiVersion: 1
         datasources:
-        - name: Prometheus
-          type: prometheus
-          url: http://prometheus-operated:9090
-          access: proxy
-          isDefault: true
+          - name: Prometheus
+            type: prometheus
+            url: http://prometheus-operated:9090
+            access: proxy
+            isDefault: true
     defaultDashboardsEnabled: false
     defaultDashboardsTimezone: utc
     enabled: true
@@ -310,9 +318,9 @@ kube-prometheus-stack:
         configMap:
           name: nginx-proxy-config-project-monitoring-grafana
           items:
-          - key: nginx.conf
-            mode: 438
-            path: nginx.conf
+            - key: nginx.conf
+              mode: 438
+              path: nginx.conf
     forceDeployDatasources: true
     forceDeployDashboards: true
     fullnameOverride: project-monitoring-grafana
@@ -343,7 +351,7 @@ kube-prometheus-stack:
       runAsUser: 472
       runAsGroup: 472
       supplementalGroups:
-      - 472
+        - 472
     rbac:
       create: false
       namespaced: true
@@ -375,7 +383,7 @@ kube-prometheus-stack:
         allowPrivilegeEscalation: false
         capabilities:
           drop:
-          - ALL
+            - ALL
         readOnlyRootFilesystem: true
         runAsUser: 472
         runAsGroup: 472
@@ -465,21 +473,18 @@ kube-prometheus-stack:
     prometheusSpec:
       additionalRemoteRead: []
       additionalRemoteWrite: []
-      # https://prometheus.io/docs/prometheus/latest/federation/
       additionalScrapeConfigs:
-        - job_name: 'federate'
+        - job_name: "federate"
           scrape_interval: 10s
           honor_labels: true
-          honor_timestamps: false
-          metrics_path: '/federate'
+          metrics_path: "/federate"
           bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
           static_configs:
             - targets:
-              - rancher-monitoring-prometheus.cattle-monitoring-system.svc:9091
+                - rancher-monitoring-prometheus.cattle-monitoring-system.svc:9091
           params:
-            'match[]':
+            "match[]":
               - '{__name__=~".+"}'
-              - '{__name__=~"job:.*"}'
       apiserverConfig: {}
       disableCompaction: false
       enableAdminAPI: false
@@ -594,7 +599,7 @@ kube-prometheus-stack:
       walCompression: true
     serviceAccount:
       create: false
-      name:  project-monitoring
+      name: project-monitoring
     service:
       annotations: {}
       clusterIP: ""

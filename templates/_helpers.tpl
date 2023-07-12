@@ -2,8 +2,20 @@
 Expand the name of the chart.
 */}}
 {{- define "caas-project-monitoring.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+  {{- default .Chart.Name .Values.caas.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Allow the release namespace to be overridden for multi-namespace deployments in combined charts
+*/}}
+{{- define "caas-project-monitoring.namespace" -}}
+  {{- if .Values.caas.namespaceOverride -}}
+    {{- .Values.caas.namespaceOverride -}}
+  {{- else -}}
+    {{- .Release.Namespace -}}
+  {{- end -}}
+{{- end -}}
+
 
 {{/*
 Create a default fully qualified app name.
@@ -11,10 +23,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "caas-project-monitoring.fullname" -}}
-{{- if .Values.fullnameOverride }}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- if .Values.caas.fullnameOverride }}
+{{- .Values.caas.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.nameOverride }}
+{{- $name := default .Chart.Name .Values.caas.nameOverride }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -65,3 +77,4 @@ Create the name of the service account to use
 {{- default "default" .Values.caas.rbac.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
