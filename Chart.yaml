@@ -6,15 +6,15 @@ annotations:
 #  catalog.cattle.io/certified: rancher
 name: caas-project-monitoring
 description: A Helm chart for Rancher Project Monitoring V3
-version: 1.0.15
+version: 1.0.16
 appVersion: "40.1.2"
 icon: https://raw.githubusercontent.com/caas-team/caas-project-monitoring/main/logo.png
 keywords:
-- monitoring
+  - monitoring
 dependencies:
-- name: kube-prometheus-stack
-  version: "40.1.2"
-  repository: "https://prometheus-community.github.io/helm-charts"
+  - name: kube-prometheus-stack
+    version: "40.1.2"
+    repository: "https://prometheus-community.github.io/helm-charts"
 sources:
   - https://github.com/caas-team/caas-project-monitoring
   - https://github.com/prometheus-community/helm-charts
