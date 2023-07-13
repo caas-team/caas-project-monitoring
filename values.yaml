@@ -9,8 +9,8 @@ caas:
       create: true
       name: project-monitoring
   # list of additional namespaces where project-monitoring should watch
-  #projectNamespaces:
-  #projectNamespaces: demoapp3,demoapp4
+  projectNamespaces: ""
+  #projectNamespaces: demoapp3 demoapp4
   #
   # deploy additional nginx.conf and dashboard for Grafana
   grafana:
@@ -22,6 +22,8 @@ caas:
 
 global:
   cattle:
+    # set clusterId for Grafana reachable via RancherProxy (not necessary in deployment via App store)
+    #clusterId: c-xxxxx
     projectId: &projectId
     systemDefaultRegistry: ""
 
