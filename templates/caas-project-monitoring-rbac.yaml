@@ -2,6 +2,7 @@
 {{ $fullname := include "caas-project-monitoring.fullname" . }}
 {{ $serviceaccount := include "caas-project-monitoring.serviceAccountName" . }}
 {{ $monitornamespaces := include "caas-project-monitoring.namespace" . }}
+{{ $releaseNamespace := include "caas-project-monitoring.namespace" . }} 
 {{ if .Values.caas.projectNamespaces }}
 {{ $monitornamespaces = printf "%s %s" $monitornamespaces .Values.caas.projectNamespaces }}
 {{ end }}
@@ -76,6 +77,6 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ $serviceaccount }}
-  namespace: {{ $ns}}
+  namespace: {{ $releaseNamespace}}
 {{ end }}
 {{ end }}
