@@ -237,7 +237,7 @@ questions:
         type: string
         label: Grafana dashboard timezone
         group: Grafana
-      - variable: kube-prometheus-stack.grafana.grafana.ini.log.level
+      - variable: kube-prometheus-stack.grafana."grafana.ini".log.level
         description: Loglevel Grafana
         type: enum
         label: Loglevel Grafana

@@ -24,6 +24,7 @@ global:
   cattle:
     # set clusterId for Grafana reachable via RancherProxy (not necessary in deployment via App store)
     #clusterId: c-xxxxx
+    # projectId: &projectId p-xxxxx
     projectId: &projectId
     systemDefaultRegistry: ""
 
