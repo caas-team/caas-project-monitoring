@@ -1,10 +1,11 @@
 {{ if .Values.caas.grafana.configmaps }}
-{{ $releasenamespace := .Release.Namespace }}
+{{ $releasenamespace := include "caas-project-monitoring.namespace" . }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-proxy-config-project-monitoring-grafana
+  namespace: {{ include "caas-project-monitoring.namespace" . }}
   labels:
     {{- include "caas-project-monitoring.labels" . | nindent 4 }}
 data:

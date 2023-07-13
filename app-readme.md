@@ -131,7 +131,7 @@ spec:
 </details>
 
 
-* Additional permissions for Project-Owner, assigned from administrator within RoleTemplate:
+* The CaaS Project Owner must be assigned to the user installing the app. It provides the additional permissions for the project monitoring stack:
 
 <details>
 <summary>code snippet</summary>
@@ -139,19 +139,6 @@ spec:
 ### rancher
 
 ```yaml
-apiVersion: management.cattle.io/v3
-builtin: false
-context: project
-displayName: CaaS-Project-Monitoring-Admin
-external: false
-hidden: false
-kind: RoleTemplate
-metadata:
-  annotations:
-    cleanup.cattle.io/rtUpgradeCluster: 'true'
-  name: caas-project-monitoring-admin
-roleTemplateNames:
-  - project-owner
 rules:
   - apiGroups:
       - monitoring.coreos.com

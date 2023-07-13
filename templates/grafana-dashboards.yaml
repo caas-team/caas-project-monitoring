@@ -4,6 +4,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: project-monitoring-rancher-default-dashboards
+  namespace: {{ include "caas-project-monitoring.namespace" . }}
   labels:
     grafana_dashboard: "1"
     {{- include "caas-project-monitoring.labels" . | nindent 4 }}

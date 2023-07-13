@@ -1,10 +1,9 @@
 {{ if .Values.caas.rbac.enabled }}
 {{ $fullname := include "caas-project-monitoring.fullname" . }}
-{{ $serviceaccount :=include "caas-project-monitoring.serviceAccountName" . }}
-{{ $releasenamespace := .Release.Namespace }}
-{{ $monitornamespaces := .Release.Namespace }}
+{{ $serviceaccount := include "caas-project-monitoring.serviceAccountName" . }}
+{{ $monitornamespaces := include "caas-project-monitoring.namespace" . }}
 {{ if .Values.caas.projectNamespaces }}
-{{ $monitornamespaces = printf "%s %s" .Release.Namespace .Values.caas.projectNamespaces }}
+{{ $monitornamespaces = printf "%s %s" $monitornamespaces .Values.caas.projectNamespaces }}
 {{ end }}
 ---
 apiVersion: v1
@@ -13,15 +12,15 @@ metadata:
   labels:
     {{- include "caas-project-monitoring.labels" . | nindent 4 }}
   name: {{ include "caas-project-monitoring.serviceAccountName" . }}
-  namespace: {{ .Release.Namespace }}
-{{- $ns1 := (splitList " " $monitornamespaces) }}
-{{- range $s1 := $ns1 }}
+  namespace: {{ include "caas-project-monitoring.namespace" . }}
+{{- $namespaces := (splitList " " $monitornamespaces) }}
+{{- range $ns := $namespaces }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ $fullname }}
-  namespace: {{ $s1 }}
+  namespace: {{ $ns }}
 rules:
 - apiGroups:
   - ""
@@ -69,7 +68,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ $fullname }}
-  namespace: {{ $s1 }}
+  namespace: {{ $ns }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -77,6 +76,6 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ $serviceaccount }}
-  namespace: {{ $releasenamespace }}
+  namespace: {{ $ns}}
 {{ end }}
 {{ end }}

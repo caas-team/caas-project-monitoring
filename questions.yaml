@@ -2,7 +2,7 @@ categories:
   - monitoring
 questions:
   - variable: caas.projectNamespaces
-    description: List of additional namespaces to monitor (whitespace separated, without installation namespace!!!)
+    description: List of additional namespaces to monitor (whitespace separated, without installation namespace!). No need to define, if your namespaces are in the same project as the installation namespace.
     group: CaaS
     label: Caas projectNamespaces
     required: true
@@ -15,25 +15,25 @@ questions:
   #    label: ProjectId
   #    group: "CaaS"
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
-    description: projectId for alertmanagerConfigNamespaceSelector label
+    description: Required. Project ID for alertmanagerConfigNamespaceSelector label. Set to your project's ID.
     required: true
     type: string
     label: ProjectId
     group: CaaS
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.ruleNamespaceSelector.matchLabels."field.cattle.io/projectId"
-    description: projectId for ruleNamespaceSelector label
+    description: Required. Project ID for ruleNamespaceSelector label. Set to your project's ID.
     required: true
     type: string
     label: ProjectId
     group: CaaS
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
-    description: projectId for podMonitorNamespaceSelector label
+    description: Required. Project ID for podMonitorNamespaceSelector label. Set to your project's ID.
     required: true
     type: string
     label: ProjectId
     group: CaaS
   - variable: kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId"
-    description: projectId for serviceMonitorNamespaceSelector label
+    description: Required. Project ID for serviceMonitorNamespaceSelector label. Set to your project's ID.
     required: true
     type: string
     label: ProjectId
