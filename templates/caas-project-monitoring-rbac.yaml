@@ -1,7 +1,7 @@
 {{ if .Values.caas.rbac.enabled }}
 {{ $fullname := include "caas-project-monitoring.fullname" . }}
 {{ $serviceaccount := include "caas-project-monitoring.serviceAccountName" . }}
-{{ $monitornamespaces := include "caas-project-monitoring.namespace" . }}
+{{ $monitornamespaces := .Release.Namespace }}
 {{ if .Values.caas.projectNamespaces }}
 {{ $monitornamespaces = printf "%s %s" $monitornamespaces .Values.caas.projectNamespaces }}
 {{ end }}
