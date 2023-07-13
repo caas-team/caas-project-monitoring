@@ -10,7 +10,7 @@ caas:
       name: project-monitoring
   # list of additional namespaces where project-monitoring should watch
   #projectNamespaces: 
-  #projectNamespaces: demoapp3,demoapp4
+  #projectNamespaces: demoapp3 demoapp4
   #
   # deploy additional nginx.conf and dashboard for Grafana
   grafana:
