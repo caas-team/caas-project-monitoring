@@ -59,16 +59,6 @@ questions:
     group: Alertmanager
     show_subquestion_if: true
     subquestions:
-      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
-        description: "Pause Alertmanager"
-        type: boolean
-        label: Alertmanager Pause
-        group: Alertmanager
-      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.repository
-        description: Repository of Alertmanager Image
-        type: string
-        label: Alertmanager Image Repo
-        group: Alertmanager
       - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.tag
         description: Tag of Alertmanager Image
         type: string
