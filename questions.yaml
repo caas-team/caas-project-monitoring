@@ -7,7 +7,7 @@ questions:
     label: Caas projectNamespaces
     required: false
     type: string
-  - variable: kube-prometheus-stack.allertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
+  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
     description: Required. Project ID for alertmanagerConfigNamespaceSelector label. Set to your project's ID.
     required: true
     type: string
@@ -31,52 +31,61 @@ questions:
     type: string
     label: ProjectId
     group: CaaS
-  - variable: ha.enabled
-    default: "true"
-    description: Enable HA
-    type: boolean
-    label: ha enabled
-    group: demoapp
-    show_subquestion_if: true
-    subquestions:
-      - variable: ha.replicaCount.hiller.dry
-        description: Replica Count of PODs
-        type: string
-        label: ha replicacount
-        group: demoapp
-      - variable: ha.replicaCount2
-        description: Replica Count 2 of PODs
-        type: string
-        label: ha replicacount
-        group: demoapp
-  - variable: kube-prometheus-staack.alertmanager.enabled
+  - variable: kube-prometheus-stack.alertmanager.enabled
     default: "true"
     description: Enable Alertmanager
     type: boolean
-    label: alertmanager enabled
-    group: demo
+    label: Alertmanager Enabled
+    group: Alertmanager
     show_subquestion_if: true
     subquestions:
-      - variable: ha.replicaCount23
-        description: Replica Count 2 of PODs
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
+        description: "Pause Alertmanager"
+        type: boolean
+        label: Alertmanager Pause
+        group: Alertmanager
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.repository
+        description: Repository of Alertmanager Image
         type: string
-        label: ha replicacount
-        group: demo
-  - variable: kube-proometheus-stack.alertmanager.enabled
-    default: "true"
-    description: Enable HA 2
-    type: boolean
-    label: ha enabled
-    group: alertmanager
-    show_subquestion_if: true
-    subquestions:
-      - variable: ha2.replicaCount.hiller.dry
-        description: Replica Count of PODs
+        label: Alertmanager Image Repo
+        group: Alertmanager
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.tag
+        description: Tag of Alertmanager Image
         type: string
-        label: ha replicacount
-        group: alertmanager
-      - variable: ha2.replicaCount2
-        description: Replica Count 2 of PODs
+        label: Alertmanager Image Tag
+        group: Alertmanager
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.memory
+        description: Memory Requests Alertmanager
         type: string
-        label: ha replicacount
-        group: alertmanager
+        label: Alertmanager Memory Requests
+        group: Alertmanager
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.cpu
+        description: CPU Requests Alertmanager
+        type: string
+        label: Alertmanager CPU Requests
+        group: Alertmanager
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.memory
+        description: Memory Limits Alertmanager
+        type: string
+        label: Alertmanager Memory Limits
+        group: Alertmanager
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.cpu
+        description: CPU limits Alertmanager
+        type: string
+        label: Alertmanager CPU Limits
+        group: Alertmanager
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.logLevel
+        default: info
+        description: Loglevel Alertmanager
+        type: enum
+        options:
+          - info
+          - error
+          - debug
+        label: Loglevel Alertmanager
+        group: Alertmanager
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.retention
+        description: Retention of Alertmanager data
+        type: string
+        label: Alertmanager Retention
+        group: Alertmanager
