@@ -191,17 +191,11 @@ questions:
     show_subquestion_if: false
     subquestions:
       - variable: kube-prometheus-stack.grafana.sidecar.dashboards.searchNamespace
-        description: "Namespaces list. If specified, the sidecar will search for dashboards config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used. It's also possible to specify ALL to search in all namespaces."
+        description: "Namespaces list. If specified, the sidecar will search for dashboards config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used.
         type: string
         label: Grafana view namespaces (by comma)
-        required: true
+        required: false
         group: "Grafana"
-      #      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
-      #        description: "Namespaces list. If specified, the sidecar will search for datasources config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used. It's also possible to specify ALL to search in all namespaces."
-      #        type: string
-      #        label: Grafana view namespaces (by comma)
-      #        required: true
-      #        group: "Grafana"
       - variable: kube-prometheus-stack.grafana.image.repository
         description: Repository of Grafana Image
         type: string
