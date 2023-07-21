@@ -49,7 +49,7 @@ questions:
         type: string
         label: ha replicacount
         group: demoapp
-  - variable: kube-prometheus-stack.alertmanager.enabled
+  - variable: teeest.kube-prometheus-stack.alertmanager.enabled
     default: "true"
     description: Enable Alertmanager
     type: boolean
