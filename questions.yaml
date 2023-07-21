@@ -56,11 +56,11 @@ questions:
     description: Enable Alertmanager
     type: boolean
     label: Alertmanager Enabled
-    group: Alertmanager
+    group: alertmanager
     show_subquestion_if: true
     subquestions:
       - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.tag
         description: Tag of Alertmanager Image
         type: string
         label: Alertmanager Image Tag
-        group: Alertmanager
+        group: alertmanager
