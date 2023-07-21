@@ -62,7 +62,7 @@ questions:
         type: string
         label: ha replicacount
         group: demo
-  - variable: ha2.enabled
+  - variable: kube-prometheus-stack.alertmanager.enabled
     default: "true"
     description: Enable HA 2
     type: boolean
