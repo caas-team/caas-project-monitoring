@@ -41,9 +41,9 @@ questions:
     subquestions:
       - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
         description: "Pause Alertmanager"
-        group: Alertmanager
-        label: Alertmanager Pause
         type: boolean
+        label: Alertmanager Pause
+        group: Alertmanager
       - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.repository
         description: Repository of Alertmanager Image
         type: string
@@ -197,45 +197,6 @@ questions:
         description: Tag of Grafana Image
         type: string
         label: Grafana Image Tag
-        group: Grafana
-      - variable: kube-prometheus-stack.grafana.resources.requests.memory
-        description: Memory Requests Grafana
-        type: string
-        label: Grafana Memory Requests
-        group: Grafana
-      - variable: kube-prometheus-stack.grafana.resources.requests.cpu
-        description: CPU Requests Grafana
-        type: string
-        label: Grafana Memory Requests
-        group: Grafana
-      - variable: kube-prometheus-stack.grafana.resources.limits.memory
-        description: Memory Limits Grafana
-        type: string
-        label: Grafana Memory Requests
-        group: Grafana
-      - variable: kube-prometheus-stack.grafana.resources.limits.cpu
-        description: CPU limits Grafana
-        type: string
-        label: Grafana CPU Limits
-        group: Grafana
-      - variable: kube-prometheus-stack.grafana.defaultDashboardsTimezone
-        description: Grafana dashboard timezone
-        type: string
-        label: Grafana dashboard timezone
-        group: Grafana
-      - variable: kube-prometheus-stack.grafana."grafana.ini".log.level
-        description: Loglevel Grafana
-        type: enum
-        label: Loglevel Grafana
-        options:
-          - info
-          - error
-          - debug
-        group: Grafana
-      - variable: kube-prometheus-stack.grafana.adminPassword
-        description: Grafana admin password
-        type: string
-        label: Grafana admin password
         group: Grafana
   - variable: ha.enabled
     default: "true"
