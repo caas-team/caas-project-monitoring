@@ -39,28 +39,26 @@ questions:
     group: demoapp
     show_subquestion_if: true
     subquestions:
-      - variable: ha.replicaCount
+      - variable: ha.replicaCount.hiller.dry
         description: Replica Count of PODs
         type: string
         label: ha replicacount
         group: demoapp
-        default: 3
       - variable: ha.replicaCount2
         description: Replica Count 2 of PODs
         type: string
         label: ha replicacount
         group: demoapp
-        default: 3
   - variable: kube-prometheus-stack.alertmanager.enabled
     default: "true"
     description: Enable Alertmanager
     type: boolean
-    label: Alertmanager Enabled
+    label: alertmanager enabled
     group: alertmanager
     show_subquestion_if: true
     subquestions:
       - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec
         description: Tag of Alertmanager Image
         type: string
-        label: Alertmanager Image Tag
+        label: alertmanager image tag
         group: alertmanager
