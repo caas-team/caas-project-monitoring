@@ -57,6 +57,11 @@ questions:
     group: alertmanager
     show_subquestion_if: true
     subquestions:
+      - variable: ha.replicaCount23
+        description: Replica Count 2 of PODs
+        type: string
+        label: ha replicacount
+        group: alertmanager
       - variable: kube-prometheus-stack.alertmanager.alertmanagerSpecc
         description: Tag of Alertmanager Image
         type: string
