@@ -42,7 +42,7 @@ questions:
     type: boolean
     label: Alertmanager Enabled
     group: Alertmanager
-    show_subquestion_if: false
+    show_subquestion_if: true
     subquestions:
       - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.repository
         description: Repository of Alertmanager Image
@@ -100,7 +100,7 @@ questions:
     type: boolean
     label: Prometheus pause
     group: Prometheus
-    show_subquestion_if: false
+    show_subquestion_if: true
     subquestions:
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
         default: mtr.devops.telekom.de/kubeprometheusstack/prometheus
@@ -181,7 +181,7 @@ questions:
     type: boolean
     label: Grafana Enabled
     group: Grafana
-    show_subquestion_if: false
+    show_subquestion_if: true
     subquestions:
       - variable: kube-prometheus-stack.grafana.sidecar.dashboards.searchNamespace
         description: "Namespaces list. If specified, the sidecar will search for dashboards config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used.
