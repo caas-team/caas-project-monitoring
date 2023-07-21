@@ -77,7 +77,7 @@ kube-prometheus-stack:
   ##
   alertmanager:
     apiVersion: v2
-    enabled: true
+    enabled: false
     config:
       global:
         resolve_timeout: 5m
