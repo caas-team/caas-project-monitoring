@@ -550,7 +550,7 @@ kube-prometheus-stack:
           memory: 400Mi
           cpu: 400m
       retention: 10d
-      retentionSize: ""
+      #retentionSize: ""
       routePrefix: /
       replicaExternalLabelName: ""
       replicaExternalLabelNameClear: false

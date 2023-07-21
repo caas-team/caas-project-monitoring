@@ -5,15 +5,7 @@ questions:
     description: List of additional namespaces to monitor (whitespace separated, without installation namespace!). No need to define, if your namespaces are in the same project as the installation namespace.
     group: CaaS
     label: Caas projectNamespaces
-    required: true
     type: string
-  #  - variable: caas.projectId
-  #    description: "projectId of target installation, e.g. p-xxxxx"
-  #    required: true
-  #    default: global.cattle.projectID
-  #    type: string
-  #    label: ProjectId
-  #    group: "CaaS"
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
     description: Required. Project ID for alertmanagerConfigNamespaceSelector label. Set to your project's ID.
     required: true
@@ -38,19 +30,19 @@ questions:
     type: string
     label: ProjectId
     group: CaaS
-  - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
-    description: "Pause Alertmanager"
-    group: Alertmanager
-    label: Alertmanager Pause
-    type: boolean
   - variable: kube-prometheus-stack.alertmanager.enabled
     default: "true"
     description: Enable Alertmanager
     type: boolean
     label: Alertmanager Enabled
     group: Alertmanager
-    show_subquestion_if: false
+    show_subquestion_if: true
     subquestions:
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.paused
+        description: "Pause Alertmanager"
+        type: boolean
+        label: Alertmanager Pause
+        group: Alertmanager
       - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.image.repository
         description: Repository of Alertmanager Image
         type: string
@@ -102,13 +94,13 @@ questions:
     type: boolean
     label: Prometheus Enabled
     group: Prometheus
-  - variable: kube-prometheus-stack.prometheus.prometheusSpec.paused
-    description: Pause Prometheus
-    type: boolean
-    label: Prometheus pause
-    group: Prometheus
-    show_subquestion_if: false
+    show_subquestion_if: true
     subquestions:
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.paused
+        description: Pause Prometheus
+        type: boolean
+        label: Prometheus pause
+        group: Prometheus
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
         default: mtr.devops.telekom.de/kubeprometheusstack/prometheus
         description: Repository of Prometheus Image
@@ -139,6 +131,7 @@ questions:
         description: Strongly recommend to use a persistent storage for Prometheus. The size should be bigger than Retention Size and the StorageClass should be Longhorn, if available.
         type: storageclass
         label: Storage Class
+        default: longhorn
         group: Prometheus
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.accessModes
         description: StorageClass accessMode
@@ -188,20 +181,13 @@ questions:
     type: boolean
     label: Grafana Enabled
     group: Grafana
-    show_subquestion_if: false
+    show_subquestion_if: true
     subquestions:
       - variable: kube-prometheus-stack.grafana.sidecar.dashboards.searchNamespace
-        description: "Namespaces list. If specified, the sidecar will search for dashboards config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used. It's also possible to specify ALL to search in all namespaces."
+        description: Namespaces list. If specified, the sidecar will search for dashboards config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used.
         type: string
         label: Grafana view namespaces (by comma)
-        required: true
-        group: "Grafana"
-      #      - variable: kube-prometheus-stack.grafana.sidecar.datasources.searchNamespace
-      #        description: "Namespaces list. If specified, the sidecar will search for datasources config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used. It's also possible to specify ALL to search in all namespaces."
-      #        type: string
-      #        label: Grafana view namespaces (by comma)
-      #        required: true
-      #        group: "Grafana"
+        group: Grafana
       - variable: kube-prometheus-stack.grafana.image.repository
         description: Repository of Grafana Image
         type: string
@@ -213,7 +199,7 @@ questions:
         label: Grafana Image Tag
         group: Grafana
       - variable: kube-prometheus-stack.grafana.resources.requests.memory
-        description: "Memory Requests Grafana"
+        description: Memory Requests Grafana
         type: string
         label: Grafana Memory Requests
         group: Grafana
@@ -223,7 +209,7 @@ questions:
         label: Grafana Memory Requests
         group: Grafana
       - variable: kube-prometheus-stack.grafana.resources.limits.memory
-        description: "Memory Limits Grafana"
+        description: Memory Limits Grafana
         type: string
         label: Grafana Memory Requests
         group: Grafana
