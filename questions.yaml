@@ -5,15 +5,8 @@ questions:
     description: List of additional namespaces to monitor (whitespace separated, without installation namespace!). No need to define, if your namespaces are in the same project as the installation namespace.
     group: CaaS
     label: Caas projectNamespaces
-    required: true
+    required: false
     type: string
-  #  - variable: caas.projectId
-  #    description: "projectId of target installation, e.g. p-xxxxx"
-  #    required: true
-  #    default: global.cattle.projectID
-  #    type: string
-  #    label: ProjectId
-  #    group: "CaaS"
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
     description: Required. Project ID for alertmanagerConfigNamespaceSelector label. Set to your project's ID.
     required: true
