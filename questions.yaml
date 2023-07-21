@@ -62,11 +62,6 @@ questions:
         type: string
         label: ha replicacount
         group: alertmanager
-      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpecc
-        description: Tag of Alertmanager Image
-        type: string
-        label: alertmanager image tag
-        group: alertmanager
   - variable: ha2.enabled
     default: "true"
     description: Enable HA 2
