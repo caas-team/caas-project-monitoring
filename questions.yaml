@@ -31,6 +31,26 @@ questions:
     type: string
     label: ProjectId
     group: CaaS
+  - variable: ha.enabled
+    default: "true"
+    description: Enable HA
+    type: boolean
+    label: ha enabled
+    group: demoapp
+    show_subquestion_if: true
+    subquestions:
+      - variable: ha.replicaCount
+        description: Replica Count of PODs
+        type: string
+        label: ha replicacount
+        group: demoapp
+        default: 3
+      - variable: ha.replicaCount2
+        description: Replica Count 2 of PODs
+        type: string
+        label: ha replicacount
+        group: demoapp
+        default: 3
   - variable: kube-prometheus-stack.alertmanager.enabled
     default: "true"
     description: Enable Alertmanager
@@ -89,6 +109,26 @@ questions:
         type: string
         label: Alertmanager Retention
         group: Alertmanager
+  - variable: ha.enabled
+    default: "true"
+    description: Enable HA
+    type: boolean
+    label: ha enabled
+    group: demoapp
+    show_subquestion_if: true
+    subquestions:
+      - variable: ha.replicaCount
+        description: Replica Count of PODs
+        type: string
+        label: ha replicacount
+        group: demoapp
+        default: 3
+      - variable: ha.replicaCount2
+        description: Replica Count 2 of PODs
+        type: string
+        label: ha replicacount
+        group: demoapp
+        default: 3
   - variable: kube-prometheus-stack.prometheus.enabled
     default: "true"
     description: Enable Prometheus
@@ -213,4 +253,3 @@ questions:
         label: ha replicacount
         group: demoapp
         default: 3
-
