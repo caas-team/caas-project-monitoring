@@ -180,19 +180,19 @@ questions:
     description: Enable Grafana
     type: boolean
     label: Grafana Enabled
-    group: Grafana
+    group: grafana
     show_subquestion_if: true
     subquestions:
       - variable: kube-prometheus-stack.grafana.image.repository
         description: Repository of Grafana Image
         type: string
         label: Grafana Image Repo
-        group: Grafana
+        group: grafana
       - variable: kube-prometheus-stack.grafana.image.tag
         description: Tag of Grafana Image
         type: string
         label: Grafana Image Tag
-        group: Grafana
+        group: grafana
   - variable: ha.enabled
     default: "true"
     description: Enable HA
