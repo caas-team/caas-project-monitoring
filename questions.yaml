@@ -54,29 +54,29 @@ questions:
     description: Enable Alertmanager
     type: boolean
     label: alertmanager enabled
-    group: alertmanager
+    group: demo
     show_subquestion_if: true
     subquestions:
       - variable: ha.replicaCount23
         description: Replica Count 2 of PODs
         type: string
         label: ha replicacount
-        group: alertmanager
+        group: demo
   - variable: ha2.enabled
     default: "true"
     description: Enable HA 2
     type: boolean
     label: ha enabled
-    group: demoapp2
+    group: alertmanager
     show_subquestion_if: true
     subquestions:
       - variable: ha2.replicaCount.hiller.dry
         description: Replica Count of PODs
         type: string
         label: ha replicacount
-        group: demoapp2
+        group: alertmanager
       - variable: ha2.replicaCount2
         description: Replica Count 2 of PODs
         type: string
         label: ha replicacount
-        group: demoapp2
+        group: alertmanager
