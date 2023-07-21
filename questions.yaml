@@ -5,7 +5,6 @@ questions:
     description: List of additional namespaces to monitor (whitespace separated, without installation namespace!). No need to define, if your namespaces are in the same project as the installation namespace.
     group: CaaS
     label: Caas projectNamespaces
-    required: false
     type: string
   - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId"
     description: Required. Project ID for alertmanagerConfigNamespaceSelector label. Set to your project's ID.
@@ -89,3 +88,152 @@ questions:
         type: string
         label: Alertmanager Retention
         group: Alertmanager
+  - variable: kube-prometheus-stack.prometheus.enabled
+    default: "true"
+    description: Enable Prometheus
+    type: boolean
+    label: Prometheus Enabled
+    group: Prometheus
+    show_subquestion_if: true
+    subquestions:
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.paused
+        description: Pause Prometheus
+        type: boolean
+        label: Prometheus pause
+        group: Prometheus
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
+        default: mtr.devops.telekom.de/kubeprometheusstack/prometheus
+        description: Repository of Prometheus Image
+        type: string
+        label: Prometheus Image Repo
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.tag
+        description: Tag of Prometheus Image
+        type: string
+        label: Prometheus Image Tag
+        group: Prometheus
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.memory
+        description: Memory Requests Prometheus
+        type: string
+        label: Prometheus Memory Requests
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.cpu
+        description: CPU Requests Prometheus
+        type: string
+        label: Prometheus CPU Requests
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.memory
+        description: Memory Limits Prometheus
+        type: string
+        label: Prometheus Memory Limits
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.cpu
+        description: CPU limits Prometheus
+        type: string
+        label: Prometheus CPU Limits
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
+        description: Strongly recommend to use a persistent storage for Prometheus. The size should be bigger than Retention Size and the StorageClass should be Longhorn, if available.
+        type: storageclass
+        label: Storage Class
+        default: longhorn
+        group: Prometheus
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.accessModes
+        description: StorageClass accessMode
+        type: enum
+        default:
+          - ReadWriteOnce
+        options:
+          - [ReadWriteOnce]
+          - [ReadWriteMany]
+          - [ReadOnlyMany]
+        label: Access Mode
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage
+        default: 10Gi
+        description: Size of Prometheus Storage
+        type: string
+        label: Prometheus Storage Size
+        group: Prometheus
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.retention
+        description: "Retention of Prometheus data"
+        type: string
+        label: Prometheus Retention
+        group: Prometheus
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.retentionSize
+        default: 9GiB
+        description: Retention size of Prometheus data in bytes (allowed units eg. GiB or MB)
+        type: string
+        label: Prometheus Retention Size
+        group: Prometheus
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.scrapeInterval
+        description: scrapeInterval of Prometheus
+        type: string
+        label: Prometheus scrape interval
+        group: Prometheus
+      - variable: kube-prometheus-stack.prometheus.prometheusSpec.logLevel
+        default: info
+        description: Loglevel Prometheus
+        type: enum
+        label: Loglevel Prometheus
+        options:
+          - info
+          - error
+          - debug
+        group: Prometheus
+  - variable: kube-prometheus-stack.grafana.enabled
+    default: "true"
+    description: Enable Grafana
+    type: boolean
+    label: Grafana Enabled
+    group: Grafana
+    show_subquestion_if: true
+    subquestions:
+      - variable: kube-prometheus-stack.grafana.sidecar.dashboards.searchNamespace
+        description: Namespaces list. If specified, the sidecar will search for dashboards config-maps inside these namespaces. Otherwise the namespace in which the sidecar is running will be used.
+        type: string
+        label: Grafana view namespaces (by comma)
+        group: Grafana
+      - variable: kube-prometheus-stack.grafana.image.repository
+        description: Repository of Grafana Image
+        type: string
+        label: Grafana Image Repo
+        group: Grafana
+      - variable: kube-prometheus-stack.grafana.image.tag
+        description: Tag of Grafana Image
+        type: string
+        label: Grafana Image Tag
+        group: Grafana
+      - variable: kube-prometheus-stack.grafana.resources.requests.memory
+        description: Memory Requests Grafana
+        type: string
+        label: Grafana Memory Requests
+        group: Grafana
+      - variable: kube-prometheus-stack.grafana.resources.requests.cpu
+        description: CPU Requests Grafana
+        type: string
+        label: Grafana Memory Requests
+        group: Grafana
+      - variable: kube-prometheus-stack.grafana.resources.limits.memory
+        description: Memory Limits Grafana
+        type: string
+        label: Grafana Memory Requests
+        group: Grafana
+      - variable: kube-prometheus-stack.grafana.resources.limits.cpu
+        description: CPU limits Grafana
+        type: string
+        label: Grafana CPU Limits
+        group: Grafana
+      - variable: kube-prometheus-stack.grafana.defaultDashboardsTimezone
+        description: Grafana dashboard timezone
+        type: string
+        label: Grafana dashboard timezone
+        group: Grafana
+      - variable: kube-prometheus-stack.grafana."grafana.ini".log.level
+        description: Loglevel Grafana
+        type: enum
+        label: Loglevel Grafana
+        options:
+          - info
+          - error
+          - debug
+        group: Grafana
+      - variable: kube-prometheus-stack.grafana.adminPassword
+        description: Grafana admin password
+        type: string
+        label: Grafana admin password
+        group: Grafana
