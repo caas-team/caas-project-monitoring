@@ -57,7 +57,7 @@ questions:
     group: alertmanager
     show_subquestion_if: true
     subquestions:
-      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpec
+      - variable: kube-prometheus-stack.alertmanager.alertmanagerSpecc
         description: Tag of Alertmanager Image
         type: string
         label: alertmanager image tag
