@@ -62,3 +62,21 @@ questions:
         type: string
         label: alertmanager image tag
         group: alertmanager
+  - variable: ha2.enabled
+    default: "true"
+    description: Enable HA 2
+    type: boolean
+    label: ha enabled
+    group: demoapp2
+    show_subquestion_if: true
+    subquestions:
+      - variable: ha2.replicaCount.hiller.dry
+        description: Replica Count of PODs
+        type: string
+        label: ha replicacount
+        group: demoapp2
+      - variable: ha2.replicaCount2
+        description: Replica Count 2 of PODs
+        type: string
+        label: ha replicacount
+        group: demoapp2
