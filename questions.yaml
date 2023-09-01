@@ -2,7 +2,7 @@ categories:
   - monitoring
 questions:
   - variable: caas.projectNamespaces
-    description: List of additional namespaces to monitor (whitespace separated, without installation namespace!). No need to define, if your namespaces are in the same project as the installation namespace.
+    description: List of additional namespaces to monitor (whitespace separated, without installation namespace!). No need to define, if you install monitoring in the same namespace as the the resources you need to monitor.
     group: CaaS
     label: Caas projectNamespaces
     type: string
