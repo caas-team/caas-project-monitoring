@@ -268,15 +268,6 @@ kube-prometheus-stack:
       privileged: false
       readOnlyRootFilesystem: true
     createConfigmap: true
-    datasources:
-      datasources.yaml:
-        apiVersion: 1
-        datasources:
-          - name: Prometheus
-            type: prometheus
-            url: http://prometheus-operated:9090
-            access: proxy
-            isDefault: true
     defaultDashboardsEnabled: false
     defaultDashboardsTimezone: utc
     enabled: true
