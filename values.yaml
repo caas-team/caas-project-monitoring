@@ -318,6 +318,15 @@ kube-prometheus-stack:
     forceDeployDatasources: true
     forceDeployDashboards: true
     fullnameOverride: project-monitoring-grafana
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            url: http://prometheus-operated:9090
+            access: proxy
+            isDefault: true
     grafana.ini:
       analytics:
         check_for_updates: false
@@ -398,7 +407,7 @@ kube-prometheus-stack:
       datasources:
         createPrometheusReplicasDatasources: false
         defaultDatasourceEnabled: true
-        enabled: true
+        enabled: false
         label: grafana_datasource
         labelValue: "1"
         searchNamespace: ""
