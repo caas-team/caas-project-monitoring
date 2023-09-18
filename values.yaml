@@ -33,6 +33,7 @@ kube-prometheus-stack:
   #  ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
   nameOverride: "project-monitoring"
   fullnameOverride: "project-monitoring"
+  imageRegistry: mtr.devops.telekom.de
   #commonLabels:
   #  field.cattle.io/projectId: *projectId
 
@@ -370,7 +371,8 @@ kube-prometheus-stack:
       externalUrl:
       forceEnableClusterMode: false
       image:
-        repository: mtr.devops.telekom.de/kubeprometheusstack/alertmanager
+        registry: mtr.devops.telekom.de
+        repository: kubeprometheusstack/alertmanager
         tag: v0.26.0
       listenLocal: false
       logFormat: logfmt
@@ -654,7 +656,8 @@ kube-prometheus-stack:
       enforcedTargetLimit: false
       enableRemoteWriteReceiver: false
       image:
-        repository: mtr.devops.telekom.de/kubeprometheusstack/prometheus
+        registry: mtr.devops.telekom.de
+        repository: kubeprometheusstack/prometheus
         tag: v2.46.0
       ignoreNamespaceSelectors: false
       listenLocal: false
