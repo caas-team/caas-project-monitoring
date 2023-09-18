@@ -1,10 +1,10 @@
 apiVersion: monitoring.coreos.com/v1
-kind: Prometheus
+kind: Alertmanager
 metadata:
-  name: project-monitoring-prometheus
+  name: project-monitoring-alertmanager
 spec:
   containers:
-  - name: config-reloader
+  - name: alertmanager
     securityContext:
       allowPrivilegeEscalation: false
       capabilities:
@@ -14,7 +14,7 @@ spec:
       readOnlyRootFilesystem: true
       runAsUser: 1000
       runAsGroup: 1000
-  - name: prometheus
+  - name: config-reloader
     securityContext:
       allowPrivilegeEscalation: false
       capabilities:
