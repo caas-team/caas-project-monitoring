@@ -70,7 +70,8 @@ spec:
   template:
     spec:
       containers:
-      - args: ["-c","kubectl patch prometheus project-monitoring-prometheus --patch-file patches/prometheus-patch.yaml --type=merge && kubectl patch alertmanager project-monitoring-alertmanager --patch-file patches/alertmanager-patch.yaml --type=merge && kubectl patch deployment project-monitoring-grafana --patch-file patches/grafana-patch.json --type=json && exit 0"]
+      #- args: ["-c","kubectl patch prometheus project-monitoring-prometheus --patch-file patches/prometheus-patch.yaml --type=merge && kubectl patch alertmanager project-monitoring-alertmanager --patch-file patches/alertmanager-patch.yaml --type=merge && kubectl patch deployment project-monitoring-grafana --patch-file patches/grafana-patch.json --type=json && exit 0"]
+      - args: ["-c","kubectl patch prometheus project-monitoring-prometheus --patch-file patches/prometheus-patch.yaml --type=merge && kubectl patch alertmanager project-monitoring-alertmanager --patch-file patches/alertmanager-patch.yaml --type=merge && exit 0"]
         command: ["sh"]
         image: "{{ .Values.caas.patchjob.image.repository }}:{{ .Values.caas.patchjob.image.tag }}"
         imagePullPolicy: {{ .Values.caas.patchjob.pullPolicy | default "Always" }}
