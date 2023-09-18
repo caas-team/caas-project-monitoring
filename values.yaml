@@ -19,6 +19,35 @@ caas:
   nameOverride: ""
   # overrides the default namespace for caas related resources
   namespaceOverride: ""
+  # 
+  patchjob:
+    image:
+      repository: mtr.devops.telekom.de/caas/kubectl
+      tag: latest
+    pullPolicy: IfNotPresent    
+    # minimal permissions for pod
+    podSecurityContext:
+      fsGroup: 1000
+      supplementalGroups:
+      - 1000
+    # resources for kubectl job
+    resources:
+      requests:
+        cpu: 1m
+        memory: 8Mi
+      limits:
+        cpu: 100m
+        memory: 128Mi
+    # minimal permissions for container
+    securityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      privileged: false
+      runAsUser: 1000
+      runAsGroup: 1000
 
 global:
   cattle:
@@ -416,9 +445,9 @@ kube-prometheus-stack:
       capabilities:
         drop:
           - ALL
+      privileged: false
       runAsUser: 472
       runAsGroup: 472
-      privileged: false
       readOnlyRootFilesystem: true
     createConfigmap: true
     datasources:
@@ -502,19 +531,10 @@ kube-prometheus-stack:
       tag: 9.1.5
     namespaceOverride: ""
     nameOverride: project-monitoring-grafana
-    securityContext:
-      fsGroup: 472
-      runAsUser: 472
-      runAsGroup: 472
-      supplementalGroups:
-        - 472
     rbac:
       create: false
       namespaced: true
       pspEnabled: false
-    serviceAccount:
-      create: false
-      name: project-monitoring
     resources:
       limits:
         memory: 600Mi
@@ -522,6 +542,15 @@ kube-prometheus-stack:
       requests:
         memory: 200Mi
         cpu: 200m
+    serviceAccount:
+      create: false
+      name: project-monitoring
+    securityContext:
+      fsGroup: 472
+      runAsUser: 472
+      runAsGroup: 472
+      supplementalGroups:
+      - 472
     sidecar:
       image:
         repository: mtr.devops.telekom.de/kubeprometheusstack/k8s-sidecar
