@@ -1,7 +1,5 @@
-apiVersion: monitoring.coreos.com/v1
-kind: Prometheus
-metadata:
-  name: project-monitoring-prometheus
+# https://prometheus-operator.dev/docs/operator/strategic-merge-patch/
+# kubectl patch prometheus project-monitoring-prometheus --patch-file patches/prometheus-patch.yaml --type=merge
 spec:
   containers:
   - name: config-reloader
