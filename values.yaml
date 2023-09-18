@@ -371,6 +371,7 @@ kube-prometheus-stack:
       externalUrl:
       forceEnableClusterMode: false
       image:
+        registry: mtr.devops.telekom.de
         repository: kubeprometheusstack/alertmanager
         tag: v0.26.0
       listenLocal: false
@@ -655,6 +656,7 @@ kube-prometheus-stack:
       enforcedTargetLimit: false
       enableRemoteWriteReceiver: false
       image:
+        registry: mtr.devops.telekom.de
         repository: kubeprometheusstack/prometheus
         tag: v2.46.0
       ignoreNamespaceSelectors: false
