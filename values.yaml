@@ -406,8 +406,8 @@ kube-prometheus-stack:
         searchNamespace: ""
       datasources:
         createPrometheusReplicasDatasources: false
-        defaultDatasourceEnabled: true
-        enabled: false
+        defaultDatasourceEnabled: false
+        enabled: true
         label: grafana_datasource
         labelValue: "1"
         searchNamespace: ""
