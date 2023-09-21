@@ -1,0 +1,94 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: project-monitoring-patch-job
+  labels:
+    {{- include "caas-project-monitoring.labels" . | nindent 4 }}
+data:
+{{ (.Files.Glob "patches/*").AsConfig | indent 2 }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    {{- include "caas-project-monitoring.labels" . | nindent 4 }}
+  name: project-monitoring-patch-job
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    {{- include "caas-project-monitoring.labels" . | nindent 4 }}
+  name: project-monitoring-patch-job
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - alertmanagers
+  - prometheuses
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    {{- include "caas-project-monitoring.labels" . | nindent 4 }}
+  name: project-monitoring-patch-job
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: project-monitoring-patch-job
+subjects:
+  - kind: ServiceAccount
+    name: project-monitoring-patch-job
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+  labels:
+    {{- include "caas-project-monitoring.labels" . | nindent 4 }}
+  name: project-monitoring-patch-job
+  namespace: {{ include "caas-project-monitoring.namespace" . }}
+spec:
+  backoffLimit: 1
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      containers:
+      #- args: ["-c","kubectl patch prometheus project-monitoring-prometheus --patch-file patches/prometheus-patch.yaml --type=merge && kubectl patch alertmanager project-monitoring-alertmanager --patch-file patches/alertmanager-patch.yaml --type=merge && kubectl patch deployment project-monitoring-grafana --patch-file patches/grafana-patch.json --type=json && exit 0"]
+      - args: ["-c","kubectl patch prometheus project-monitoring-prometheus --patch-file patches/prometheus-patch.yaml --type=merge && kubectl patch alertmanager project-monitoring-alertmanager --patch-file patches/alertmanager-patch.yaml --type=merge && exit 0"]
+        command: ["sh"]
+        image: "{{ .Values.caas.patchjob.image.repository }}:{{ .Values.caas.patchjob.image.tag }}"
+        imagePullPolicy: {{ .Values.caas.patchjob.pullPolicy | default "Always" }}
+        name: kubectl
+        resources:
+          {{- toYaml .Values.caas.patchjob.resources | nindent 10 }}
+        securityContext:
+          {{- toYaml .Values.caas.patchjob.securityContext | nindent 10 }}
+        volumeMounts:
+        - mountPath: /patches
+          name: project-monitoring-patch-job
+      restartPolicy: Never
+      securityContext:
+        {{- toYaml .Values.caas.patchjob.podSecurityContext | nindent 8 }}
+      serviceAccount: project-monitoring-patch-job
+      volumes:
+      - configMap:
+          defaultMode: 0755
+          name: project-monitoring-patch-job
+        name: project-monitoring-patch-job

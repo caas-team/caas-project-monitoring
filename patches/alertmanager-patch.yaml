@@ -1,0 +1,37 @@
+spec:
+  containers:
+  - name: alertmanager
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      privileged: false
+      readOnlyRootFilesystem: true
+      runAsUser: 1000
+      runAsGroup: 1000
+  - name: config-reloader
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      privileged: false
+      readOnlyRootFilesystem: true
+      runAsUser: 1000
+      runAsGroup: 1000
+  initContainers:
+  - name: init-config-reloader
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      privileged: false
+      readOnlyRootFilesystem: true
+      runAsUser: 1000
+      runAsGroup: 1000
+  securityContext:
+    fsGroup: 1000
+    supplementalGroups:
+    - 1000

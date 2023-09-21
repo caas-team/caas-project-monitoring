@@ -19,6 +19,35 @@ caas:
   nameOverride: ""
   # overrides the default namespace for caas related resources
   namespaceOverride: ""
+  # 
+  patchjob:
+    image:
+      repository: mtr.devops.telekom.de/caas/kubectl
+      tag: latest
+    pullPolicy: IfNotPresent    
+    # minimal permissions for pod
+    podSecurityContext:
+      fsGroup: 1000
+      supplementalGroups:
+      - 1000
+    # resources for kubectl job
+    resources:
+      requests:
+        cpu: 1m
+        memory: 8Mi
+      limits:
+        cpu: 100m
+        memory: 128Mi
+    # minimal permissions for container
+    securityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      privileged: false
+      runAsUser: 1000
+      runAsGroup: 1000
 
 global:
   cattle:
@@ -27,6 +56,7 @@ global:
     # projectId: &projectId p-xxxxx
     projectId: &projectId
     systemDefaultRegistry: ""
+  imageRegistry: mtr.devops.telekom.de
 
 kube-prometheus-stack:
   #  full set of values and pre-defined for caas
@@ -135,74 +165,225 @@ kube-prometheus-stack:
       interval: "30s"
       selfMonitor: true
     templateFiles:
-      rancher_defaults.tmpl: |-
+      rancher_defaults.tmpl: >-
         {{- define "slack.rancher.text" -}}
+
         {{ template "rancher.text_multiple" . }}
+
+        {{- end -}}
+
+        {{- define "webex.text_multiple" -}}
+
+        {{- range .Alerts }}
+
+        {{ template "webex.text_single" . }}
+
+        {{- end }}
+
+        {{- if .ExternalURL }}
+
+        AlertManager: <{{ .ExternalURL }}>
+          
+        {{- end }}
+
+        {{- end -}}
+
+        {{- define "webex.text_single" -}}
+
+        {{- if .Labels.alertname }}
+
+        ## [ALERT - {{ .Labels.alertname }}]
+
+        {{- else }}
+
+        ## [ALERT]
+
+        {{- end }}
+
+        {{- if .Labels.severity }}
+
+        ### Severity: `{{ .Labels.severity }}`
+
+        {{- end }}
+
+        {{- if .Labels.cluster }}
+
+        ### Cluster:  {{ .Labels.cluster }}
+
+        {{- end }}
+
+        {{- if .Annotations.summary }}
+
+        ### Summary: {{ .Annotations.summary }}
+
+        {{- end }}
+
+        {{- if .Annotations.message }}
+
+        Message:  {{ .Annotations.message }}
+
+        {{- end }}
+
+        {{- if .Annotations.description }}
+
+        Description:  {{ .Annotations.description }}
+
+        {{- end }}
+
+        {{- if .Annotations.runbook_url }}
+
+        Runbook URL: <{{ .Annotations.runbook_url }}|:spiral_note_pad:>
+
+        {{- end }}
+
+        {{- with .Labels }}
+
+        {{- with .Remove (stringSlice "alertname" "severity" "cluster") }}
+
+        {{- if gt (len .) 0 }}
+
+        Additional Labels:
+          {{- range .SortedPairs }}
+          • {{ .Name }}: `{{ .Value }}`
+          {{- end }}
+        {{- end }}
+
+        {{- end }}
+
+        {{- end }}
+
+        {{- with .Annotations }}
+
+        {{- with .Remove (stringSlice "summary" "message" "description"
+        "runbook_url") }}
+
+        {{- if gt (len .) 0 }}
+
+        ## Additional Annotations:*
+          {{- range .SortedPairs }}
+          • {{ .Name }}: `{{ .Value }}`
+          {{- end }}
+        {{- end }}
+
+        {{- end }}
+
+        {{- end }}
+
+
         {{- end -}}
 
         {{- define "rancher.text_multiple" -}}
-        *[GROUP - Details]*
+
+        *[GROUP - Details]* 
+
         One or more alarms in this group have triggered a notification.
 
+
         {{- if gt (len .GroupLabels.Values) 0 }}
+
         *Group Labels:*
           {{- range .GroupLabels.SortedPairs }}
           • *{{ .Name }}:* `{{ .Value }}`
           {{- end }}
         {{- end }}
+
         {{- if .ExternalURL }}
+
         *Link to AlertManager:* {{ .ExternalURL }}
+
         {{- end }}
+
 
         {{- range .Alerts }}
+
         {{ template "rancher.text_single" . }}
+
         {{- end }}
+
         {{- end -}}
 
+
         {{- define "rancher.text_single" -}}
+
         {{- if .Labels.alertname }}
+
         *[ALERT - {{ .Labels.alertname }}]*
+
         {{- else }}
+
         *[ALERT]*
+
         {{- end }}
+
         {{- if .Labels.severity }}
+
         *Severity:* `{{ .Labels.severity }}`
+
         {{- end }}
+
         {{- if .Labels.cluster }}
+
         *Cluster:*  {{ .Labels.cluster }}
+
         {{- end }}
+
         {{- if .Annotations.summary }}
+
         *Summary:* {{ .Annotations.summary }}
+
         {{- end }}
+
         {{- if .Annotations.message }}
+
         *Message:* {{ .Annotations.message }}
+
         {{- end }}
+
         {{- if .Annotations.description }}
+
         *Description:* {{ .Annotations.description }}
+
         {{- end }}
+
         {{- if .Annotations.runbook_url }}
+
         *Runbook URL:* <{{ .Annotations.runbook_url }}|:spiral_note_pad:>
+
         {{- end }}
+
         {{- with .Labels }}
+
         {{- with .Remove (stringSlice "alertname" "severity" "cluster") }}
+
         {{- if gt (len .) 0 }}
+
         *Additional Labels:*
           {{- range .SortedPairs }}
           • *{{ .Name }}:* `{{ .Value }}`
           {{- end }}
         {{- end }}
+
         {{- end }}
+
         {{- end }}
+
         {{- with .Annotations }}
-        {{- with .Remove (stringSlice "summary" "message" "description" "runbook_url") }}
+
+        {{- with .Remove (stringSlice "summary" "message" "description"
+        "runbook_url") }}
+
         {{- if gt (len .) 0 }}
+
         *Additional Annotations:*
           {{- range .SortedPairs }}
           • *{{ .Name }}:* `{{ .Value }}`
           {{- end }}
         {{- end }}
+
         {{- end }}
+
         {{- end }}
+
         {{- end -}}
     alertmanagerSpec:
       alertmanagerConfigSelector:
@@ -219,8 +400,9 @@ kube-prometheus-stack:
       externalUrl:
       forceEnableClusterMode: false
       image:
-        repository: mtr.devops.telekom.de/kubeprometheusstack/alertmanager
-        tag: v0.24.0
+        registry: mtr.devops.telekom.de
+        repository: kubeprometheusstack/alertmanager
+        tag: v0.26.0
       listenLocal: false
       logFormat: logfmt
       logLevel: info
@@ -263,9 +445,9 @@ kube-prometheus-stack:
       capabilities:
         drop:
           - ALL
+      privileged: false
       runAsUser: 472
       runAsGroup: 472
-      privileged: false
       readOnlyRootFilesystem: true
     createConfigmap: true
     defaultDashboardsEnabled: false
@@ -349,19 +531,10 @@ kube-prometheus-stack:
       tag: 9.1.5
     namespaceOverride: ""
     nameOverride: project-monitoring-grafana
-    securityContext:
-      fsGroup: 472
-      runAsUser: 472
-      runAsGroup: 472
-      supplementalGroups:
-        - 472
     rbac:
       create: false
       namespaced: true
       pspEnabled: false
-    serviceAccount:
-      create: false
-      name: project-monitoring
     resources:
       limits:
         memory: 600Mi
@@ -369,10 +542,19 @@ kube-prometheus-stack:
       requests:
         memory: 200Mi
         cpu: 200m
+    serviceAccount:
+      create: false
+      name: project-monitoring
+    securityContext:
+      fsGroup: 472
+      runAsUser: 472
+      runAsGroup: 472
+      supplementalGroups:
+      - 472
     sidecar:
       image:
         repository: mtr.devops.telekom.de/kubeprometheusstack/k8s-sidecar
-        tag: 1.19.2
+        tag: 1.24.6
       plugins:
         searchNamespace: ""
       resources:
@@ -503,8 +685,9 @@ kube-prometheus-stack:
       enforcedTargetLimit: false
       enableRemoteWriteReceiver: false
       image:
-        repository: mtr.devops.telekom.de/kubeprometheusstack/prometheus
-        tag: v2.38.0
+        registry: mtr.devops.telekom.de
+        repository: kubeprometheusstack/prometheus
+        tag: v2.46.0
       ignoreNamespaceSelectors: false
       listenLocal: false
       logFormat: logfmt
