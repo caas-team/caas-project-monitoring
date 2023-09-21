@@ -3,9 +3,6 @@
 # Declare variables to be passed into your templates.
 
 caas:
-  # patch job to set securityContect in Prometheus/Alertmanager statefulset
-  #patchjob:
-  #  enabled: false
   # create a namespaces ServiceAccount
   rbac:
     enabled: true
@@ -24,7 +21,9 @@ caas:
   # overrides the default namespace for caas related resources
   namespaceOverride: ""
   # 
+  # patch job to set securityContect in Prometheus/Alertmanager statefulset
   patchjob:
+    enabled: false
     image:
       repository: mtr.devops.telekom.de/caas/kubectl
       tag: latest
