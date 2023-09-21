@@ -427,10 +427,9 @@ kube-prometheus-stack:
           cpu: 100m
       paused: false
       securityContext:
-        runAsGroup: 2000
-        runAsNonRoot: true
-        runAsUser: 1000
         fsGroup: 2000
+        supplementalGroups:
+        - 1000
       volumes: []
       volumeMounts: []
   global:
@@ -750,10 +749,9 @@ kube-prometheus-stack:
       scrapeInterval: "60s"
       scrapeTimeout: "10s"
       securityContext:
-        runAsGroup: 2000
-        runAsNonRoot: true
-        runAsUser: 1000
         fsGroup: 2000
+        supplementalGroups:
+        - 1000
       serviceMonitorSelector:
         matchExpressions:
           - key: release
