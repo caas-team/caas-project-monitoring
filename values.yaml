@@ -4,8 +4,8 @@
 
 caas:
   # patch job to set securityContect in Prometheus/Alertmanager statefulset
-  patchjob:
-    enabled: false
+  #patchjob:
+  #  enabled: false
   # create a namespaces ServiceAccount
   rbac:
     enabled: true
