@@ -163,7 +163,8 @@ rules:
 
 kube-prometheus-stack will installed in a project namespace with Project-Owner permissions + the additional permissions above.
 With default settings at least install namespace are covered with metrics, permitted by the ServiceAccountToken in the Prometheus Pod. If the install namespace is in a project, all other namespaces are also covered by the token permission.
-For additonal Prometheus targets with ServiceMonitor in other project namespaces or AlertmanagerConfigs this namespaces must by listed in `caas.projectNamespaces` Prometheus discovery can be limited, e.g.
+
+To monitor additional Prometheus targets with `ServiceMonitors` and/or `AlertmanagerConfigs` in other project namespaces, those namespaces **must** by listed in `caas.projectNamespaces`.
 
 <details>
 <summary>code snippet</summary>

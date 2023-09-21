@@ -450,15 +450,6 @@ kube-prometheus-stack:
       runAsGroup: 472
       readOnlyRootFilesystem: true
     createConfigmap: true
-    datasources:
-      datasources.yaml:
-        apiVersion: 1
-        datasources:
-          - name: Prometheus
-            type: prometheus
-            url: http://prometheus-operated:9090
-            access: proxy
-            isDefault: true
     defaultDashboardsEnabled: false
     defaultDashboardsTimezone: utc
     enabled: true
@@ -509,6 +500,15 @@ kube-prometheus-stack:
     forceDeployDatasources: true
     forceDeployDashboards: true
     fullnameOverride: project-monitoring-grafana
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            url: http://prometheus-operated:9090
+            access: proxy
+            isDefault: true
     grafana.ini:
       analytics:
         check_for_updates: false
@@ -588,7 +588,7 @@ kube-prometheus-stack:
         searchNamespace: ""
       datasources:
         createPrometheusReplicasDatasources: false
-        defaultDatasourceEnabled: true
+        defaultDatasourceEnabled: false
         enabled: true
         label: grafana_datasource
         labelValue: "1"
