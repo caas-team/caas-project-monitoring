@@ -54,7 +54,7 @@ data:
           proxy_pass     http://localhost:3000;
 
           sub_filter_types application/json;
-          sub_filter_once off;
+          sub_filter_once on;
           sub_filter '"url":"/d' '"url":"d';
         }
 
@@ -77,7 +77,7 @@ data:
           
           proxy_pass     http://localhost:3000/;
 
-          sub_filter_once off;
+          sub_filter_once on;
 {{- if not (empty .Values.global.cattle.clusterId) }}
           sub_filter '"appSubUrl":""' '"appSubUrl":"/k8s/clusters/{{ .Values.global.cattle.clusterId }}/api/v1/namespaces/{{ $releasenamespace }}/services/http:project-monitoring-grafana:80/proxy"';
 {{- else }}

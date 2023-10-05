@@ -530,7 +530,7 @@ kube-prometheus-stack:
         level: info
     image:
       repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
-      tag: 9.1.5
+      tag: 10.1.4
     namespaceOverride: ""
     nameOverride: project-monitoring-grafana
     rbac:
