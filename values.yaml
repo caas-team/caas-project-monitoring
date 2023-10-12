@@ -531,6 +531,8 @@ kube-prometheus-stack:
     image:
       repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
       tag: 10.1.4
+    initChownData:
+      enabled: false
     namespaceOverride: ""
     nameOverride: project-monitoring-grafana
     rbac:
