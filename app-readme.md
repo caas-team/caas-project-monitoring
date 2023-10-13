@@ -171,22 +171,29 @@ To monitor additional Prometheus targets with `ServiceMonitors` and/or `Alertman
 
 ### helm values
 
+Change at least the kube-prometheus-stack selectors to target the namespaces of your project:
+
 ```yaml
-    alertmanagerConfigNamespaceSelector:
-      matchLabels:
-        field.cattle.io/projectId: p-q8bp8
-    podMonitorNamespaceSelector:
-      matchLabels:
-        field.cattle.io/projectId: p-q8bp8
-    probeNamespaceSelector:
-      matchLabels:
-        field.cattle.io/projectId: p-q8bp8
-    ruleNamespaceSelector:
-      matchLabels:
-        field.cattle.io/projectId: p-q8bp8
-    serviceMonitorNamespaceSelector:
-      matchLabels:
-        field.cattle.io/projectId: p-q8bp8
+kube-prometheus-stack:
+  alertmanager:
+    alertmanagerSpec:
+      alertmanagerConfigNamespaceSelector:
+        matchLabels:
+          field.cattle.io/projectId: p-xxxxx
+  prometheus:
+    prometheusSpec:
+      podMonitorNamespaceSelector:
+        matchLabels:
+          field.cattle.io/projectId: p-xxxxx
+      probeNamespaceSelector:
+        matchLabels:
+          field.cattle.io/projectId: p-xxxxx
+      ruleNamespaceSelector:
+        matchLabels:
+          field.cattle.io/projectId: p-xxxxx
+      serviceMonitorNamespaceSelector:
+        matchLabels:
+          field.cattle.io/projectId: p-xxxxx
 ```
 
 </details>

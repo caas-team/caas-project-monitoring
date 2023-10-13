@@ -20,19 +20,19 @@ caas:
   nameOverride: ""
   # overrides the default namespace for caas related resources
   namespaceOverride: ""
-  # 
+  #
   # patch job to set securityContect in Prometheus/Alertmanager statefulset
   patchjob:
     enabled: false
     image:
       repository: mtr.devops.telekom.de/caas/kubectl
       tag: latest
-    pullPolicy: IfNotPresent    
+    pullPolicy: IfNotPresent
     # minimal permissions for pod
     podSecurityContext:
       fsGroup: 1000
       supplementalGroups:
-      - 1000
+        - 1000
     # resources for kubectl job
     resources:
       requests:
@@ -47,7 +47,7 @@ caas:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+          - ALL
       privileged: false
       runAsUser: 1000
       runAsGroup: 1000
@@ -432,7 +432,7 @@ kube-prometheus-stack:
       securityContext:
         fsGroup: 2000
         supplementalGroups:
-        - 1000
+          - 1000
       volumes: []
       volumeMounts: []
   global:
@@ -554,7 +554,7 @@ kube-prometheus-stack:
       runAsUser: 472
       runAsGroup: 472
       supplementalGroups:
-      - 472
+        - 472
     sidecar:
       image:
         repository: mtr.devops.telekom.de/kubeprometheusstack/k8s-sidecar
@@ -713,12 +713,6 @@ kube-prometheus-stack:
       #podMonitorNamespaceSelector:
       #  matchLabels:
       #    "field.cattle.io/projectId": *projectId
-      # probeNamespaceSelector:
-      #   matchExpressions:
-      #   - key: release
-      #     operator: NotIn
-      #     values:
-      #     - rancher-monitoring
       #probeNamespaceSelector:
       #  matchLabels:
       #    "field.cattle.io/projectId": *projectId
@@ -756,7 +750,7 @@ kube-prometheus-stack:
       securityContext:
         fsGroup: 2000
         supplementalGroups:
-        - 1000
+          - 1000
       serviceMonitorSelector:
         matchExpressions:
           - key: release
