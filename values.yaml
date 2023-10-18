@@ -103,7 +103,8 @@ kube-prometheus-stack:
     appNamespacesTarget: ".*"
     runbookUrl: "https://runbooks.prometheus-operator.dev/runbooks"
     ## Disabled PrometheusRule alerts
-    disabled: {}
+    disabled:
+      KubeletDown: true
     # KubeAPIDown: true
     # NodeRAIDDegraded: true
   ## Provide custom recording or alerting rules to be deployed into the cluster.
