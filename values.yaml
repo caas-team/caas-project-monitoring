@@ -664,7 +664,7 @@ kube-prometheus-stack:
       additionalRemoteWrite: []
       additionalScrapeConfigs:
         - job_name: "federate"
-          scrape_interval: 10s
+          scrape_interval: 60s
           honor_labels: true
           metrics_path: "/federate"
           bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -778,7 +778,7 @@ kube-prometheus-stack:
       #  emptyDir:
       #    medium: Memory
       tsdb:
-        outOfOrderTimeWindow: 5s
+        outOfOrderTimeWindow: 0s
       volumes: []
       volumeMounts: []
       walCompression: true
