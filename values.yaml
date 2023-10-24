@@ -678,7 +678,7 @@ kube-prometheus-stack:
       apiserverConfig: {}
       disableCompaction: false
       enableAdminAPI: false
-      evaluationInterval: ""
+      evaluationInterval: "30s"
       externalLabels: {}
       externalUrl: ""
       excludedFromEnforcement: []
@@ -746,7 +746,7 @@ kube-prometheus-stack:
             operator: NotIn
             values:
               - rancher-monitoring
-      scrapeInterval: "60s"
+      scrapeInterval: "30s"
       scrapeTimeout: "10s"
       securityContext:
         fsGroup: 2000
