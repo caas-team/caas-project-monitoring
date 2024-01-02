@@ -145,6 +145,7 @@ rules:
       - monitoring.cattle.io
     resources:
       - alertmanagers
+      - alertmanagerconfigs
       - prometheuses
     verbs:
       - create
