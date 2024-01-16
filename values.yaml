@@ -62,6 +62,9 @@ global:
   imageRegistry: mtr.devops.telekom.de
 
 kube-prometheus-stack:
+  crds:
+    # Only create CRDs if you're a cluster admin.
+    create: false
   #  full set of values and pre-defined for caas
   #  ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
   nameOverride: "project-monitoring"
