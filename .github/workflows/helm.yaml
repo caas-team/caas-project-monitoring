@@ -17,7 +17,6 @@ jobs:
           helm version
           HELM_EXPERIMENTAL_OCI=1 helm registry login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
           HELM_EXPERIMENTAL_OCI=1 helm registry login ${MTR} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-          helm dependency update .
           helm lint .
           helm package .
           HELM_EXPERIMENTAL_OCI=1 helm push $(ls *.tgz| head -1) oci://ghcr.io/caas-team/charts
