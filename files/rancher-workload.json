@@ -646,7 +646,7 @@
     ]
   },
   "timezone": "",
-  "title": "Rancher / Workload",
+  "title": "Rancher / Workload (deprecated)",
   "uid": "rancher-workload-1",
   "version": 8
 }
