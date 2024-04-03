@@ -94,7 +94,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "CPU Utilization",
+      "title": "CPU Utilization (deprecated)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -189,7 +189,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Memory Utilization",
+      "title": "Memory Utilization (deprecated)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -314,7 +314,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Network Traffic",
+      "title": "Network Traffic (deprecated)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -415,7 +415,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Network I/O",
+      "title": "Network I/O (deprecated)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -516,7 +516,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk I/O",
+      "title": "Disk I/O (deprecated)",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -569,9 +569,7 @@
         "hide": 0,
         "label": "Data Source",
         "name": "datasource",
-        "options": [
-
-        ],
+        "options": [],
         "query": "prometheus",
         "refresh": 1,
         "regex": "",
