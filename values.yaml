@@ -409,7 +409,7 @@ kube-prometheus-stack:
       image:
         registry: mtr.devops.telekom.de
         repository: kubeprometheusstack/alertmanager
-        tag: v0.26.0
+        tag: v0.27.0
       listenLocal: false
       logFormat: logfmt
       logLevel: info
@@ -534,7 +534,7 @@ kube-prometheus-stack:
         level: info
     image:
       repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
-      tag: 10.1.4
+      tag: 10.4.1
     initChownData:
       enabled: false
     namespaceOverride: ""
@@ -562,7 +562,7 @@ kube-prometheus-stack:
     sidecar:
       image:
         repository: mtr.devops.telekom.de/kubeprometheusstack/k8s-sidecar
-        tag: 1.24.6
+        tag: 1.25.2
       plugins:
         searchNamespace: ""
       resources:
@@ -695,7 +695,7 @@ kube-prometheus-stack:
       image:
         registry: mtr.devops.telekom.de
         repository: kubeprometheusstack/prometheus
-        tag: v2.46.0
+        tag: v2.50.1
       ignoreNamespaceSelectors: false
       listenLocal: false
       logFormat: logfmt
