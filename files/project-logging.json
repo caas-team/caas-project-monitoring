@@ -805,34 +805,6 @@
       },
       {
         "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values(node_cpu_seconds_total, cluster)",
-        "hide": 0,
-        "includeAll": false,
-        "label": "cluster",
-        "multi": false,
-        "name": "cluster",
-        "options": [],
-        "query": "label_values(node_cpu_seconds_total, cluster)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 2,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {
           "selected": false,
           "text": "All",
           "value": "$__all"
@@ -849,33 +821,6 @@
         "name": "fluentdplugin",
         "options": [],
         "query": "label_values(fluentd_output_status_emit_records, plugin_id)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values(fluentbit_input_bytes_total,pod)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "",
-        "multi": true,
-        "name": "fluentbit",
-        "options": [],
-        "query": "label_values(fluentbit_input_bytes_total,pod)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
