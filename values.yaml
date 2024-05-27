@@ -695,7 +695,7 @@ kube-prometheus-stack:
       image:
         registry: mtr.devops.telekom.de
         repository: kubeprometheusstack/prometheus
-        tag: v2.50.1
+        tag: v2.51.2
       ignoreNamespaceSelectors: false
       listenLocal: false
       logFormat: logfmt
