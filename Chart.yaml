@@ -5,7 +5,7 @@ annotations:
   catalog.cattle.io/requests-memory: 1000Mi
 name: caas-project-monitoring
 description: A Helm chart for Rancher Project Monitoring V3
-version: "1.2.9"
+version: "1.2.10"
 appVersion: "51.0.3"
 icon: https://raw.githubusercontent.com/caas-team/caas-project-monitoring/main/logo.png
 keywords:
