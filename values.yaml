@@ -766,7 +766,14 @@ kube-prometheus-stack:
       #  matchLabels:
       #    "field.cattle.io/projectId": *projectId
       shards: 1
-      storageSpec: {}
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 50Gi
+          selector: {}
       ## Using PersistentVolumeClaim
       ##
       #  volumeClaimTemplate:
