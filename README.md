@@ -11,29 +11,11 @@ You can use this chart as part from rancher-monitoring from command line to inst
 
 ```bash
 helm dependency build
-helm -n mynamespace upgrade -i project-monitoring -f values.yaml --skip-crds .
+helm -n mynamespace upgrade -i project-monitoring -f values.yaml .
 ```
 
-remote install:
+Or install by using the packaged chart:
 
 ```bash
-helm -n mynamespace upgrade -i project-monitoring -f values.yaml --skip-crds --repo oci://mtr.devops.telekom.de/caas/charts/caas-project-monitoring --version 0.0.19
-```
-
-Note: the bundle in this repo doesn't contain the crds directory, because helm-operation from Rancher can't set `--skip-crds` flag
-
-Debug kube-prometheus-spec
-
-```yaml
-kube-prometheus-spec:
-  alertmanager:
-    alertmanagerSpec:
-      logLevel: debug
-  grafana:
-    grafana.ini:
-      log:
-        level: debug
-  prometheus:
-    prometheusSpec:
-      logLevel: debug
+helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mtr.devops.telekom.de/caas/charts/caas-project-monitoring --version 1.3.0
 ```
