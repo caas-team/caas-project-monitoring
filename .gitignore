@@ -1,2 +1,2 @@
 charts/kube-prometheus-stack
-demomon.yaml
+caas-project-monitoring*.tgz

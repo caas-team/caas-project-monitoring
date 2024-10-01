@@ -1,4 +1,10 @@
+.pre-commit-config.yaml
+rke*.tgz
+.github/*
+README.md*
+
+# needed else the whole git directory is packed in the chart
 .git
-logo.png
-LICENSE
-charts/kube-prometheus-stack
+
+# ignore self if present in directory
+caas-cluster-monitoring*.tgz

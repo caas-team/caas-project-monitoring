@@ -41,12 +41,6 @@ rules:
   - get
   - list
   - watch
-- apiGroups:
-  - monitoring.cattle.io
-  resources:
-  - prometheus
-  verbs:
-  - view
 - apiGroups: 
   - monitoring.coreos.com
   resources:
