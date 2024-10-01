@@ -42,15 +42,13 @@ kube-prometheus-stack:
   commonLabels:
     field.cattle.io/projectId: *projectId
 
-  # -- Default rules for monitoring the namespaces of the 
-  # -- rancher project
+  # Default rules for monitoring the namespaces of the 
+  # rancher project
   defaultRules:
+    # -- Whether to deploy the default rules
     create: true
     rules:
-      alertmanager: true
       etcd: false
-      configReloaders: true
-      general: true
       k8s: true
       kubeApiserverAvailability: false
       kubeApiserverBurnrate: false
@@ -59,88 +57,33 @@ kube-prometheus-stack:
       kubeControllerManager: false
       kubelet: false
       kubeProxy: false
-      kubePrometheusGeneral: true
       kubePrometheusNodeRecording: false
-      kubernetesApps: true
-      kubernetesResources: true
-      kubernetesStorage: true
-      kubernetesSystem: true
       kubeScheduler: false
-      kubeStateMetrics: true
-      network: true
       node: false
       nodeExporterAlerting: false
       nodeExporterRecording: false
-      prometheus: true
       prometheusOperator: false
-    appNamespacesTarget: ".*"
-    runbookUrl: "https://runbooks.prometheus-operator.dev/runbooks"
     # -- Disabled PrometheusRule alerts
     disabled:
       KubeletDown: true
 
-  # -- Provide custom recording or alerting rules to be deployed into the cluster.
+  # Provide custom recording or alerting rules to be deployed into the cluster.
   alertmanager:
-    apiVersion: v2
-    enabled: true
     config:
-      global:
-        resolve_timeout: 5m
-      inhibit_rules:
-      - source_matchers:
-        - "severity = critical"
-        target_matchers:
-        - "severity =~ warning|info"
-        equal:
-        - "namespace"
-        - "alertname"
-      - source_matchers:
-        - "severity = warning"
-        target_matchers:
-        - "severity = info"
-        equal:
-        - "namespace"
-        - "alertname"
-      - source_matchers:
-        - "alertname = InfoInhibitor"
-        target_matchers:
-        - "severity = info"
-        equal:
-        - "namespace"
       route:
-        group_by: ["namespace"]
-        group_wait: 30s
-        group_interval: 5m
-        repeat_interval: 12h
-        receiver: "null"
         routes:
         - receiver: "null"
           matchers:
           - alertname =~ "InfoInhibitor|Watchdog"
-      receivers:
-      - name: "null"
-      templates:
-      - "/etc/alertmanager/config/*.tmpl"
-    serviceAccount:
-      create: true
-    service:
-      annotations: {}
-      labels: {}
-      clusterIP: ""
-      port: 9093
-      targetPort: 9093
-      externalIPs: []
-      loadBalancerIP: ""
-      loadBalancerSourceRanges: []
-      externalTrafficPolicy: Cluster
-      type: ClusterIP
-    servicePerReplica:
-      enabled: false
+
     serviceMonitor:
       interval: "30s"
-      selfMonitor: true
+    # @ignored
     templateFiles:
+      # The default template copied
+      # from the rancher cluster monitoring
       rancher_defaults.tmpl: "{{- define \"slack.rancher.text\" -}}\n      #magic___^_^___line\n{{ template \"rancher.text_multiple\" . }}\n      #magic___^_^___line\n{{- end -}}\n      #magic___^_^___line\n{{- define \"webex.text_multiple\" -}}\n      #magic___^_^___line\n{{- range .Alerts }}\n      #magic___^_^___line\n{{ template \"webex.text_single\" . }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .ExternalURL }}\n      #magic___^_^___line\nAlertManager: <{{ .ExternalURL }}>\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end -}}\n      #magic___^_^___line\n{{- define \"webex.text_single\" -}}\n      #magic___^_^___line\n{{- if .Labels.alertname }}\n      #magic___^_^___line\n## [ALERT - {{ .Labels.alertname }}]\n      #magic___^_^___line\n{{- else }}\n      #magic___^_^___line\n## [ALERT]\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Labels.severity }}\n      #magic___^_^___line\n### Severity: `{{ .Labels.severity }}`\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Labels.cluster }}\n      #magic___^_^___line\n### Cluster:  {{ .Labels.cluster }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.summary }}\n      #magic___^_^___line\n### Summary: {{ .Annotations.summary }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.message }}\n      #magic___^_^___line\nMessage:  {{ .Annotations.message }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.description }}\n      #magic___^_^___line\nDescription:  {{ .Annotations.description }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.runbook_url }}\n      #magic___^_^___line\nRunbook URL: <{{ .Annotations.runbook_url }}|:spiral_note_pad:>\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- with .Labels }}\n      #magic___^_^___line\n{{- with .Remove (stringSlice \"alertname\" \"severity\" \"cluster\") }}\n      #magic___^_^___line\n{{- if gt (len .) 0 }}\n      #magic___^_^___line\nAdditional Labels:\n  {{- range .SortedPairs }}\n  • {{ .Name }}: `{{ .Value }}`\n  {{- end }}\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- with .Annotations }}\n      #magic___^_^___line\n{{- with .Remove (stringSlice \"summary\" \"message\" \"description\" \"runbook_url\") }}\n      #magic___^_^___line\n{{- if gt (len .) 0 }}\n      #magic___^_^___line\n## Additional Annotations:*\n  {{- range .SortedPairs }}\n  • {{ .Name }}: `{{ .Value }}`\n  {{- end }}\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n      #magic___^_^___line\n{{- end -}}\n      #magic___^_^___line\n{{- define \"rancher.text_multiple\" -}}\n      #magic___^_^___line\n*[GROUP - Details]* \n      #magic___^_^___line\nOne or more alarms in this group have triggered a notification.\n      #magic___^_^___line\n      #magic___^_^___line\n{{- if gt (len .GroupLabels.Values) 0 }}\n      #magic___^_^___line\n*Group Labels:*\n  {{- range .GroupLabels.SortedPairs }}\n  • *{{ .Name }}:* `{{ .Value }}`\n  {{- end }}\n{{- end }}\n      #magic___^_^___line\n{{- if .ExternalURL }}\n      #magic___^_^___line\n*Link to AlertManager:* {{ .ExternalURL }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n      #magic___^_^___line\n{{- range .Alerts }}\n      #magic___^_^___line\n{{ template \"rancher.text_single\" . }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end -}}\n      #magic___^_^___line\n      #magic___^_^___line\n{{- define \"rancher.text_single\" -}}\n      #magic___^_^___line\n{{- if .Labels.alertname }}\n      #magic___^_^___line\n*[ALERT - {{ .Labels.alertname }}]*\n      #magic___^_^___line\n{{- else }}\n      #magic___^_^___line\n*[ALERT]*\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Labels.severity }}\n      #magic___^_^___line\n*Severity:* `{{ .Labels.severity }}`\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Labels.cluster }}\n      #magic___^_^___line\n*Cluster:*  {{ .Labels.cluster }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.summary }}\n      #magic___^_^___line\n*Summary:* {{ .Annotations.summary }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.message }}\n      #magic___^_^___line\n*Message:* {{ .Annotations.message }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.description }}\n      #magic___^_^___line\n*Description:* {{ .Annotations.description }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.runbook_url }}\n      #magic___^_^___line\n*Runbook URL:* <{{ .Annotations.runbook_url }}|:spiral_note_pad:>\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- with .Labels }}\n      #magic___^_^___line\n{{- with .Remove (stringSlice \"alertname\" \"severity\" \"cluster\") }}\n      #magic___^_^___line\n{{- if gt (len .) 0 }}\n      #magic___^_^___line\n*Additional Labels:*\n  {{- range .SortedPairs }}\n  • *{{ .Name }}:* `{{ .Value }}`\n  {{- end }}\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- with .Annotations }}\n      #magic___^_^___line\n{{- with .Remove (stringSlice \"summary\" \"message\" \"description\" \"runbook_url\") }}\n      #magic___^_^___line\n{{- if gt (len .) 0 }}\n      #magic___^_^___line\n*Additional Annotations:*\n  {{- range .SortedPairs }}\n  • *{{ .Name }}:* `{{ .Value }}`\n  {{- end }}\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end -}}"
+
     alertmanagerSpec:
       alertmanagerConfigSelector:
         matchExpressions:
@@ -151,28 +94,8 @@ kube-prometheus-stack:
       alertmanagerConfigNamespaceSelector:
         matchLabels:
           "field.cattle.io/projectId": *projectId
-      clusterAdvertiseAddress: false
-      externalUrl:
-      forceEnableClusterMode: false
       image:
-        registry: mtr.devops.telekom.de
         repository: kubeprometheusstack/alertmanager
-        tag: v0.27.0
-      listenLocal: false
-      logFormat: logfmt
-      logLevel: info
-      replicas: 1
-      retention: 120h
-      storage: {}
-      # volumeClaimTemplate:
-      #   spec:
-      #     storageClassName: gluster
-      #     accessModes: ["ReadWriteOnce"]
-      #     resources:
-      #       requests:
-      #         storage: 50Gi
-      #     selector: {}
-      routePrefix: /
       resources:
         limits:
           memory: 750Mi
@@ -180,18 +103,13 @@ kube-prometheus-stack:
         requests:
           memory: 200Mi
           cpu: 100m
-      paused: false
       securityContext:
         fsGroup: 2000
         supplementalGroups:
         - 1000
-      volumes: []
-      volumeMounts: []
   global:
     rbac:
       create: false
-      createAggregateClusterRoles: false
-      pspEnabled: false
   grafana:
     adminPassword: prom-operator
     containerSecurityContext:
