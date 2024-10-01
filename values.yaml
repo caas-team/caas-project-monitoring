@@ -1,74 +1,46 @@
-# Default values for caas kube-prometheus-stack.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 caas:
-  # create a namespaces ServiceAccount
   rbac:
+    # -- Whether to enable the RBAC resources
+    # -- Must be enabled if multiple namespaces are monitored
     enabled: true
     serviceAccount:
       create: true
       name: project-monitoring
-  # list of additional namespaces where project-monitoring should watch
+  # -- List of additional namespaces where the project-monitoring 
+  # -- should watch for custom resources - whitespace separated
+  # -- Example projectNamespaces: demoapp3 demoapp4
   projectNamespaces: ""
-  #projectNamespaces: demoapp3 demoapp4
-  #
-  # deploy additional nginx.conf and dashboard for Grafana
+
   grafana:
+    # -- Whether to deploy additional nginx.conf and dashboard for Grafana
     configmaps: true
+
   fullnameOverride: ""
   nameOverride: ""
-  # overrides the default namespace for caas related resources
+
+  # -- Overrides the default namespace for CaaS related resources
+  # -- If not set, the namespace will be the same as the release namespace
   namespaceOverride: ""
-  #
-  # patch job to set securityContect in Prometheus/Alertmanager statefulset
-  patchjob:
-    enabled: false
-    image:
-      repository: mtr.devops.telekom.de/caas/kubectl
-      tag: latest
-    pullPolicy: IfNotPresent
-    # minimal permissions for pod
-    podSecurityContext:
-      fsGroup: 1000
-      supplementalGroups:
-      - 1000
-    # resources for kubectl job
-    resources:
-      requests:
-        cpu: 1m
-        memory: 8Mi
-      limits:
-        cpu: 100m
-        memory: 128Mi
-    # minimal permissions for container
-    securityContext:
-      readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-      privileged: false
-      runAsUser: 1000
-      runAsGroup: 1000
 
 global:
   cattle:
-    # set clusterId for Grafana reachable via RancherProxy (not necessary in deployment via App store)
-    #clusterId: c-xxxxx
-    # projectId: &projectId p-xxxxx
-    projectId: &projectId
+    # -- Whether to set clusterId for Grafana, so its reachable via the Rancher proxy 
+    # -- Not necessary in deployment via the Rancher UI App store
+    clusterId: ""
+    # -- The projectId is used a variable for the rancher UI installation
+    # -- or if you provide it here, it can be used as a default label for all resources
+    projectId: &projectId "p-xxxxx"
     systemDefaultRegistry: ""
   imageRegistry: mtr.devops.telekom.de
 
+#  Full set of values and pre-defined for CaaS
+#  ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
 kube-prometheus-stack:
-  #  full set of values and pre-defined for caas
-  #  ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
   nameOverride: "project-monitoring"
   fullnameOverride: "project-monitoring"
   # -- Labels to add to all deployed resources
-  #commonLabels:
-  #  field.cattle.io/projectId: *projectId
+  commonLabels:
+    field.cattle.io/projectId: *projectId
 
   # -- Default rules for monitoring the namespaces of the 
   # -- rancher project
@@ -106,8 +78,6 @@ kube-prometheus-stack:
     # -- Disabled PrometheusRule alerts
     disabled:
       KubeletDown: true
-      # KubeAPIDown: true
-      # NodeRAIDDegraded: true
 
   # -- Provide custom recording or alerting rules to be deployed into the cluster.
   alertmanager:
@@ -178,10 +148,9 @@ kube-prometheus-stack:
           operator: NotIn
           values:
           - rancher-monitoring
-      alertmanagerConfigNamespaceSelector: {}
-      #alertmanagerConfigNamespaceSelector:
-      #  matchLabels:
-      #    "field.cattle.io/projectId": *projectId
+      alertmanagerConfigNamespaceSelector:
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
       clusterAdvertiseAddress: false
       externalUrl:
       forceEnableClusterMode: false
@@ -312,8 +281,7 @@ kube-prometheus-stack:
       log:
         level: info
     image:
-      repository: mtr.devops.telekom.de/kubeprometheusstack/grafana
-      tag: 10.4.1
+      repository: kubeprometheusstack/grafana
     initChownData:
       enabled: false
     namespaceOverride: ""
@@ -340,8 +308,7 @@ kube-prometheus-stack:
       - 472
     sidecar:
       image:
-        repository: mtr.devops.telekom.de/kubeprometheusstack/k8s-sidecar
-        tag: 1.25.2
+        repository: kubeprometheusstack/k8s-sidecar
       plugins:
         searchNamespace: ""
       resources:
