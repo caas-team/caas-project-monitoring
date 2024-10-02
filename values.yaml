@@ -427,11 +427,5 @@ kube-prometheus-stack:
       name: project-monitoring
     serviceMonitor:
       interval: "30s"
-      selfMonitor: true
-      scheme: ""
-      tlsConfig: {}
-      bearerTokenFile:
-      metricRelabelings: []
-      relabelings: []
   thanosRuler:
     enabled: false

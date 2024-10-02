@@ -253,13 +253,7 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.prometheusSpec.walCompression | bool | `true` |  |
 | kube-prometheus-stack.prometheus.serviceAccount.create | bool | `false` |  |
 | kube-prometheus-stack.prometheus.serviceAccount.name | string | `"project-monitoring"` | The name of the serviceAccount to use for all components |
-| kube-prometheus-stack.prometheus.serviceMonitor.bearerTokenFile | string | `nil` |  |
 | kube-prometheus-stack.prometheus.serviceMonitor.interval | string | `"30s"` |  |
-| kube-prometheus-stack.prometheus.serviceMonitor.metricRelabelings | list | `[]` |  |
-| kube-prometheus-stack.prometheus.serviceMonitor.relabelings | list | `[]` |  |
-| kube-prometheus-stack.prometheus.serviceMonitor.scheme | string | `""` |  |
-| kube-prometheus-stack.prometheus.serviceMonitor.selfMonitor | bool | `true` |  |
-| kube-prometheus-stack.prometheus.serviceMonitor.tlsConfig | object | `{}` |  |
 | kube-prometheus-stack.prometheusOperator.enabled | bool | `false` |  |
 | kube-prometheus-stack.thanosRuler.enabled | bool | `false` |  |
 
