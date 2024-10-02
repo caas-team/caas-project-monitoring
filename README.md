@@ -188,13 +188,9 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.prometheusSpec.enforcedLabelLimit | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.enforcedLabelNameLengthLimit | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.enforcedLabelValueLengthLimit | bool | `false` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.enforcedNamespaceLabel | string | `""` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.enforcedSampleLimit | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.enforcedTargetLimit | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.evaluationInterval | string | `"30s"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.excludedFromEnforcement | list | `[]` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.externalLabels | object | `{}` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.externalUrl | string | `""` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.ignoreNamespaceSelectors | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.image.registry | string | `"mtr.devops.telekom.de"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.image.repository | string | `"kubeprometheusstack/prometheus"` |  |

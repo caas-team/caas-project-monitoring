@@ -311,10 +311,6 @@ kube-prometheus-stack:
           "match[]":
           - '{__name__=~".+"}'
       evaluationInterval: "30s"
-      externalLabels: {}
-      externalUrl: ""
-      excludedFromEnforcement: []
-      enforcedNamespaceLabel: ""
       enforcedLabelLimit: false
       enforcedLabelNameLengthLimit: false
       enforcedLabelValueLengthLimit: false
