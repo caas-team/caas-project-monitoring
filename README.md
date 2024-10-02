@@ -188,15 +188,12 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.prometheusSpec.image.registry | string | `"mtr.devops.telekom.de"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.image.repository | string | `"kubeprometheusstack/prometheus"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.paused | bool | `false` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.podAntiAffinityTopologyKey | string | `"kubernetes.io/hostname"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector | object | `{}` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId" | string | `"p-xxxxx"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].values[0] | string | `"rancher-monitoring"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.portName | string | `"http-web"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.prometheusExternalLabelName | string | `""` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.prometheusExternalLabelNameClear | bool | `false` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.prometheusRulesExcludedFromEnforce | list | `[]` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.probeNamespaceSelector.matchLabels."field.cattle.io/projectId" | string | `"p-xxxxx"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.query | object | `{}` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.queryLogFile | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.remoteRead | list | `[]` |  |

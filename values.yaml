@@ -315,23 +315,18 @@ kube-prometheus-stack:
         registry: mtr.devops.telekom.de
         repository: kubeprometheusstack/prometheus
       portName: "http-web"
-      prometheusRulesExcludedFromEnforce: []
-      prometheusExternalLabelName: ""
-      prometheusExternalLabelNameClear: false
-      podAntiAffinityTopologyKey: kubernetes.io/hostname
       podMonitorSelector:
         matchExpressions:
         - key: release
           operator: NotIn
           values:
           - rancher-monitoring
-      podMonitorNamespaceSelector: {}
-      #podMonitorNamespaceSelector:
-      #  matchLabels:
-      #    "field.cattle.io/projectId": *projectId
-      #probeNamespaceSelector:
-      #  matchLabels:
-      #    "field.cattle.io/projectId": *projectId
+      podMonitorNamespaceSelector:
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
+      probeNamespaceSelector:
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
       paused: false
       queryLogFile: false
       query: {}
