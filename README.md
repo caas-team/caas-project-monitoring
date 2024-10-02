@@ -53,7 +53,7 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | global.cattle.projectId | string | `"p-xxxxx"` | or if you provide it here, it can be used as a default label for all resources |
 | global.cattle.systemDefaultRegistry | string | `""` |  |
 | global.imageRegistry | string | `"mtr.devops.telekom.de"` |  |
-| kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels."field.cattle.io/projectId" | string | `"p-xxxxx"` |  |
+| kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels | object | `{"field.cattle.io/projectId":"p-xxxxx"}` | which belong to a rancher project |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigSelector.matchExpressions[0].values[0] | string | `"rancher-monitoring"` |  |
@@ -187,18 +187,18 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.prometheusSpec.evaluationInterval | string | `"30s"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.image.registry | string | `"mtr.devops.telekom.de"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.image.repository | string | `"kubeprometheusstack/prometheus"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId" | string | `"p-xxxxx"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels | object | `{"field.cattle.io/projectId":"p-xxxxx"}` | which belong to a rancher project |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].values[0] | string | `"rancher-monitoring"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.portName | string | `"http-web"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.probeNamespaceSelector.matchLabels."field.cattle.io/projectId" | string | `"p-xxxxx"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.probeNamespaceSelector.matchLabels | object | `{"field.cattle.io/projectId":"p-xxxxx"}` | which belong to a rancher project |
 | kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.cpu | string | `"1000m"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.memory | string | `"1000Mi"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.cpu | string | `"400m"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.memory | string | `"400Mi"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.retention | string | `"10d"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.ruleNamespaceSelector.matchLabels."field.cattle.io/projectId" | string | `"p-xxxxx"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.ruleNamespaceSelector.matchLabels | object | `{"field.cattle.io/projectId":"p-xxxxx"}` | which belong to a rancher project |
 | kube-prometheus-stack.prometheus.prometheusSpec.ruleSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.ruleSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.ruleSelector.matchExpressions[0].values[0] | string | `"rancher-monitoring"` |  |
@@ -206,7 +206,7 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.prometheusSpec.scrapeTimeout | string | `"10s"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.securityContext.fsGroup | int | `2000` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.securityContext.supplementalGroups[0] | int | `1000` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels."field.cattle.io/projectId" | string | `"p-xxxxx"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorNamespaceSelector.matchLabels | object | `{"field.cattle.io/projectId":"p-xxxxx"}` | which belong to a rancher project |
 | kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].values[0] | string | `"rancher-monitoring"` |  |

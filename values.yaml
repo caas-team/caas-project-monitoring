@@ -93,6 +93,9 @@ kube-prometheus-stack:
           values:
           - rancher-monitoring
       alertmanagerConfigNamespaceSelector:
+        # -- The namespaceSelector to use for selecting AlertmanagerConfigs
+        # -- Default value is the project ID for the namespaces
+        # -- which belong to a rancher project
         matchLabels:
           "field.cattle.io/projectId": *projectId
       image:
@@ -322,9 +325,15 @@ kube-prometheus-stack:
           values:
           - rancher-monitoring
       podMonitorNamespaceSelector:
+        # -- The namespaceSelector to use for selecting PodMonitors
+        # -- Default value is the project ID for the namespaces
+        # -- which belong to a rancher project
         matchLabels:
           "field.cattle.io/projectId": *projectId
       probeNamespaceSelector:
+        # -- The namespaceSelector to use for selecting Probes
+        # -- Default value is the project ID for the namespaces
+        # -- which belong to a rancher project
         matchLabels:
           "field.cattle.io/projectId": *projectId
       resources:
@@ -336,6 +345,9 @@ kube-prometheus-stack:
           cpu: 400m
       retention: 10d
       ruleNamespaceSelector:
+        # -- The namespaceSelector to use for selecting PrometheusRules
+        # -- Default value is the project ID for the namespaces
+        # -- which belong to a rancher project
         matchLabels:
           "field.cattle.io/projectId": *projectId
       ruleSelector:
@@ -357,6 +369,9 @@ kube-prometheus-stack:
           values:
           - rancher-monitoring
       serviceMonitorNamespaceSelector:
+        # -- The namespaceSelector to use for selecting ServiceMonitors
+        # -- Default value is the project ID for the namespaces
+        # -- which belong to a rancher project
         matchLabels:
           "field.cattle.io/projectId": *projectId
       tsdb:
