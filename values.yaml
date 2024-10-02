@@ -311,21 +311,9 @@ kube-prometheus-stack:
           "match[]":
           - '{__name__=~".+"}'
       evaluationInterval: "30s"
-      enforcedLabelLimit: false
-      enforcedLabelNameLengthLimit: false
-      enforcedLabelValueLengthLimit: false
-      enforcedSampleLimit: false
-      enforcedTargetLimit: false
-      enableRemoteWriteReceiver: false
       image:
         registry: mtr.devops.telekom.de
         repository: kubeprometheusstack/prometheus
-      ignoreNamespaceSelectors: false
-      listenLocal: false
-      logFormat: logfmt
-      logLevel: info
-      overrideHonorLabels: false
-      overrideHonorTimestamps: false
       portName: "http-web"
       prometheusRulesExcludedFromEnforce: []
       prometheusExternalLabelName: ""
