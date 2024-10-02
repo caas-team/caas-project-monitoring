@@ -335,10 +335,9 @@ kube-prometheus-stack:
           memory: 400Mi
           cpu: 400m
       retention: 10d
-      ruleNamespaceSelector: {}
-      #ruleNamespaceSelector:
-      #  matchLabels:
-      #    "field.cattle.io/projectId": *projectId
+      ruleNamespaceSelector:
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
       ruleSelector:
         matchExpressions:
         - key: release
@@ -357,10 +356,9 @@ kube-prometheus-stack:
           operator: NotIn
           values:
           - rancher-monitoring
-      serviceMonitorNamespaceSelector: {}
-      #serviceMonitorNamespaceSelector:
-      #  matchLabels:
-      #    "field.cattle.io/projectId": *projectId
+      serviceMonitorNamespaceSelector:
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
       tsdb:
         outOfOrderTimeWindow: 5m
     serviceAccount:
