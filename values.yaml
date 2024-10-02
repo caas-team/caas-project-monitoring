@@ -327,13 +327,6 @@ kube-prometheus-stack:
       probeNamespaceSelector:
         matchLabels:
           "field.cattle.io/projectId": *projectId
-      paused: false
-      queryLogFile: false
-      query: {}
-      replicas: 1
-      remoteRead: []
-      remoteWrite: []
-      remoteWriteDashboards: false
       resources:
         limits:
           memory: 1000Mi
