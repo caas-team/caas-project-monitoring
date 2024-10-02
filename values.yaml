@@ -298,8 +298,6 @@ kube-prometheus-stack:
   prometheus:
     enabled: true
     prometheusSpec:
-      additionalRemoteRead: []
-      additionalRemoteWrite: []
       additionalScrapeConfigs:
       - job_name: "federate"
         scrape_interval: 30s
@@ -312,9 +310,6 @@ kube-prometheus-stack:
         params:
           "match[]":
           - '{__name__=~".+"}'
-      apiserverConfig: {}
-      disableCompaction: false
-      enableAdminAPI: false
       evaluationInterval: "30s"
       externalLabels: {}
       externalUrl: ""

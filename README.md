@@ -177,8 +177,6 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus-node-exporter.rbac.pspEnabled | bool | `false` |  |
 | kube-prometheus-stack.prometheus-node-exporter.releaseLabel | bool | `false` |  |
 | kube-prometheus-stack.prometheus.enabled | bool | `true` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.additionalRemoteRead | list | `[]` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.additionalRemoteWrite | list | `[]` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].bearer_token_file | string | `"/var/run/secrets/kubernetes.io/serviceaccount/token"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].honor_labels | bool | `true` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].job_name | string | `"federate"` |  |
@@ -186,9 +184,6 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].params.match[][0] | string | `"{__name__=~\".+\"}"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].scrape_interval | string | `"30s"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].static_configs[0].targets[0] | string | `"rancher-monitoring-prometheus.cattle-monitoring-system.svc:9091"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.apiserverConfig | object | `{}` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.disableCompaction | bool | `false` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.enableAdminAPI | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.enableRemoteWriteReceiver | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.enforcedLabelLimit | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.enforcedLabelNameLengthLimit | bool | `false` |  |
