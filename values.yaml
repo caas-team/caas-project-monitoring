@@ -5,6 +5,7 @@ caas:
     enabled: true
     serviceAccount:
       create: true
+      # -- The name of the serviceAccount to use for all components
       name: project-monitoring
   # -- List of additional namespaces where the project-monitoring 
   # -- should watch for custom resources - whitespace separated
@@ -212,6 +213,7 @@ kube-prometheus-stack:
         cpu: 200m
     serviceAccount:
       create: false
+      name: project-monitoring
     securityContext:
       fsGroup: 472
       runAsUser: 472
@@ -420,6 +422,8 @@ kube-prometheus-stack:
       walCompression: true
     serviceAccount:
       create: false
+      # -- Uses serviceAccount for all components
+      # -- The name of the serviceAccount to use for all components
       name: project-monitoring
     service:
       annotations: {}

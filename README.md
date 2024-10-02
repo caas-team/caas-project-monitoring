@@ -48,7 +48,7 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | caas.projectNamespaces | string | `""` | Example projectNamespaces: demoapp3 demoapp4 |
 | caas.rbac.enabled | bool | `true` | Must be enabled if multiple namespaces are monitored |
 | caas.rbac.serviceAccount.create | bool | `true` |  |
-| caas.rbac.serviceAccount.name | string | `"project-monitoring"` |  |
+| caas.rbac.serviceAccount.name | string | `"project-monitoring"` | The name of the serviceAccount to use for all components |
 | global.cattle.clusterId | string | `""` | Not necessary in deployment via the Rancher UI App store |
 | global.cattle.projectId | string | `"p-xxxxx"` | or if you provide it here, it can be used as a default label for all resources |
 | global.cattle.systemDefaultRegistry | string | `""` |  |
@@ -137,6 +137,7 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.grafana.service.portName | string | `"nginx-http"` |  |
 | kube-prometheus-stack.grafana.service.targetPort | int | `8080` |  |
 | kube-prometheus-stack.grafana.serviceAccount.create | bool | `false` |  |
+| kube-prometheus-stack.grafana.serviceAccount.name | string | `"project-monitoring"` |  |
 | kube-prometheus-stack.grafana.serviceMonitor.interval | string | `"30s"` |  |
 | kube-prometheus-stack.grafana.sidecar.dashboards.enabled | bool | `true` |  |
 | kube-prometheus-stack.grafana.sidecar.dashboards.label | string | `"grafana_dashboard"` |  |
@@ -260,7 +261,7 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.service.targetPort | int | `9090` |  |
 | kube-prometheus-stack.prometheus.service.type | string | `"ClusterIP"` |  |
 | kube-prometheus-stack.prometheus.serviceAccount.create | bool | `false` |  |
-| kube-prometheus-stack.prometheus.serviceAccount.name | string | `"project-monitoring"` |  |
+| kube-prometheus-stack.prometheus.serviceAccount.name | string | `"project-monitoring"` | The name of the serviceAccount to use for all components |
 | kube-prometheus-stack.prometheus.serviceMonitor.bearerTokenFile | string | `nil` |  |
 | kube-prometheus-stack.prometheus.serviceMonitor.interval | string | `"30s"` |  |
 | kube-prometheus-stack.prometheus.serviceMonitor.metricRelabelings | list | `[]` |  |
