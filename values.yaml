@@ -335,10 +335,6 @@ kube-prometheus-stack:
           memory: 400Mi
           cpu: 400m
       retention: 10d
-      #retentionSize: ""
-      routePrefix: /
-      replicaExternalLabelName: ""
-      replicaExternalLabelNameClear: false
       ruleNamespaceSelector: {}
       #ruleNamespaceSelector:
       #  matchLabels:
@@ -365,22 +361,6 @@ kube-prometheus-stack:
       #serviceMonitorNamespaceSelector:
       #  matchLabels:
       #    "field.cattle.io/projectId": *projectId
-      shards: 1
-      storageSpec: {}
-      ## Using PersistentVolumeClaim
-      ##
-      #  volumeClaimTemplate:
-      #    spec:
-      #      storageClassName: gluster
-      #      accessModes: ["ReadWriteOnce"]
-      #      resources:
-      #        requests:
-      #          storage: 50Gi
-      #    selector: {}
-      ## Using tmpfs volume
-      ##
-      #  emptyDir:
-      #    medium: Memory
       tsdb:
         outOfOrderTimeWindow: 5m
       volumes: []

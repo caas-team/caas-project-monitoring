@@ -193,14 +193,11 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].values[0] | string | `"rancher-monitoring"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.portName | string | `"http-web"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.probeNamespaceSelector.matchLabels."field.cattle.io/projectId" | string | `"p-xxxxx"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.replicaExternalLabelName | string | `""` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.replicaExternalLabelNameClear | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.cpu | string | `"1000m"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.resources.limits.memory | string | `"1000Mi"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.cpu | string | `"400m"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.resources.requests.memory | string | `"400Mi"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.retention | string | `"10d"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.routePrefix | string | `"/"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.ruleNamespaceSelector | object | `{}` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.ruleSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.ruleSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
@@ -213,8 +210,6 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].values[0] | string | `"rancher-monitoring"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.shards | int | `1` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.storageSpec | object | `{}` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.tsdb.outOfOrderTimeWindow | string | `"5m"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.volumeMounts | list | `[]` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.volumes | list | `[]` |  |
