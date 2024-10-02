@@ -425,8 +425,6 @@ kube-prometheus-stack:
       # -- Uses serviceAccount for all components
       # -- The name of the serviceAccount to use for all components
       name: project-monitoring
-    servicePerReplica:
-      enabled: false
     serviceMonitor:
       interval: "30s"
       selfMonitor: true

@@ -260,7 +260,6 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.serviceMonitor.scheme | string | `""` |  |
 | kube-prometheus-stack.prometheus.serviceMonitor.selfMonitor | bool | `true` |  |
 | kube-prometheus-stack.prometheus.serviceMonitor.tlsConfig | object | `{}` |  |
-| kube-prometheus-stack.prometheus.servicePerReplica.enabled | bool | `false` |  |
 | kube-prometheus-stack.prometheusOperator.enabled | bool | `false` |  |
 | kube-prometheus-stack.thanosRuler.enabled | bool | `false` |  |
 
