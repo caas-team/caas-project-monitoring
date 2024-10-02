@@ -425,16 +425,6 @@ kube-prometheus-stack:
       # -- Uses serviceAccount for all components
       # -- The name of the serviceAccount to use for all components
       name: project-monitoring
-    service:
-      annotations: {}
-      clusterIP: ""
-      externalIPs: []
-      externalTrafficPolicy: Cluster
-      labels: {}
-      port: 9090
-      publishNotReadyAddresses: false
-      targetPort: 9090
-      type: ClusterIP
     servicePerReplica:
       enabled: false
     serviceMonitor:

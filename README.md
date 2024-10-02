@@ -251,15 +251,6 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.prometheusSpec.volumeMounts | list | `[]` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.volumes | list | `[]` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.walCompression | bool | `true` |  |
-| kube-prometheus-stack.prometheus.service.annotations | object | `{}` |  |
-| kube-prometheus-stack.prometheus.service.clusterIP | string | `""` |  |
-| kube-prometheus-stack.prometheus.service.externalIPs | list | `[]` |  |
-| kube-prometheus-stack.prometheus.service.externalTrafficPolicy | string | `"Cluster"` |  |
-| kube-prometheus-stack.prometheus.service.labels | object | `{}` |  |
-| kube-prometheus-stack.prometheus.service.port | int | `9090` |  |
-| kube-prometheus-stack.prometheus.service.publishNotReadyAddresses | bool | `false` |  |
-| kube-prometheus-stack.prometheus.service.targetPort | int | `9090` |  |
-| kube-prometheus-stack.prometheus.service.type | string | `"ClusterIP"` |  |
 | kube-prometheus-stack.prometheus.serviceAccount.create | bool | `false` |  |
 | kube-prometheus-stack.prometheus.serviceAccount.name | string | `"project-monitoring"` | The name of the serviceAccount to use for all components |
 | kube-prometheus-stack.prometheus.serviceMonitor.bearerTokenFile | string | `nil` |  |
