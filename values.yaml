@@ -295,8 +295,6 @@ kube-prometheus-stack:
     enabled: false
   prometheus:
     enabled: true
-    ingressPerReplica:
-      enabled: false
     prometheusSpec:
       additionalRemoteRead: []
       additionalRemoteWrite: []

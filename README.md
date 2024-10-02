@@ -176,7 +176,6 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus-node-exporter.rbac.pspEnabled | bool | `false` |  |
 | kube-prometheus-stack.prometheus-node-exporter.releaseLabel | bool | `false` |  |
 | kube-prometheus-stack.prometheus.enabled | bool | `true` |  |
-| kube-prometheus-stack.prometheus.ingressPerReplica.enabled | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalRemoteRead | list | `[]` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalRemoteWrite | list | `[]` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].bearer_token_file | string | `"/var/run/secrets/kubernetes.io/serviceaccount/token"` |  |
