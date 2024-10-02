@@ -295,13 +295,6 @@ kube-prometheus-stack:
     enabled: false
   prometheus:
     enabled: true
-    ingress:
-      enabled: false
-      annotations: {}
-      labels: {}
-      hosts: []
-      paths: []
-      tls: []
     ingressPerReplica:
       enabled: false
     prometheusSpec:

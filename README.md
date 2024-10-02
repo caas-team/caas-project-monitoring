@@ -176,12 +176,6 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus-node-exporter.rbac.pspEnabled | bool | `false` |  |
 | kube-prometheus-stack.prometheus-node-exporter.releaseLabel | bool | `false` |  |
 | kube-prometheus-stack.prometheus.enabled | bool | `true` |  |
-| kube-prometheus-stack.prometheus.ingress.annotations | object | `{}` |  |
-| kube-prometheus-stack.prometheus.ingress.enabled | bool | `false` |  |
-| kube-prometheus-stack.prometheus.ingress.hosts | list | `[]` |  |
-| kube-prometheus-stack.prometheus.ingress.labels | object | `{}` |  |
-| kube-prometheus-stack.prometheus.ingress.paths | list | `[]` |  |
-| kube-prometheus-stack.prometheus.ingress.tls | list | `[]` |  |
 | kube-prometheus-stack.prometheus.ingressPerReplica.enabled | bool | `false` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalRemoteRead | list | `[]` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalRemoteWrite | list | `[]` |  |
