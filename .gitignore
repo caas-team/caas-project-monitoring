@@ -1,2 +1,4 @@
 charts/kube-prometheus-stack
 caas-project-monitoring*.tgz
+current.yaml
+new.yaml
