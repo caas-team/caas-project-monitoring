@@ -137,11 +137,7 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.grafana.service.portName | string | `"nginx-http"` |  |
 | kube-prometheus-stack.grafana.service.targetPort | int | `8080` |  |
 | kube-prometheus-stack.grafana.serviceAccount.create | bool | `false` |  |
-| kube-prometheus-stack.grafana.serviceMonitor.enabled | bool | `true` |  |
 | kube-prometheus-stack.grafana.serviceMonitor.interval | string | `"30s"` |  |
-| kube-prometheus-stack.grafana.serviceMonitor.path | string | `"/metrics"` |  |
-| kube-prometheus-stack.grafana.serviceMonitor.scheme | string | `"http"` |  |
-| kube-prometheus-stack.grafana.serviceMonitor.scrapeTimeout | string | `"30s"` |  |
 | kube-prometheus-stack.grafana.sidecar.dashboards.enabled | bool | `true` |  |
 | kube-prometheus-stack.grafana.sidecar.dashboards.label | string | `"grafana_dashboard"` |  |
 | kube-prometheus-stack.grafana.sidecar.dashboards.labelValue | string | `"1"` |  |

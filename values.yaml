@@ -247,11 +247,7 @@ kube-prometheus-stack:
         label: grafana_datasource
         labelValue: "1"
     serviceMonitor:
-      enabled: true
-      path: "/metrics"
       interval: "30s"
-      scheme: http
-      scrapeTimeout: 30s
     service:
       portName: nginx-http
       port: 80
