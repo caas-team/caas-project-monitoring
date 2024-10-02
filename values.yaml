@@ -363,9 +363,6 @@ kube-prometheus-stack:
       #    "field.cattle.io/projectId": *projectId
       tsdb:
         outOfOrderTimeWindow: 5m
-      volumes: []
-      volumeMounts: []
-      walCompression: true
     serviceAccount:
       create: false
       # -- Uses serviceAccount for all components

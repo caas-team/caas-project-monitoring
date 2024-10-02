@@ -211,9 +211,6 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].values[0] | string | `"rancher-monitoring"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.tsdb.outOfOrderTimeWindow | string | `"5m"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.volumeMounts | list | `[]` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.volumes | list | `[]` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.walCompression | bool | `true` |  |
 | kube-prometheus-stack.prometheus.serviceAccount.create | bool | `false` |  |
 | kube-prometheus-stack.prometheus.serviceAccount.name | string | `"project-monitoring"` | The name of the serviceAccount to use for all components |
 | kube-prometheus-stack.prometheus.serviceMonitor.interval | string | `"30s"` |  |
