@@ -88,3 +88,14 @@ rules:
 ```
 
 </details>
+
+## Development
+
+If you need to make any changes to the chart, you should follow this general development process:
+
+1. Change any files needed for the chart.
+2. Update any dependencies by using the Chart.yaml, if needed.
+3. Update the README.md.gotmpl, if needed.
+4. Update the app-readme.md, if needed.
+5. Run `make chart` to prepare the chart for packaging.
+6. Open a PR with the changes.
