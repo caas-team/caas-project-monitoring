@@ -1,7 +1,7 @@
 apiVersion: v2
 name: caas-project-monitoring
 description: A Helm chart for Rancher Project Monitoring V3.
-version: "1.3.0-rc0"
+version: "1.3.0-rc1"
 appVersion: "58.4.0"
 icon: https://raw.githubusercontent.com/caas-team/caas-project-monitoring/main/logo.png
 keywords:
