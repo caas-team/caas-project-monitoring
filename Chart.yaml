@@ -1,26 +1,22 @@
 apiVersion: v2
-annotations:
-  catalog.cattle.io/display-name: CaaS Project Monitoring V3
-  catalog.cattle.io/requests-cpu: 1000m
-  catalog.cattle.io/requests-memory: 1000Mi
 name: caas-project-monitoring
-description: A Helm chart for Rancher Project Monitoring V3
-version: "1.2.10"
-appVersion: "51.0.3"
+description: A Helm chart for Rancher Project Monitoring V3.
+version: "1.3.0-rc2"
+appVersion: "58.4.0"
 icon: https://raw.githubusercontent.com/caas-team/caas-project-monitoring/main/logo.png
 keywords:
-  - monitoring
+- monitoring
 dependencies:
-  - name: kube-prometheus-stack
-    version: "51.0.3"
-    repository: "https://prometheus-community.github.io/helm-charts"
+- name: kube-prometheus-stack
+  version: "58.4.0"
+  repository: "https://prometheus-community.github.io/helm-charts"
 sources:
-  - https://github.com/caas-team/caas-project-monitoring
-  - https://github.com/prometheus-community/helm-charts
+- https://github.com/caas-team/caas-project-monitoring
+- https://github.com/prometheus-community/helm-charts
 maintainers:
-  - name: eumel8
-    email: f.kloeker@telekom.de
-    url: https://www.telekom.com
-  - name: puffitos
-    email: bruno.bressi@telekom.de
-    url: https://www.telekom.com
+- name: eumel8
+  email: f.kloeker@telekom.de
+  url: https://www.telekom.com
+- name: puffitos
+  email: bruno.bressi@telekom.de
+  url: https://www.telekom.com
