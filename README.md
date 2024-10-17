@@ -148,9 +148,9 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mt
 | kube-prometheus-stack.grafana.sidecar.datasources.labelValue | string | `"1"` |  |
 | kube-prometheus-stack.grafana.sidecar.image.repository | string | `"kubeprometheusstack/k8s-sidecar"` |  |
 | kube-prometheus-stack.grafana.sidecar.resources.limits.cpu | string | `"200m"` |  |
-| kube-prometheus-stack.grafana.sidecar.resources.limits.memory | string | `"200Mi"` |  |
+| kube-prometheus-stack.grafana.sidecar.resources.limits.memory | string | `"300Mi"` |  |
 | kube-prometheus-stack.grafana.sidecar.resources.requests.cpu | string | `"50m"` |  |
-| kube-prometheus-stack.grafana.sidecar.resources.requests.memory | string | `"50Mi"` |  |
+| kube-prometheus-stack.grafana.sidecar.resources.requests.memory | string | `"200Mi"` |  |
 | kube-prometheus-stack.grafana.sidecar.securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | kube-prometheus-stack.grafana.sidecar.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | kube-prometheus-stack.grafana.sidecar.securityContext.privileged | bool | `false` |  |
