@@ -24,6 +24,20 @@ metadata:
   namespace: {{ $ns }}
 rules:
 - apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - prometheus
+  verbs:
+  - view
+- apiGroups: 
+  - monitoring.coreos.com
+  resources:
+  - servicemonitors
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
   - ""
   resources:
   - services
@@ -37,20 +51,6 @@ rules:
   - networking.k8s.io
   resources:
   - ingresses
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - monitoring.cattle.io
-  resources:
-  - prometheus
-  verbs:
-  - view
-- apiGroups: 
-  - monitoring.coreos.com
-  resources:
-  - servicemonitors
   verbs:
   - get
   - list
