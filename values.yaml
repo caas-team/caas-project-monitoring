@@ -1,0 +1,387 @@
+caas:
+  rbac:
+    # -- Whether to enable the RBAC resources
+    # -- Must be enabled if multiple namespaces are monitored
+    enabled: true
+    serviceAccount:
+      create: true
+      # -- The name of the serviceAccount to use for all components
+      name: project-monitoring
+  # -- List of additional namespaces where the project-monitoring 
+  # -- should watch for custom resources - whitespace separated
+  # -- Example projectNamespaces: demoapp3 demoapp4
+  projectNamespaces: ""
+
+  grafana:
+    # -- Whether to deploy additional nginx.conf and dashboard for Grafana
+    configmaps: true
+
+  fullnameOverride: ""
+  nameOverride: ""
+
+  # -- Overrides the default namespace for CaaS related resources
+  # -- If not set, the namespace will be the same as the release namespace
+  namespaceOverride: ""
+
+global:
+  cattle:
+    # -- Whether to set clusterId for Grafana, so its reachable via the Rancher proxy 
+    # -- Not necessary in deployment via the Rancher UI App store
+    clusterId: ""
+    # -- The projectId is used a variable for the rancher UI installation
+    # -- or if you provide it here, it can be used as a default label for all resources
+    projectId: &projectId "p-xxxxx"
+    systemDefaultRegistry: ""
+  imageRegistry: mtr.devops.telekom.de
+
+#  Full set of values and pre-defined for CaaS
+#  ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+kube-prometheus-stack:
+  nameOverride: "project-monitoring"
+  fullnameOverride: "project-monitoring"
+  # -- Labels to add to all deployed resources
+  commonLabels:
+    field.cattle.io/projectId: *projectId
+
+  # Default rules for monitoring the namespaces of the 
+  # rancher project
+  defaultRules:
+    # -- Whether to deploy the default rules
+    create: true
+    rules:
+      etcd: false
+      k8s: true
+      kubeApiserverAvailability: false
+      kubeApiserverBurnrate: false
+      kubeApiserverHistogram: false
+      kubeApiserverSlos: false
+      kubeControllerManager: false
+      kubelet: false
+      kubeProxy: false
+      kubePrometheusNodeRecording: false
+      kubeScheduler: false
+      node: false
+      nodeExporterAlerting: false
+      nodeExporterRecording: false
+      prometheusOperator: false
+    # -- Disabled PrometheusRule alerts
+    disabled:
+      KubeletDown: true
+
+  # Provide custom recording or alerting rules to be deployed into the cluster.
+  alertmanager:
+    config:
+      route:
+        routes:
+        - receiver: "null"
+          matchers:
+          - alertname =~ "InfoInhibitor|Watchdog"
+
+    serviceMonitor:
+      interval: "30s"
+    # @ignored
+    templateFiles:
+      # The default template copied
+      # from the rancher cluster monitoring
+      rancher_defaults.tmpl: "{{- define \"slack.rancher.text\" -}}\n      #magic___^_^___line\n{{ template \"rancher.text_multiple\" . }}\n      #magic___^_^___line\n{{- end -}}\n      #magic___^_^___line\n{{- define \"webex.text_multiple\" -}}\n      #magic___^_^___line\n{{- range .Alerts }}\n      #magic___^_^___line\n{{ template \"webex.text_single\" . }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .ExternalURL }}\n      #magic___^_^___line\nAlertManager: <{{ .ExternalURL }}>\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end -}}\n      #magic___^_^___line\n{{- define \"webex.text_single\" -}}\n      #magic___^_^___line\n{{- if .Labels.alertname }}\n      #magic___^_^___line\n## [ALERT - {{ .Labels.alertname }}]\n      #magic___^_^___line\n{{- else }}\n      #magic___^_^___line\n## [ALERT]\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Labels.severity }}\n      #magic___^_^___line\n### Severity: `{{ .Labels.severity }}`\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Labels.cluster }}\n      #magic___^_^___line\n### Cluster:  {{ .Labels.cluster }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.summary }}\n      #magic___^_^___line\n### Summary: {{ .Annotations.summary }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.message }}\n      #magic___^_^___line\nMessage:  {{ .Annotations.message }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.description }}\n      #magic___^_^___line\nDescription:  {{ .Annotations.description }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.runbook_url }}\n      #magic___^_^___line\nRunbook URL: <{{ .Annotations.runbook_url }}|:spiral_note_pad:>\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- with .Labels }}\n      #magic___^_^___line\n{{- with .Remove (stringSlice \"alertname\" \"severity\" \"cluster\") }}\n      #magic___^_^___line\n{{- if gt (len .) 0 }}\n      #magic___^_^___line\nAdditional Labels:\n  {{- range .SortedPairs }}\n  • {{ .Name }}: `{{ .Value }}`\n  {{- end }}\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- with .Annotations }}\n      #magic___^_^___line\n{{- with .Remove (stringSlice \"summary\" \"message\" \"description\" \"runbook_url\") }}\n      #magic___^_^___line\n{{- if gt (len .) 0 }}\n      #magic___^_^___line\n## Additional Annotations:*\n  {{- range .SortedPairs }}\n  • {{ .Name }}: `{{ .Value }}`\n  {{- end }}\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n      #magic___^_^___line\n{{- end -}}\n      #magic___^_^___line\n{{- define \"rancher.text_multiple\" -}}\n      #magic___^_^___line\n*[GROUP - Details]* \n      #magic___^_^___line\nOne or more alarms in this group have triggered a notification.\n      #magic___^_^___line\n      #magic___^_^___line\n{{- if gt (len .GroupLabels.Values) 0 }}\n      #magic___^_^___line\n*Group Labels:*\n  {{- range .GroupLabels.SortedPairs }}\n  • *{{ .Name }}:* `{{ .Value }}`\n  {{- end }}\n{{- end }}\n      #magic___^_^___line\n{{- if .ExternalURL }}\n      #magic___^_^___line\n*Link to AlertManager:* {{ .ExternalURL }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n      #magic___^_^___line\n{{- range .Alerts }}\n      #magic___^_^___line\n{{ template \"rancher.text_single\" . }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end -}}\n      #magic___^_^___line\n      #magic___^_^___line\n{{- define \"rancher.text_single\" -}}\n      #magic___^_^___line\n{{- if .Labels.alertname }}\n      #magic___^_^___line\n*[ALERT - {{ .Labels.alertname }}]*\n      #magic___^_^___line\n{{- else }}\n      #magic___^_^___line\n*[ALERT]*\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Labels.severity }}\n      #magic___^_^___line\n*Severity:* `{{ .Labels.severity }}`\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Labels.cluster }}\n      #magic___^_^___line\n*Cluster:*  {{ .Labels.cluster }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.summary }}\n      #magic___^_^___line\n*Summary:* {{ .Annotations.summary }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.message }}\n      #magic___^_^___line\n*Message:* {{ .Annotations.message }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.description }}\n      #magic___^_^___line\n*Description:* {{ .Annotations.description }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- if .Annotations.runbook_url }}\n      #magic___^_^___line\n*Runbook URL:* <{{ .Annotations.runbook_url }}|:spiral_note_pad:>\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- with .Labels }}\n      #magic___^_^___line\n{{- with .Remove (stringSlice \"alertname\" \"severity\" \"cluster\") }}\n      #magic___^_^___line\n{{- if gt (len .) 0 }}\n      #magic___^_^___line\n*Additional Labels:*\n  {{- range .SortedPairs }}\n  • *{{ .Name }}:* `{{ .Value }}`\n  {{- end }}\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- with .Annotations }}\n      #magic___^_^___line\n{{- with .Remove (stringSlice \"summary\" \"message\" \"description\" \"runbook_url\") }}\n      #magic___^_^___line\n{{- if gt (len .) 0 }}\n      #magic___^_^___line\n*Additional Annotations:*\n  {{- range .SortedPairs }}\n  • *{{ .Name }}:* `{{ .Value }}`\n  {{- end }}\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end }}\n      #magic___^_^___line\n{{- end -}}"
+
+    alertmanagerSpec:
+      alertmanagerConfigSelector:
+        matchExpressions:
+        - key: release
+          operator: NotIn
+          values:
+          - rancher-monitoring
+      alertmanagerConfigNamespaceSelector:
+        # -- The namespaceSelector to use for selecting AlertmanagerConfigs
+        # -- Default value is the project ID for the namespaces
+        # -- which belong to a rancher project
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
+      image:
+        repository: kubeprometheusstack/alertmanager
+      resources:
+        limits:
+          memory: 750Mi
+          cpu: 800m
+        requests:
+          memory: 200Mi
+          cpu: 100m
+      securityContext:
+        fsGroup: 2000
+        supplementalGroups:
+        - 1000
+  global:
+    rbac:
+      create: false
+
+  grafana:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      privileged: false
+      runAsUser: 472
+      runAsGroup: 472
+      readOnlyRootFilesystem: true
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://prometheus-operated:9090
+          access: proxy
+          isDefault: true
+    defaultDashboardsEnabled: false
+    extraContainers: |
+      - name: grafana-proxy
+        args:
+        - nginx
+        - -g
+        - daemon off;
+        - -c
+        - /nginx/nginx.conf
+        image: mtr.devops.telekom.de/kubeprometheusstack/nginx:1.23.2-alpine
+        ports:
+        - containerPort: 8080
+          name: nginx-http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 50m
+            memory: 50Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          runAsUser: 101
+          runAsGroup: 101
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /nginx
+          name: grafana-nginx
+        - mountPath: /var/cache/nginx
+          name: nginx-home
+    extraContainerVolumes:
+    - name: nginx-home
+      emptyDir: {}
+    - name: grafana-nginx
+      configMap:
+        name: nginx-proxy-config-project-monitoring-grafana
+        items:
+        - key: nginx.conf
+          mode: 438
+          path: nginx.conf
+    forceDeployDatasources: true
+    forceDeployDashboards: true
+    fullnameOverride: project-monitoring-grafana
+    grafana.ini:
+      analytics:
+        check_for_updates: false
+      users:
+        auto_assign_org_role: Viewer
+      auth:
+        disable_login_form: false
+      auth.anonymous:
+        enabled: true
+        org_role: Viewer
+      auth.basic:
+        enabled: false
+      security:
+        # -- Required to embed dashboards in Rancher Cluster Overview Dashboard on Cluster Explorer
+        allow_embedding: true
+      log:
+        level: info
+    image:
+      repository: kubeprometheusstack/grafana
+    initChownData:
+      enabled: false
+    nameOverride: project-monitoring-grafana
+    rbac:
+      create: false
+      namespaced: true
+    resources:
+      limits:
+        memory: 600Mi
+        cpu: 600m
+      requests:
+        memory: 200Mi
+        cpu: 200m
+    serviceAccount:
+      create: false
+      name: project-monitoring
+    securityContext:
+      fsGroup: 472
+      runAsUser: 472
+      runAsGroup: 472
+      supplementalGroups:
+      - 472
+    sidecar:
+      image:
+        repository: kubeprometheusstack/k8s-sidecar
+      resources:
+        limits:
+          cpu: 200m
+          memory: 300Mi
+        requests:
+          cpu: 50m
+          memory: 200Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+        runAsUser: 472
+        runAsGroup: 472
+        privileged: false
+      dashboards:
+        enabled: true
+        label: grafana_dashboard
+        labelValue: "1"
+        searchNamespace: ""
+      datasources:
+        defaultDatasourceEnabled: false
+        label: grafana_datasource
+        labelValue: "1"
+    serviceMonitor:
+      interval: "30s"
+    service:
+      portName: nginx-http
+      port: 80
+      targetPort: 8080
+    testFramework:
+      enabled: false
+  kubeApiServer:
+    enabled: false
+  kubelet:
+    enabled: false
+  kubeControllerManager:
+    enabled: false
+  coreDns:
+    enabled: false
+  kubeDns:
+    enabled: false
+  kubeEtcd:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+  kubeProxy:
+    enabled: false
+  kubeStateMetrics:
+    enabled: false
+  kube-state-metrics:
+    rbac:
+      create: false
+    releaseLabel: false
+    prometheus:
+      monitor:
+        enabled: false
+        honorLabels: false
+    selfMonitor:
+      enabled: false
+  nodeExporter:
+    enabled: false
+  prometheus-node-exporter:
+    prometheus:
+      monitor:
+        enabled: false
+    releaseLabel: false
+    rbac:
+      pspEnabled: false
+  prometheusOperator:
+    enabled: false
+  prometheus:
+    enabled: true
+    prometheusSpec:
+      additionalScrapeConfigs:
+      - job_name: "federate"
+        scrape_interval: 30s
+        honor_labels: true
+        metrics_path: "/federate"
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        static_configs:
+        - targets:
+          - rancher-monitoring-prometheus.cattle-monitoring-system.svc:9091
+        params:
+          "match[]":
+          - '{__name__=~".+"}'
+      evaluationInterval: "30s"
+      image:
+        registry: mtr.devops.telekom.de
+        repository: kubeprometheusstack/prometheus
+      portName: "http-web"
+      podMonitorSelector:
+        matchExpressions:
+        - key: release
+          operator: NotIn
+          values:
+          - rancher-monitoring
+      podMonitorNamespaceSelector:
+        # -- The namespaceSelector to use for selecting PodMonitors
+        # -- Default value is the project ID for the namespaces
+        # -- which belong to a rancher project
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
+      probeNamespaceSelector:
+        # -- The namespaceSelector to use for selecting Probes
+        # -- Default value is the project ID for the namespaces
+        # -- which belong to a rancher project
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
+      resources:
+        limits:
+          memory: 1000Mi
+          cpu: 1000m
+        requests:
+          memory: 400Mi
+          cpu: 400m
+      retention: 10d
+      ruleNamespaceSelector:
+        # -- The namespaceSelector to use for selecting PrometheusRules
+        # -- Default value is the project ID for the namespaces
+        # -- which belong to a rancher project
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
+      ruleSelector:
+        matchExpressions:
+        - key: release
+          operator: NotIn
+          values:
+          - rancher-monitoring
+      scrapeInterval: "30s"
+      scrapeTimeout: "10s"
+      securityContext:
+        fsGroup: 2000
+        supplementalGroups:
+        - 1000
+      serviceMonitorSelector:
+        matchExpressions:
+        - key: release
+          operator: NotIn
+          values:
+          - rancher-monitoring
+      serviceMonitorNamespaceSelector:
+        # -- The namespaceSelector to use for selecting ServiceMonitors
+        # -- Default value is the project ID for the namespaces
+        # -- which belong to a rancher project
+        matchLabels:
+          "field.cattle.io/projectId": *projectId
+      tsdb:
+        outOfOrderTimeWindow: 5m
+    serviceAccount:
+      create: false
+      # -- Uses serviceAccount for all components
+      # -- The name of the serviceAccount to use for all components
+      name: project-monitoring
+    serviceMonitor:
+      interval: "30s"
+  thanosRuler:
+    enabled: false
