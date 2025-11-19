@@ -312,7 +312,7 @@ kube-prometheus-stack:
           - rancher-monitoring-prometheus.cattle-monitoring-system.svc:9091
         params:
           "match[]":
-          - '{__name__=~".+",job!="ingress-nginx"}'
+          - '{__name__=~".+", job!="ingress-nginx"}'
       evaluationInterval: "30s"
       image:
         registry: mtr.devops.telekom.de
