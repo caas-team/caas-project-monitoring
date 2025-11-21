@@ -313,7 +313,7 @@ kube-prometheus-stack:
         params:
           "match[]":
           # Scrape all metrics except of ingress controller metrics (default)
-          - '{__name__=~".+", job!="ingress-nginx"}' # Excluded due increasing amout of metrics in case multiple Ingress resources defined in scraped namespaces
+          - '{__name__=~".+", job!="ingress-nginx"}' # Excluded due to increasing amount of metrics when multiple Ingress resources are defined in scraped namespaces
       evaluationInterval: "30s"
       image:
         registry: mtr.devops.telekom.de
