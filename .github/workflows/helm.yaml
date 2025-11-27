@@ -11,6 +11,17 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+      - name: Verify Chart version matches tag
+        run: |
+          TAG_VERSION=${GITHUB_REF#refs/tags/}
+          CHART_VERSION=$(grep '^version:' Chart.yaml | awk '{print $2}' | tr -d '"')
+          echo "Tag version: $TAG_VERSION"
+          echo "Chart version: $CHART_VERSION"
+          if [ "$TAG_VERSION" != "$CHART_VERSION" ]; then
+            echo "Error: Tag version ($TAG_VERSION) does not match Chart.yaml version ($CHART_VERSION)"
+            exit 1
+          fi
+          echo "Version check passed: $TAG_VERSION"
       - name: Helm lint & package & push
         run: |
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash

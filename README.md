@@ -9,6 +9,7 @@ Please read the [Application Readme](./docs/app-readme.md) for more details.
 | ---- | ------ | --- |
 | eumel8 | <f.kloeker@telekom.de> | <https://www.telekom.com> |
 | puffitos | <bruno.bressi@telekom.de> | <https://www.telekom.com> |
+| y-eigth | <maximilian.schubert@telekom.de> | <https://www.telekom.com> |
 
 ## Source Code
 
@@ -34,7 +35,7 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml .
 Or install the chart by using the packaged chart:
 
 ```bash
-helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mtr.devops.telekom.de/caas/charts/caas-project-monitoring --version 1.3.0
+helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mtr.devops.telekom.de/caas/charts/caas-project-monitoring --version 1.3.1
 ```
 
 ## Compatibility matrix
