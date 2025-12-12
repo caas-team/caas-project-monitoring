@@ -145,7 +145,8 @@ kube-prometheus-stack:
         - /nginx/nginx.conf
         image: mtr.devops.telekom.de/kubeprometheusstack/nginx:1.23.2-alpine
         ports:
-        - containerPort: 8080
+        # Change Container-Port in Case of Helm Duplicate Port Warnings
+        - containerPort: 8081
           name: nginx-http
           protocol: TCP
         resources:
@@ -182,6 +183,18 @@ kube-prometheus-stack:
     forceDeployDatasources: true
     forceDeployDashboards: true
     fullnameOverride: project-monitoring-grafana
+    # P.e. to SetUp Proxy-Config
+    env: {}
+       # HTTP_PROXY: "http://<Proxy-IP>:<Proxy-Port>"
+       # HTTPS_PROXY: "http://<Proxy-IP>:<Proxy-Port>"
+       # NO_PROXY: "localhost,127.0.0.0/8,.svc.cluster.local"
+    # P.e. to mount UserName and Password for Mail-Authentification
+    extraSecretMounts: {}
+      # - name: mailauth
+      #   secretName: mailauth
+      #   defaultMode: 0440
+      #   mountPath: /etc/secrets/mailauth
+      #   readOnly: true      
     grafana.ini:
       analytics:
         check_for_updates: false
@@ -194,6 +207,17 @@ kube-prometheus-stack:
         org_role: Viewer
       auth.basic:
         enabled: false
+      # If you sending eMails as Alert over SMTP with Aurhentification you can use something like that.
+      # Please add SMTP Creds as Secret and activate exttraSecretMount some rows before
+      # smtp:
+      #   enabled: true
+      #   host: <SMTP-ADDRESS>:<SMTP-PORT>
+      #   skip_verify: true  
+      #   from_address: <Yours Sender eMail-Address>
+      #   from_name: <Your Sender Name>
+      #   ehlo_identity: <The ehlo-Name>
+      #   user: $__file{/etc/secrets/mailauth/user}
+      #   password: $__file{/etc/secrets/mailauth/password}        
       security:
         # -- Required to embed dashboards in Rancher Cluster Overview Dashboard on Cluster Explorer
         allow_embedding: true
@@ -214,6 +238,13 @@ kube-prometheus-stack:
       requests:
         memory: 200Mi
         cpu: 200m
+    # Persists a PVC and keep it by Helm-Delete so you can Update and your local Changes should be available
+    persistence:
+      type: pvc
+      enabled: true
+      size: 10Gi
+      annotations:
+        helm.sh/resource-policy: keep        
     serviceAccount:
       create: false
       name: project-monitoring
