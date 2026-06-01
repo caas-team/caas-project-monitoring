@@ -65,12 +65,11 @@ where `x` is the CaaS Project Monitoring Version and `y` is the CaaS Cluster Mon
 | global.cattle.clusterId | string | `""` | Not necessary in deployment via the Rancher UI App store |
 | global.cattle.projectId | string | `"p-xxxxx"` | or if you provide it here, it can be used as a default label for all resources |
 | global.cattle.systemDefaultRegistry | string | `""` |  |
-| global.imageRegistry | string | `"mtr.devops.telekom.de"` |  |
+| global.imageRegistry | string | `"trusted.artifactory.devops.telekom.de/quay.io"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels | object | `{"field.cattle.io/projectId":"p-xxxxx"}` | which belong to a rancher project |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigSelector.matchExpressions[0].values[0] | string | `"rancher-monitoring"` |  |
-| kube-prometheus-stack.alertmanager.alertmanagerSpec.image.repository | string | `"kubeprometheusstack/alertmanager"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.cpu | string | `"800m"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.memory | string | `"750Mi"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.cpu | string | `"100m"` |  |
@@ -133,7 +132,6 @@ where `x` is the CaaS Project Monitoring Version and `y` is the CaaS Cluster Mon
 | kube-prometheus-stack.grafana.forceDeployDashboards | bool | `true` |  |
 | kube-prometheus-stack.grafana.forceDeployDatasources | bool | `true` |  |
 | kube-prometheus-stack.grafana.fullnameOverride | string | `"project-monitoring-grafana"` |  |
-| kube-prometheus-stack.grafana.image.repository | string | `"kubeprometheusstack/grafana"` |  |
 | kube-prometheus-stack.grafana.initChownData.enabled | bool | `false` |  |
 | kube-prometheus-stack.grafana.nameOverride | string | `"project-monitoring-grafana"` |  |
 | kube-prometheus-stack.grafana.rbac.create | bool | `false` |  |
@@ -159,7 +157,6 @@ where `x` is the CaaS Project Monitoring Version and `y` is the CaaS Cluster Mon
 | kube-prometheus-stack.grafana.sidecar.datasources.defaultDatasourceEnabled | bool | `false` |  |
 | kube-prometheus-stack.grafana.sidecar.datasources.label | string | `"grafana_datasource"` |  |
 | kube-prometheus-stack.grafana.sidecar.datasources.labelValue | string | `"1"` |  |
-| kube-prometheus-stack.grafana.sidecar.image.repository | string | `"kubeprometheusstack/k8s-sidecar"` |  |
 | kube-prometheus-stack.grafana.sidecar.resources.limits.cpu | string | `"200m"` |  |
 | kube-prometheus-stack.grafana.sidecar.resources.limits.memory | string | `"300Mi"` |  |
 | kube-prometheus-stack.grafana.sidecar.resources.requests.cpu | string | `"50m"` |  |
@@ -198,8 +195,6 @@ where `x` is the CaaS Project Monitoring Version and `y` is the CaaS Cluster Mon
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].scrape_interval | string | `"30s"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].static_configs[0].targets[0] | string | `"rancher-monitoring-prometheus.cattle-monitoring-system.svc:9091"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.evaluationInterval | string | `"30s"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.image.registry | string | `"mtr.devops.telekom.de"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.image.repository | string | `"kubeprometheusstack/prometheus"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels | object | `{"field.cattle.io/projectId":"p-xxxxx"}` | which belong to a rancher project |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
