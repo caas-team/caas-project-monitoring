@@ -291,7 +291,7 @@ kube-prometheus-stack:
     rbac:
       pspEnabled: false
   prometheusOperator:
-    enabled: falses
+    enabled: false
     admissionWebhooks:
       patch:
         image:
