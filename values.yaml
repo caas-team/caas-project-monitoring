@@ -32,7 +32,9 @@ global:
     # -- or if you provide it here, it can be used as a default label for all resources
     projectId: &projectId "p-xxxxx"
     systemDefaultRegistry: ""
-  imageRegistry: mtr.devops.telekom.de
+  # -- Not set globally: kube-prometheus-stack images come from different upstream
+  # registries (quay.io, docker.io), so each component sets its own image.registry below.
+  imageRegistry: ""
 
 #  Full set of values and pre-defined for CaaS
 #  ref: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
@@ -99,7 +101,7 @@ kube-prometheus-stack:
         matchLabels:
           "field.cattle.io/projectId": *projectId
       image:
-        repository: kubeprometheusstack/alertmanager
+        registry: trusted.artifactory.devops.telekom.de/quay.io
       resources:
         limits:
           memory: 750Mi
@@ -143,7 +145,7 @@ kube-prometheus-stack:
         - daemon off;
         - -c
         - /nginx/nginx.conf
-        image: mtr.devops.telekom.de/kubeprometheusstack/nginx:1.23.2-alpine
+        image: trusted.artifactory.devops.telekom.de/hub.docker.com/nginx:1.23.2-alpine
         ports:
         - containerPort: 8080
           name: nginx-http
@@ -182,6 +184,9 @@ kube-prometheus-stack:
     forceDeployDatasources: true
     forceDeployDashboards: true
     fullnameOverride: project-monitoring-grafana
+    image:
+      # -- grafana/grafana is only published to Docker Hub, not quay.io
+      registry: trusted.artifactory.devops.telekom.de/hub.docker.com
     grafana.ini:
       analytics:
         check_for_updates: false
@@ -199,8 +204,6 @@ kube-prometheus-stack:
         allow_embedding: true
       log:
         level: info
-    image:
-      repository: kubeprometheusstack/grafana
     initChownData:
       enabled: false
     nameOverride: project-monitoring-grafana
@@ -225,7 +228,7 @@ kube-prometheus-stack:
       - 472
     sidecar:
       image:
-        repository: kubeprometheusstack/k8s-sidecar
+        registry: trusted.artifactory.devops.telekom.de/quay.io
       resources:
         limits:
           cpu: 200m
@@ -298,9 +301,15 @@ kube-prometheus-stack:
       pspEnabled: false
   prometheusOperator:
     enabled: false
+    admissionWebhooks:
+      patch:
+        image:
+          registry: trusted.artifactory.devops.telekom.de/registry.k8s.io
   prometheus:
     enabled: true
     prometheusSpec:
+      image:
+        registry: trusted.artifactory.devops.telekom.de/quay.io
       additionalScrapeConfigs:
       - job_name: "federate"
         scrape_interval: 30s
@@ -315,9 +324,6 @@ kube-prometheus-stack:
           # Scrape all metrics except of ingress controller metrics (default)
           - '{__name__=~".+", job!="ingress-nginx"}' # Excluded due to increasing amount of metrics when multiple Ingress resources are defined in scraped namespaces
       evaluationInterval: "30s"
-      image:
-        registry: mtr.devops.telekom.de
-        repository: kubeprometheusstack/prometheus
       portName: "http-web"
       podMonitorSelector:
         matchExpressions:

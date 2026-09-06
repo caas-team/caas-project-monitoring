@@ -9,7 +9,7 @@ Please read the [Application Readme](./docs/app-readme.md) for more details.
 | ---- | ------ | --- |
 | eumel8 | <f.kloeker@telekom.de> | <https://www.telekom.com> |
 | puffitos | <bruno.bressi@telekom.de> | <https://www.telekom.com> |
-| y-eigth | <maximilian.schubert@telekom.de> | <https://www.telekom.com> |
+| y-eight | <maximilian.schubert@telekom.de> | <https://www.telekom.com> |
 
 ## Source Code
 
@@ -35,7 +35,7 @@ helm -n mynamespace upgrade -i project-monitoring -f values.yaml .
 Or install the chart by using the packaged chart:
 
 ```bash
-helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://mtr.devops.telekom.de/caas/charts/caas-project-monitoring --version 1.3.1
+helm -n mynamespace upgrade -i project-monitoring -f values.yaml --repo oci://artifactory.devops.telekom.de/caas-imagetransfers-helmoci-local/caas-project-monitoring --version 1.3.2
 ```
 
 ## Compatibility matrix
@@ -65,12 +65,12 @@ where `x` is the CaaS Project Monitoring Version and `y` is the CaaS Cluster Mon
 | global.cattle.clusterId | string | `""` | Not necessary in deployment via the Rancher UI App store |
 | global.cattle.projectId | string | `"p-xxxxx"` | or if you provide it here, it can be used as a default label for all resources |
 | global.cattle.systemDefaultRegistry | string | `""` |  |
-| global.imageRegistry | string | `"mtr.devops.telekom.de"` |  |
+| global.imageRegistry | string | `""` | Not set globally: kube-prometheus-stack images come from different upstream registries (quay.io, docker.io), so each component sets its own image.registry below. |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector.matchLabels | object | `{"field.cattle.io/projectId":"p-xxxxx"}` | which belong to a rancher project |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.alertmanagerConfigSelector.matchExpressions[0].values[0] | string | `"rancher-monitoring"` |  |
-| kube-prometheus-stack.alertmanager.alertmanagerSpec.image.repository | string | `"kubeprometheusstack/alertmanager"` |  |
+| kube-prometheus-stack.alertmanager.alertmanagerSpec.image.registry | string | `"trusted.artifactory.devops.telekom.de/quay.io"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.cpu | string | `"800m"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.limits.memory | string | `"750Mi"` |  |
 | kube-prometheus-stack.alertmanager.alertmanagerSpec.resources.requests.cpu | string | `"100m"` |  |
@@ -129,11 +129,11 @@ where `x` is the CaaS Project Monitoring Version and `y` is the CaaS Cluster Mon
 | kube-prometheus-stack.grafana.extraContainerVolumes[1].configMap.items[0].path | string | `"nginx.conf"` |  |
 | kube-prometheus-stack.grafana.extraContainerVolumes[1].configMap.name | string | `"nginx-proxy-config-project-monitoring-grafana"` |  |
 | kube-prometheus-stack.grafana.extraContainerVolumes[1].name | string | `"grafana-nginx"` |  |
-| kube-prometheus-stack.grafana.extraContainers | string | `"- name: grafana-proxy\n  args:\n  - nginx\n  - -g\n  - daemon off;\n  - -c\n  - /nginx/nginx.conf\n  image: mtr.devops.telekom.de/kubeprometheusstack/nginx:1.23.2-alpine\n  ports:\n  - containerPort: 8080\n    name: nginx-http\n    protocol: TCP\n  resources:\n    limits:\n      cpu: 100m\n      memory: 100Mi\n    requests:\n      cpu: 50m\n      memory: 50Mi\n  securityContext:\n    allowPrivilegeEscalation: false\n    capabilities:\n      drop:\n      - ALL\n    privileged: false\n    runAsUser: 101\n    runAsGroup: 101\n    readOnlyRootFilesystem: true\n  volumeMounts:\n  - mountPath: /nginx\n    name: grafana-nginx\n  - mountPath: /var/cache/nginx\n    name: nginx-home\n"` |  |
+| kube-prometheus-stack.grafana.extraContainers | string | `"- name: grafana-proxy\n  args:\n  - nginx\n  - -g\n  - daemon off;\n  - -c\n  - /nginx/nginx.conf\n  image: trusted.artifactory.devops.telekom.de/hub.docker.com/nginx:1.23.2-alpine\n  ports:\n  - containerPort: 8080\n    name: nginx-http\n    protocol: TCP\n  resources:\n    limits:\n      cpu: 100m\n      memory: 100Mi\n    requests:\n      cpu: 50m\n      memory: 50Mi\n  securityContext:\n    allowPrivilegeEscalation: false\n    capabilities:\n      drop:\n      - ALL\n    privileged: false\n    runAsUser: 101\n    runAsGroup: 101\n    readOnlyRootFilesystem: true\n  volumeMounts:\n  - mountPath: /nginx\n    name: grafana-nginx\n  - mountPath: /var/cache/nginx\n    name: nginx-home\n"` |  |
 | kube-prometheus-stack.grafana.forceDeployDashboards | bool | `true` |  |
 | kube-prometheus-stack.grafana.forceDeployDatasources | bool | `true` |  |
 | kube-prometheus-stack.grafana.fullnameOverride | string | `"project-monitoring-grafana"` |  |
-| kube-prometheus-stack.grafana.image.repository | string | `"kubeprometheusstack/grafana"` |  |
+| kube-prometheus-stack.grafana.image.registry | string | `"trusted.artifactory.devops.telekom.de/hub.docker.com"` | grafana/grafana is only published to Docker Hub, not quay.io |
 | kube-prometheus-stack.grafana.initChownData.enabled | bool | `false` |  |
 | kube-prometheus-stack.grafana.nameOverride | string | `"project-monitoring-grafana"` |  |
 | kube-prometheus-stack.grafana.rbac.create | bool | `false` |  |
@@ -159,7 +159,7 @@ where `x` is the CaaS Project Monitoring Version and `y` is the CaaS Cluster Mon
 | kube-prometheus-stack.grafana.sidecar.datasources.defaultDatasourceEnabled | bool | `false` |  |
 | kube-prometheus-stack.grafana.sidecar.datasources.label | string | `"grafana_datasource"` |  |
 | kube-prometheus-stack.grafana.sidecar.datasources.labelValue | string | `"1"` |  |
-| kube-prometheus-stack.grafana.sidecar.image.repository | string | `"kubeprometheusstack/k8s-sidecar"` |  |
+| kube-prometheus-stack.grafana.sidecar.image.registry | string | `"trusted.artifactory.devops.telekom.de/quay.io"` |  |
 | kube-prometheus-stack.grafana.sidecar.resources.limits.cpu | string | `"200m"` |  |
 | kube-prometheus-stack.grafana.sidecar.resources.limits.memory | string | `"300Mi"` |  |
 | kube-prometheus-stack.grafana.sidecar.resources.requests.cpu | string | `"50m"` |  |
@@ -194,12 +194,11 @@ where `x` is the CaaS Project Monitoring Version and `y` is the CaaS Cluster Mon
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].honor_labels | bool | `true` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].job_name | string | `"federate"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].metrics_path | string | `"/federate"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].params.match[][0] | string | `"{__name__=~\".+\"}"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].params.match[][0] | string | `"{__name__=~\".+\", job!=\"ingress-nginx\"}"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].scrape_interval | string | `"30s"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.additionalScrapeConfigs[0].static_configs[0].targets[0] | string | `"rancher-monitoring-prometheus.cattle-monitoring-system.svc:9091"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.evaluationInterval | string | `"30s"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.image.registry | string | `"mtr.devops.telekom.de"` |  |
-| kube-prometheus-stack.prometheus.prometheusSpec.image.repository | string | `"kubeprometheusstack/prometheus"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.image.registry | string | `"trusted.artifactory.devops.telekom.de/quay.io"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorNamespaceSelector.matchLabels | object | `{"field.cattle.io/projectId":"p-xxxxx"}` | which belong to a rancher project |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].key | string | `"release"` |  |
 | kube-prometheus-stack.prometheus.prometheusSpec.podMonitorSelector.matchExpressions[0].operator | string | `"NotIn"` |  |
@@ -227,8 +226,10 @@ where `x` is the CaaS Project Monitoring Version and `y` is the CaaS Cluster Mon
 | kube-prometheus-stack.prometheus.serviceAccount.create | bool | `false` |  |
 | kube-prometheus-stack.prometheus.serviceAccount.name | string | `"project-monitoring"` | The name of the serviceAccount to use for all components |
 | kube-prometheus-stack.prometheus.serviceMonitor.interval | string | `"30s"` |  |
+| kube-prometheus-stack.prometheusOperator.admissionWebhooks.patch.image.registry | string | `"trusted.artifactory.devops.telekom.de/registry.k8s.io"` |  |
 | kube-prometheus-stack.prometheusOperator.enabled | bool | `false` |  |
 | kube-prometheus-stack.thanosRuler.enabled | bool | `false` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)
+

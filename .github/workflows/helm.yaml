@@ -27,13 +27,13 @@ jobs:
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
           helm version
           HELM_EXPERIMENTAL_OCI=1 helm registry login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-          HELM_EXPERIMENTAL_OCI=1 helm registry login ${MTR} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+          HELM_EXPERIMENTAL_OCI=1 helm registry login ${REGISTRY} -u ${ARTIFACTORY_USERNAME} -p ${ARTIFACTORY_PASSWORD}
           helm lint .
           helm package .
           HELM_EXPERIMENTAL_OCI=1 helm push $(ls *.tgz| head -1) oci://ghcr.io/caas-team/charts
-          HELM_EXPERIMENTAL_OCI=1 helm push $(ls *.tgz| head -1) oci://${MTR}/${REPO}/charts
+          HELM_EXPERIMENTAL_OCI=1 helm push $(ls *.tgz| head -1) oci://${REGISTRY}/${REPO}
         env:
-          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-          MTR: mtr.devops.telekom.de
-          REPO: caas
+          ARTIFACTORY_USERNAME: ${{secrets.ARTIFACTORY_USERNAME}}
+          ARTIFACTORY_PASSWORD: ${{secrets.ARTIFACTORY_PASSWORD}}
+          REGISTRY: artifactory.devops.telekom.de
+          REPO: caas-imagetransfers-helmoci-local
