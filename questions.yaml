@@ -102,7 +102,7 @@ questions:
         label: Prometheus pause
         group: Prometheus
       - variable: kube-prometheus-stack.prometheus.prometheusSpec.image.repository
-        default: mtr.devops.telekom.de/kubeprometheusstack/prometheus
+        default: prometheus/prometheus
         description: Repository of Prometheus Image
         type: string
         label: Prometheus Image Repo
